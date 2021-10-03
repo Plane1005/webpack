@@ -1,5 +1,6 @@
 // import './js/image'
 import './js/login'
+import './title'
 import React from 'react'
 import ReactDom from 'react-dom'
 import App from './App.jsx'
@@ -23,6 +24,6 @@ console.log(p);
 //@babel/plugin-transform-block-scoping
 ReactDom.render(<App />,document.getElementById('root'))
 
-axios.get('/api/simpleWeather/query').then(res => {
-  console.log(res);
-})
+// axios.get('/api/simpleWeather/query').then(res => {
+//   console.log(res);
+// })

@@ -1,43 +1,26 @@
-const path = require('path')
+const resolveApp = require('./path')
 const { DefinePlugin } = require('webpack')
-const { CleanWebpackPlugin } = require('clean-webpack-plugin')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
-const CopyWebpackPlugin = require('copy-webpack-plugin')
-const ReactRefreshWebpackPlugin = require('@pmmmwh/react-refresh-webpack-plugin')
+const { merge } = require('webpack-merge')
 
-module.exports = {
+const prodConfig = require('./webpack.prod')
+const devConfig = require('./webpack.dev')
+
+// 生产环境和开发环境通用配置
+const commonConfig = {
   // watch: true,
-  mode: 'development',
-  devtool:false,
   entry: './src/index.js',
-  target: 'web', // 开发时屏蔽 .browserslistrc
   output: {
     filename: 'js/main.js',
-    path: path.resolve(__dirname, 'build'),
+    path: resolveApp('./build')
     // publicPath: '/'
     // assetModuleFilename: "img/[name][hash:6][ext]"
   },
   resolve: {
     extensions: [".js", ".json", "jsx", "ts", "tsx"],
     alias: {
-      '@': path.resolve(__dirname,'src')
+      '@': resolveApp('./src')
     }
-  },
-  devServer: {
-    hot: true,
-    open: true,
-    compress: true,
-    historyApiFallback: true,
-    proxy: {
-      '/api': {
-        target: 'http://apis.juhe.cn',
-        pathRewrite: { "^/api": "" },
-        changeOrigin: true
-      }
-    }
-    // publicPath: '/jet'
-    // progress: true,
-    // port: 6666,
   },
   module: {
     rules: [
@@ -93,14 +76,17 @@ module.exports = {
           filename: 'font/[name][hash:3][ext]'
         }
       }, {
-        test: /\.(jsx?|tsx?)$/,
+        test: /\.jsx?$/,
+        exclude: /node_modules/,
+        use: ['babel-loader']
+      }, {
+        test: /\.tsx?$/,
         exclude: /node_modules/,
         use: ['babel-loader']
       }
     ]
   },
   plugins: [
-    new CleanWebpackPlugin(),
     new HtmlWebpackPlugin({
       title: 'Webpack App',
       template: './public/index.html',
@@ -109,14 +95,13 @@ module.exports = {
     new DefinePlugin({
       PUBLIC_URL: '"./"'
     }),
-    new CopyWebpackPlugin({
-      patterns: [{
-        from: 'public',
-        globOptions: {
-          ignore: ['**/index.html']
-        }
-      }]
-    }),
-    new ReactRefreshWebpackPlugin()
   ]
+}
+
+module.exports = (env) => {
+  const isProduction = env.production
+  // 根据环境进行webpack配置合并
+  const config = isProduction ? prodConfig : devConfig
+  const mergeConfig = merge(commonConfig,config)
+  return mergeConfig
 }

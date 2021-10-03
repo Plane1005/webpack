@@ -7,9 +7,10 @@ module.exports = {
         corejs: 3, // 不设置会报错 
       }
     ],
-    ['@babel/preset-react']
+    ['@babel/preset-react'],
+    ['@babel/preset-typescript'],
   ],
-  plugins: [
-    ['react-refresh/babel']
-  ]
+  // plugins: [
+  //   ['react-refresh/babel']
+  // ]
 }
