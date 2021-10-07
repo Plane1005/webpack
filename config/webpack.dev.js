@@ -15,13 +15,13 @@ module.exports = {
     open: true,
     compress: true,
     historyApiFallback: true,
-    proxy: {
-      '/api': {
-        target: 'http://apis.juhe.cn',
-        pathRewrite: { "^/api": "" },
-        changeOrigin: true
-      }
-    }
+    // proxy: {
+    //   '/api': {
+    //     target: 'http://116.62.220.126:2333',
+    //     pathRewrite: { "^/api": "" },
+    //     changeOrigin: true
+    //   }
+    // }
     // publicPath: '/jet'
     // progress: true,
     // port: 6666,

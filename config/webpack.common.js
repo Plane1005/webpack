@@ -9,7 +9,7 @@ const devConfig = require('./webpack.dev')
 // 生产环境和开发环境通用配置
 const commonConfig = {
   // watch: true,
-  entry: './src/index.js',
+  entry: './src/App.tsx',
   output: {
     filename: 'js/main.js',
     path: resolveApp('./build')
