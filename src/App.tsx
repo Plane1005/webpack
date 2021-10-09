@@ -1,12 +1,17 @@
-import React, { FC } from 'react';
+import React from 'react'
 import ReactDOM from 'react-dom'
-import { Button } from 'antd';
-import './App.css';
+import { Provider } from 'react-redux'
+import { store } from './store/index'
+import { ConfigProvider } from 'antd'
+import zhCN from 'antd/es/locale/zh_CN' // 引入中文包
+import './App.css'
+import EnergyAnalysis from '@/page/EnergyAnalysis/index';
 
-const App: FC = () => (
-  <div className="App">
-    <Button type="primary">Button</Button>
-  </div>
-);
-
-ReactDOM.render(<App />, document.getElementById('root'))
+const Root = () => (
+  <ConfigProvider locale={zhCN}>
+    <Provider store={store}>
+      <EnergyAnalysis />
+    </Provider>
+  </ConfigProvider>
+)
+ReactDOM.render(<Root />, document.getElementById('root'))

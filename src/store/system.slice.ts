@@ -1,6 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit'
 import { message } from 'antd'
 import { handleMessage } from "@/utils";
+import { fetchRoleList } from './reducer/systemReducer';
 
 interface State {
   roleList: any[]
@@ -25,15 +26,6 @@ export const systemSlice = createSlice({
       } else {
         message.warning(res.message || '服务器异常')
       }
-    });
-    builder.addCase(AddRole.fulfilled, (state, action: any) => {
-      handleMessage(action.payload, '添加成功')
-    });
-    builder.addCase(EditRole.fulfilled, (state, action: any) => {
-      handleMessage(action.payload, '修改成功')
-    });
-    builder.addCase(DeleteRole.fulfilled, (state, action: any) => {
-      handleMessage(action.payload, '删除成功')
     });
   },
 });

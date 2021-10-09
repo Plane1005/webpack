@@ -17,7 +17,7 @@ const commonConfig = {
     // assetModuleFilename: "img/[name][hash:6][ext]"
   },
   resolve: {
-    extensions: [".js", ".json", "jsx", "ts", "tsx"],
+    extensions: [".js", ".json", ".jsx", ".ts", ".tsx"],
     alias: {
       '@': resolveApp('./src')
     }
