@@ -5,7 +5,7 @@ export const fetchRoleList = createAsyncThunk(
   'system/fetchRoleList',
   async (params: any = {}) => {
     return request({
-      url: `/api/v1`,
+      url: `/api/air`,
       method: 'GET',
       params: params,
     }).then((res: ResponseData<any>) => {

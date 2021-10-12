@@ -19,6 +19,7 @@ axios.defaults.headers = {
 
 axios.interceptors.request.use((config: AxiosRequestConfig) => {
   config.url = PUBLIC_URL + config.url
+  return config
 },(error: AxiosError)=>Promise.reject(error))
 
 // 统一发起请求的函数
