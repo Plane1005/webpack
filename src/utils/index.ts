@@ -8,3 +8,7 @@ export const handleMessage = (res: any, tip: string, warn = '') => {
     message.warning(warn || res.message)
   }
 }
+
+export const setDate = (oldDate: string) => {
+  return '\'1999' + oldDate.slice(4) + '\''
+}

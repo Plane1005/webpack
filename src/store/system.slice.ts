@@ -19,8 +19,8 @@ export const systemSlice = createSlice({
   reducers: {},
   extraReducers: (builder) => {
     builder.addCase(fetchRoleList.fulfilled, (state, action: any) => {
-      const res = action.payload;
-      if (res.code === '0') {
+      const res = action?.payload?.data;
+      if (res.code === 200) {
         state.roleList = res.data;
         state.roleListCount = res.totalCount;
       } else {

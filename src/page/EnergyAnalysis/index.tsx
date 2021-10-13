@@ -4,6 +4,7 @@ import { RootState, useAppDispatch } from '@/store'
 import { Form, Space, Button, DatePicker, Select, InputNumber, Table } from 'antd'
 import { fetchRoleList } from '@/store/reducer/systemReducer'
 import moment from 'moment'
+import { setDate } from '@/utils/index'
 import './index.less'
 
 type LayoutType = Parameters<typeof Form>[0]['layout']
@@ -17,7 +18,7 @@ const energyAnalysis = (props: any) => {
   const [form] = Form.useForm()
   const [formLayout] = useState<LayoutType>('inline')
   const [pageNum, setPageNum] = useState<number>(1)
-  const [pageSize, setPageSize] = useState<number>(10)
+  const [pageSize] = useState<number>(10)
   const roleList = useSelector((state: RootState) => state.system.roleList)
   const roleListCount = useSelector((state: RootState) => state.system.roleListCount)
 
@@ -74,19 +75,26 @@ const energyAnalysis = (props: any) => {
     },
   ];
 
-  const formFinish = (values: any) => {
+  const searchData = () => {
+    let values = form.getFieldsValue()
     dispatch(fetchRoleList({
       pageNum,
       pageSize,
-      ...values
+      ...values,
+      beginTime: setDate(moment(values.date[0]._d).format('YYYY-MM-DD')),
+      endTime: setDate(moment(values.date[1]._d).format('YYYY-MM-DD')),
     }))
   }
+
+  useEffect(() => {
+    searchData()
+  }, [pageNum])
 
   return (
     <div className="g_energy">
       <div className="m_title">新风空调系统能耗分析优化系统</div>
       <div className="m_form">
-        <Form form={form} layout={formLayout} onFinish={formFinish} initialValues={{city:'杭州',temp:23.0,date:[moment('01-01', weekFormat), moment('12-31', weekFormat)]}}>
+        <Form form={form} layout={formLayout} onFinish={searchData} initialValues={{city:'杭州',temp:23.0,date:[moment('01-01', weekFormat), moment('12-31', weekFormat)]}}>
           <Space>
             <span>区域范围</span>
             <Form.Item name="city">
@@ -117,7 +125,7 @@ const energyAnalysis = (props: any) => {
           </Space>
         </Form>
       </div>
-      <Table columns={columns} />
+      <Table columns={columns} dataSource={roleList} pagination={{total:roleListCount,showSizeChanger:false,onChange:(page)=>{setPageNum(page)},showQuickJumper:true}} />
     </div>
   )
 }
