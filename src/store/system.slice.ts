@@ -6,13 +6,15 @@ import { fetchRoleList, fetchTempChart } from './reducer/systemReducer'
 interface State {
   roleList: any[]
   roleListCount: number
-  tempChart: any[]
+  tempChartTemp: number[],
+  tempChartHour: string[],
 }
 
 const initialState: State = {
   roleList: [],
   roleListCount: 0,
-  tempChart: [],
+  tempChartTemp: [],
+  tempChartHour: []
 }
 
 export const systemSlice = createSlice({
@@ -32,8 +34,8 @@ export const systemSlice = createSlice({
     builder.addCase(fetchTempChart.fulfilled, (state, action: any) => {
       const res = action?.payload?.data
       if (res.code === 200) {
-        state.roleList = res.data
-        state.roleListCount = res.totalCount
+        state.tempChartTemp = res.data.tempChartTemp
+        state.tempChartHour = res.data.tempChartHour
       } else {
         message.warning(res.message || '服务器异常')
       }

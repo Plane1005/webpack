@@ -21,6 +21,7 @@ const energyAnalysis = (props: any) => {
   const [formLayout] = useState<LayoutType>('inline')
   const [pageNum, setPageNum] = useState<number>(1)
   const [pageSize] = useState<number>(10)
+  const [param, setParam] = useState<any>({})
   const roleList = useSelector((state: RootState) => state.system.roleList)
   const roleListCount = useSelector((state: RootState) => state.system.roleListCount)
 
@@ -88,6 +89,7 @@ const energyAnalysis = (props: any) => {
         endTime: setDate(moment(values.date[1]._d).format('YYYY-MM-DD')),
       })
     )
+    setParam(values)
   }
 
   useEffect(() => {
@@ -147,7 +149,7 @@ const energyAnalysis = (props: any) => {
           />
         </TabPane>
         <TabPane tab="温度统计" key="2">
-          <TempChart />
+          <TempChart param={param} />
         </TabPane>
         <TabPane tab="Tab 3" key="3">
           Content of Tab 3
