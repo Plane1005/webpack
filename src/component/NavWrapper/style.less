@@ -1,0 +1,64 @@
+.g-nav{
+    .g-menu{
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        flex-flow: row nowrap;
+        padding-left: 10px;
+        &>div{
+            height: 56px;
+            display: flex;
+            align-items: center;
+            cursor: pointer;
+        }
+        img{
+            width: 56px;
+            height: 56px;
+        }
+        .m-logo{
+            .u-logo {
+                margin-right: 21px;
+                vertical-align: top;
+              }
+              .u-title{
+                  font-size: 22px;
+                  font-weight: 600;
+              }
+        }
+        .m-menu{
+            font-size: 16px;
+            img{
+                width: 35px;
+                height: 35px;
+            }
+            .u-menu{
+                padding: 0 15px;
+                img{
+                   padding: 0 5px; 
+                }
+                &:hover{
+                    color: #0066ff;
+                }
+            }
+        }
+        .m-user{
+            .u-avatar{
+                padding: 0px 30px 0px 10px;
+            }
+            .u-name{
+                width: 70px;
+                &:hover{
+                    color: #0066ff;
+                }
+            }
+        }
+    }
+    .m-usermenu {
+        :global(.anticon) {
+          margin-right: 8px;
+        }
+        :global(.ant-dropdown-menu-item) {
+          min-width: 200px;
+        }
+      }
+}

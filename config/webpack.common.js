@@ -35,7 +35,14 @@ const commonConfig = {
         },'postcss-loader']
       },{
         test: /\.less/,
-        use: ['style-loader', 'css-loader','postcss-loader','less-loader']
+        use: ['style-loader', 'css-loader','postcss-loader',{
+          loader: 'less-loader',
+          options: {
+            lessOptions: {
+              javascriptEnabled: true,
+            },
+          },
+        },]
       },
       // { //输出文件
       //   test: /\.(png|svg|gif|jpe?g)$/,

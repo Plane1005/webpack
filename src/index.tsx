@@ -7,7 +7,7 @@ import zhCN from 'antd/es/locale/zh_CN' // 引入中文包
 import App from './App'
 import './App.css'
 
-const Root = () => (
+const Root: React.FC = () => (
   <ConfigProvider locale={zhCN}>
     <Provider store={store}>
       <App />
