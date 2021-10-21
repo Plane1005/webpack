@@ -4,6 +4,7 @@ import NavWrapper from '@/component/NavWrapper'
 import Home from '@/page/Home'
 import List from '@/page/List'
 import Login from '@/page/Login'
+import UserCenter from '@/page/UserCenter'
 
 const App: React.FC = (props: any) => {
   return (
@@ -16,6 +17,7 @@ const App: React.FC = (props: any) => {
               <Switch>
                 <Route exact path="/" component={Home} />
                 <Route exact path="/list" component={List} />
+                <Route exact path="/usercenter" component={UserCenter} />
               </Switch>
             </NavWrapper>
           </div>

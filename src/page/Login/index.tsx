@@ -3,23 +3,41 @@ import { LoginForm, ProFormText, ProFormCaptcha, ProFormCheckbox } from '@ant-de
 import { UserOutlined, MobileOutlined, LockOutlined } from '@ant-design/icons'
 import { message, Tabs, Space } from 'antd'
 import logo from '@/assets/logo.png'
-import { userLogin } from '@/store/reducer/userReducer'
+import { fetchUserInfo, userLogin } from '@/store/reducer/userReducer'
 import './style.less'
 import { useAppDispatch } from '@/store'
+import { getScrect } from '@/utils/index'
+import { useHistory } from 'react-router-dom'
 
 type LoginType = 'phone' | 'account'
 
 const Login: React.FC = (props: any) => {
-
-  const [loginType, setLoginType] = useState<LoginType>('phone')
+  const [loginType, setLoginType] = useState<LoginType>('account')
   const dispatch = useAppDispatch()
+  const history = useHistory()
 
   const handleSubmit = async (values: any) => {
-    console.log(values);
-    dispatch(userLogin({
-      ...values
-    })).then(res => {
+    let password: string | boolean
+    if (loginType === 'account') password = await getScrect(values.password)
+    else password = values.captcha
+    dispatch(
+      userLogin({
+        ...values,
+        password,
+        loginType
+      })
+    ).then((res: any) => {
+      res = res?.payload?.data
       console.log(res);
+      if (res.success) {
+        localStorage.setItem('isAdmin', res.isAdmin)
+        localStorage.setItem('token', res.token)
+        dispatch(fetchUserInfo()).then((res: any) => {
+          localStorage.setItem('userInfo', res.payload.data ? JSON.stringify(res.payload.data) : '')
+        })
+        message.success('登录成功')
+        history.push('/')
+      }
     })
   }
 

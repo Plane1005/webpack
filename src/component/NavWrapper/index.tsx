@@ -7,12 +7,17 @@ import addIcon from '@/assets/icon/nav_add.svg'
 import { Avatar, Menu, Dropdown, Tooltip } from 'antd'
 import type { MenuInfo } from 'rc-menu/lib/interface'
 import { UserOutlined, SettingOutlined, LogoutOutlined } from '@ant-design/icons'
+import { RootState } from '@/store';
+import { useSelector } from 'react-redux';
 
 const NavWrapper: React.FC = (props: any) => {
   const { children } = props
   const history = useHistory()
-  const [menu] = useState(false)
   const [initialState, setInitialState] = useState({})
+  const userInfo = useSelector((state: RootState) => state.user.userInfo)
+
+  console.log("userinfo",userInfo);
+  
 
   const loginOut = async () => {
     // await outLogin();
@@ -42,9 +47,9 @@ const NavWrapper: React.FC = (props: any) => {
     [setInitialState]
   )
 
-  const menuHeaderDropdown = menu ? (
+  const menuHeaderDropdown = userInfo ? (
     <Menu className="m-usermenu" selectedKeys={[]} onClick={onMenuClick} style={{ width: 110 }}>
-      <Menu.Item key="center">
+      <Menu.Item key="center" onClick={()=>{history.push('./usercenter')}} >
         <UserOutlined />
         个人中心
       </Menu.Item>
@@ -80,8 +85,8 @@ const NavWrapper: React.FC = (props: any) => {
           </div>
         </div>
         <div className="m-user">
-          {menu ? (
-            <div className="u-name">彭祯伟</div>
+          {userInfo ? (
+            <div className="u-name">{userInfo.name}</div>
           ) : (
             <div
               className="u-name"
@@ -94,7 +99,7 @@ const NavWrapper: React.FC = (props: any) => {
           )}
           <Dropdown overlay={menuHeaderDropdown} placement="bottomRight">
             <div className="u-avatar">
-              <Avatar size={35} icon={<UserOutlined />} />
+              <Avatar size={35} icon={<UserOutlined />} src='./a.jpg' />
             </div>
           </Dropdown>
         </div>

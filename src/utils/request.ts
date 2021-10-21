@@ -1,5 +1,6 @@
 import axios, { AxiosRequestConfig, AxiosError, AxiosResponse } from 'axios'
 import { PUBLIC_URL } from '../../config/proxy.js'
+import { chkToken } from '@/utils/index'
 import { message } from 'antd'
 
 export interface ResponseData<T> {
@@ -17,10 +18,14 @@ axios.defaults.headers = {
   'Content-Type': 'application/json;charset=utf-8',
 }
 
-axios.interceptors.request.use((config: AxiosRequestConfig) => {
-  config.url = PUBLIC_URL + config.url
-  return config
-},(error: AxiosError)=>Promise.reject(error))
+axios.interceptors.request.use(
+  (config: AxiosRequestConfig) => {
+    config.url = PUBLIC_URL + config.url
+    config.headers = { accessToken: chkToken() }
+    return config
+  },
+  (error: AxiosError) => Promise.reject(error)
+)
 
 // 统一发起请求的函数
 export function request<T>(options: AxiosRequestConfig) {

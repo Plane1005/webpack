@@ -1,22 +1,26 @@
 import { createSlice } from '@reduxjs/toolkit'
 import { message } from 'antd'
 import { handleMessage } from '@/utils'
-import { userLogin } from './reducer/userReducer'
+import { userLogin, fetchUserInfo } from './reducer/userReducer'
+
+interface UserType{
+  name: string
+}
 
 interface State {
-  userInfo: any
+  userInfo: UserType | null
 }
 
 const initialState: State = {
-  userInfo: {}
+  userInfo: null
 }
 
-export const systemSlice = createSlice({
+export const userSlice = createSlice({
   name: 'user',
   initialState,
   reducers: {},
   extraReducers: (builder) => {
-    builder.addCase(userLogin.fulfilled, (state, action: any) => {
+    builder.addCase(fetchUserInfo.fulfilled, (state, action: any) => {
       const res = action?.payload?.data
       if (res.code === 200) {
         state.userInfo = res.data

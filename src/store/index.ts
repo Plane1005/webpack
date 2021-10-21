@@ -1,10 +1,12 @@
 import { configureStore, ThunkAction, Action, combineReducers, Reducer } from '@reduxjs/toolkit'
 import { useDispatch } from 'react-redux' 
 import { systemSlice } from './system.slice'
+import { userSlice } from './user.slice'
 
 // 项目中使用到的reducer
 export const rootReducer = combineReducers({
-  system: systemSlice.reducer
+  system: systemSlice.reducer,
+  user: userSlice.reducer
 })
 
 export const store = configureStore({

@@ -1,4 +1,7 @@
 .g-nav{
+    height: 100%;
+    display: flex;
+    flex-flow: column;
     .g-menu{
         display: flex;
         justify-content: space-between;
@@ -60,5 +63,8 @@
         :global(.ant-dropdown-menu-item) {
           min-width: 200px;
         }
+      }
+      .g-main {
+        height: calc(100vh - 56px);
       }
 }
