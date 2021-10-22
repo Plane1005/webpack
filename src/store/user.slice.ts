@@ -4,7 +4,14 @@ import { handleMessage } from '@/utils'
 import { userLogin, fetchUserInfo } from './reducer/userReducer'
 
 interface UserType{
-  name: string
+  name: string,
+  stuId: string,
+  mobile: string,
+  sex: string,
+  company: string,
+  avatar: string,
+  birth: number,
+  work: string
 }
 
 interface State {

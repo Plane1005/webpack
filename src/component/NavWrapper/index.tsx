@@ -6,7 +6,7 @@ import listIcon from '@/assets/icon/nav_list.svg'
 import addIcon from '@/assets/icon/nav_add.svg'
 import { Avatar, Menu, Dropdown, Tooltip } from 'antd'
 import type { MenuInfo } from 'rc-menu/lib/interface'
-import { UserOutlined, SettingOutlined, LogoutOutlined } from '@ant-design/icons'
+import { UserOutlined, SettingOutlined, LogoutOutlined, PlusCircleOutlined, ProfileOutlined } from '@ant-design/icons'
 import { RootState } from '@/store';
 import { useSelector } from 'react-redux';
 
@@ -76,12 +76,12 @@ const NavWrapper: React.FC = (props: any) => {
         </div>
         <div className="m-menu">
           <div className="u-menu">
-            <img src={listIcon} />
+            <ProfileOutlined className="u-icon" />
             内推列表
           </div>
           <div className="u-menu">
             添加内推
-            <img src={addIcon} />
+            <PlusCircleOutlined className="u-icon" />
           </div>
         </div>
         <div className="m-user">
@@ -99,7 +99,7 @@ const NavWrapper: React.FC = (props: any) => {
           )}
           <Dropdown overlay={menuHeaderDropdown} placement="bottomRight">
             <div className="u-avatar">
-              <Avatar size={35} icon={<UserOutlined />} src='./a.jpg' />
+              <Avatar size={35} icon={<UserOutlined />} src={userInfo?.avatar} shape='square' />
             </div>
           </Dropdown>
         </div>

@@ -18,6 +18,19 @@
             width: 56px;
             height: 56px;
         }
+        .u-menu{
+            vertical-align: top;
+            font-size: 20px;
+            font-family:'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+            svg{
+                position: relative;
+                margin: 0 1px;
+                width: 20px;
+                height: 20px;
+                top: 2px;
+                color: #0066ff;
+            }
+        }
         .m-logo{
             .u-logo {
                 margin-right: 21px;
@@ -41,17 +54,23 @@
                 }
                 &:hover{
                     color: #0066ff;
+                    transition: color .2s ease-in
                 }
             }
         }
         .m-user{
             .u-avatar{
                 padding: 0px 30px 0px 10px;
+                img{
+                    width: 35px;
+                    height: 35px;
+                }
             }
             .u-name{
                 width: 70px;
                 &:hover{
                     color: #0066ff;
+                    transition: color .2s ease-in
                 }
             }
         }

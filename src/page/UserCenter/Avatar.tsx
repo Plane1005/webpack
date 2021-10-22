@@ -1,0 +1,69 @@
+import React, { CSSProperties, useState } from 'react'
+import { Image, Upload } from 'antd'
+import './style.less'
+import PictureOutlined from '@ant-design/icons/lib/icons/PictureOutlined'
+
+interface AvatarType {
+  imgUrl: string
+  uploadUrl: string
+}
+
+const maskStyle: CSSProperties = {
+  color: '#fff',
+  position: 'absolute',
+  width: 132,
+  height: 132,
+  top: 4,
+  left: 4,
+  opacity: 0.4,
+  transition: 'opacity .2s ease-in',
+  cursor: 'pointer',
+  backgroundColor: '#121212',
+}
+
+const removeMask: CSSProperties = {
+  position: 'absolute',
+  opacity: 0,
+}
+
+const mackContent: CSSProperties = {
+  position: 'absolute',
+  top: '45px',
+  left: '45px',
+  color: '#fff',
+  zIndex: 10,
+  textAlign: 'center',
+  cursor: 'pointer',
+}
+
+const Avatar: React.FC<AvatarType> = (props) => {
+  const { imgUrl, uploadUrl } = props
+  const [maskVisble, setMaskVisble] = useState(false)
+
+  return (
+    <div
+      className="g-avatar"
+      style={{ position: 'relative' }}
+      onMouseOver={() => setMaskVisble(true)}
+      onMouseOut={() => setMaskVisble(false)}
+    >
+      <Upload action={uploadUrl} showUploadList={false}>
+        <div>
+          <div style={maskVisble ? maskStyle : removeMask}></div>
+          <div style={maskVisble ? mackContent : removeMask}>
+            <PictureOutlined />
+            <div>修改头像</div>
+          </div>
+        </div>
+      </Upload>
+      <img
+        width={140}
+        height={140}
+        src={imgUrl}
+        style={{ borderRadius: '8px', border: '4px solid #fff' }}
+      />
+    </div>
+  )
+}
+
+export default Avatar
