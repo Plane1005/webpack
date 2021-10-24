@@ -1,9 +1,11 @@
-import { RootState } from '@/store'
+import { RootState, useAppDispatch } from '@/store'
 import CheckOutlined from '@ant-design/icons/lib/icons/CheckOutlined'
 import EditOutlined from '@ant-design/icons/lib/icons/EditOutlined'
-import { Button, Form, Input } from 'antd'
+import FileOutlined from '@ant-design/icons/lib/icons/FileOutlined'
+import { Button, Form, Input, Select } from 'antd'
 import React, { useState } from 'react'
 import { useSelector } from 'react-redux'
+import { updateInfo } from '@/store/reducer/userReducer'
 import PDFViewer from './PDFViewer'
 import Avatar from './Avatar'
 import './style.less'
@@ -11,27 +13,28 @@ import './style.less'
 
 const UserCenter: React.FC = (props: any) => {
   const [form] = Form.useForm()
-  const [editable, setEditable] = useState<boolean>(true)
+  const [editing, setEditing] = useState<boolean>(false)
   const userInfo = useSelector((state: RootState) => state.user.userInfo)
+  const { Option } = Select;
+  const { TextArea } = Input;
+  const dispatch = useAppDispatch()
 
   const onFinish = (values: any) => {
-    console.log(values)
+    dispatch(updateInfo(form.getFieldsValue()))
   }
 
   return (
     <div className="g-usercenter">
       <div className="m-main">
         <div className="m-left">
-          <Avatar
-            imgUrl="http://116.62.220.126/test/avatar.jpg"
-            uploadUrl="null"
-          />
+          <Avatar imgUrl="http://116.62.220.126/test/avatar.jpg" uploadUrl="null" />
           <Button
             type="primary"
             icon={<EditOutlined />}
             shape="round"
             size="large"
             style={{ marginTop: 30 }}
+            onClick={()=>{setEditing(true)}}
           >
             编辑资料
           </Button>
@@ -41,60 +44,79 @@ const UserCenter: React.FC = (props: any) => {
             shape="round"
             size="large"
             style={{ marginTop: 30 }}
-            disabled={true}
+            disabled={!editing}
+            onClick={onFinish}
           >
             提交
           </Button>
+          <Button
+            type="primary"
+            icon={<FileOutlined />}
+            shape="round"
+            size="large"
+            style={{ marginTop: 30 }}
+          >
+            更新简历
+          </Button>
         </div>
-        <Form form={form} name="userInfo" onFinish={onFinish}>
+        <Form form={form} name="userInfo">
           <div className="m-right">
             <Form.Item name="mobile">
               <div className="m-item">
-                <span>手机号</span>
-                {editable ? userInfo?.mobile : <Input />}
+                <span className="u-label" >手机号</span>
+                {/* {editing ? <Input /> : userInfo?.mobile } */}
+                {userInfo?.mobile}
+              </div>
+            </Form.Item>
+            <Form.Item name="mobile">
+              <div className="m-item">
+                <span className="u-label" >密码</span>
+                {editing ? <Input.Password width={300} /> : "******" }
               </div>
             </Form.Item>
             <Form.Item name="name">
               <div className="m-item">
-                <span>姓名</span>
-                {editable ? userInfo?.name : <Input />}
+                <span className="u-label" >姓名</span>
+                {editing ? <Input defaultValue={userInfo?.name} /> : userInfo?.name }
               </div>
             </Form.Item>
             <Form.Item name="sex">
               <div className="m-item">
-                <span>性别</span>
-                {editable ? userInfo?.sex : <Input />}
+                <span className="u-label" >性别</span>
+                {editing ? <Select>
+                  <Option value="男">男</Option>
+                  <Option value="女">女</Option>
+                  <Option value="未知">未知</Option>
+                </Select> : userInfo?.sex }
               </div>
             </Form.Item>
             <Form.Item name="stuId">
               <div className="m-item">
-                <span>学号</span>
-                {editable ? userInfo?.stuId : <Input />}
+                <span className="u-label" >学号</span>
+                {editing ? <Input defaultValue={userInfo?.stuId} /> : userInfo?.stuId }
               </div>
             </Form.Item>
             <Form.Item name="birth">
               <div className="m-item">
-                <span>出生年份</span>
-                {editable ? userInfo?.birth : <Input />}
+                <span className="u-label" >出生年份</span>
+                {editing ? <Input /> : userInfo?.birth }
               </div>
             </Form.Item>
             <Form.Item name="work">
               <div className="m-item">
-                <span>求职岗位</span>
-                {editable ? userInfo?.work : <Input />}
+                <span className="u-label" >求职岗位</span>
+                {editing ? <Input defaultValue={userInfo?.work} /> : userInfo?.work }
               </div>
             </Form.Item>
             <Form.Item name="company">
               <div className="m-item">
-                <span>公司</span>
-                {editable ? userInfo?.company : <Input />}
+                <div className="u-company" >公司</div>
+                {editing ? <TextArea rows={4} maxLength={70} defaultValue={userInfo?.company} /> : userInfo?.company }
               </div>
             </Form.Item>
           </div>
         </Form>
-        <div>
-          {/* <PDFViewer alreadySrc='http://116.62.220.126/test/jianli.pdf' /> */}
-        </div>
+        <div>{/* <PDFVi ewer alreadySrc='http://116.62.220.126/test/jianli.pdf' /> */}</div>
       </div>
     </div>
   )
