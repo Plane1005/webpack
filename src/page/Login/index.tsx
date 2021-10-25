@@ -29,7 +29,7 @@ const Login: React.FC = (props: any) => {
     ).then((res: any) => {
       res = res?.payload?.data
       console.log(res);
-      if (res.success) {
+      if (res?.success) {
         localStorage.setItem('isAdmin', res.isAdmin)
         localStorage.setItem('token', res.token)
         dispatch(fetchUserInfo()).then((res: any) => {
@@ -58,16 +58,16 @@ const Login: React.FC = (props: any) => {
         {loginType === 'account' && (
           <>
             <ProFormText
-              name="username"
+              name="mobile"
               fieldProps={{
                 size: 'large',
                 prefix: <UserOutlined className={'prefixIcon'} />,
               }}
-              placeholder={'用户名'}
+              placeholder={'账号'}
               rules={[
                 {
                   required: true,
-                  message: '请输入用户名!',
+                  message: '请输入账号!',
                 },
               ]}
             />

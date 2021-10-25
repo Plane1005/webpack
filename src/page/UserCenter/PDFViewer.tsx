@@ -28,7 +28,7 @@ const PDFViewer = (props) => {
                 loading="正在努力加载中" //加载时提示语句
                 externalLinkTarget="_blank"	
             >
-                <Page pageNumber={page} scale={2}/> //scale 呈现的比例
+                <Page pageNumber={page} scale={2}/>
             </Document>
             <Pagination onChange={handelOnChange}  total={totalPage*10} current={page}/>
         </div>

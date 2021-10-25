@@ -39,7 +39,7 @@ export const userSlice = createSlice({
     builder.addCase(updateInfo.fulfilled, (state, action: any) => {
       const res = action?.payload?.data
       if (res.code === 200) {
-        state.userInfo = res.data
+        message.success('更新成功')
       } else {
         message.warning(res.message || '服务器异常')
       }

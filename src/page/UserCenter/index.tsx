@@ -140,7 +140,9 @@ const UserCenter: React.FC = (props: any) => {
             </Form.Item>
           </div>
         </Form>
-        <div>{/* <PDFVi ewer alreadySrc='http://116.62.220.126/test/jianli.pdf' /> */}</div>
+        <div>
+          <PDFViewer ewer alreadySrc='http://116.62.220.126/test/jianli.pdf' />
+        </div>
       </div>
     </div>
   )
