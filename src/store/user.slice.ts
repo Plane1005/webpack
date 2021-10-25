@@ -1,7 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit'
 import { message } from 'antd'
 import { handleMessage } from '@/utils'
-import { userLogin, fetchUserInfo } from './reducer/userReducer'
+import { updateInfo, fetchUserInfo } from './reducer/userReducer'
 
 interface UserType{
   name: string,
@@ -10,16 +10,17 @@ interface UserType{
   sex: string,
   company: string,
   avatar: string,
-  birth: number,
-  work: string
+  birth: string,
+  work: string,
+  password: string
 }
 
 interface State {
-  userInfo: UserType | null
+  userInfo: UserType | undefined
 }
 
 const initialState: State = {
-  userInfo: null
+  userInfo: undefined
 }
 
 export const userSlice = createSlice({
@@ -28,6 +29,14 @@ export const userSlice = createSlice({
   reducers: {},
   extraReducers: (builder) => {
     builder.addCase(fetchUserInfo.fulfilled, (state, action: any) => {
+      const res = action?.payload?.data
+      if (res.code === 200) {
+        state.userInfo = res.data
+      } else {
+        message.warning(res.message || '服务器异常')
+      }
+    }),
+    builder.addCase(updateInfo.fulfilled, (state, action: any) => {
       const res = action?.payload?.data
       if (res.code === 200) {
         state.userInfo = res.data

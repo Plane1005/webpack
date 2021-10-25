@@ -16,7 +16,7 @@ const NavWrapper: React.FC = (props: any) => {
   const [initialState, setInitialState] = useState({})
   const userInfo = useSelector((state: RootState) => state.user.userInfo)
 
-  console.log("userinfo",userInfo);
+  // console.log("userinfo",userInfo);
   
 
   const loginOut = async () => {
@@ -67,6 +67,10 @@ const NavWrapper: React.FC = (props: any) => {
     <></>
   )
 
+  const handleClick = (e: any) => {
+    console.log("click",e);
+  }
+
   return (
     <div className="g-nav">
       <div className="g-menu">
@@ -75,14 +79,22 @@ const NavWrapper: React.FC = (props: any) => {
           <span className="u-title">师大内推</span>
         </div>
         <div className="m-menu">
-          <div className="u-menu">
+          {/* <div className="u-menu">
             <ProfileOutlined className="u-icon" />
             内推列表
           </div>
           <div className="u-menu">
             添加内推
             <PlusCircleOutlined className="u-icon" />
-          </div>
+          </div> */}
+          <Menu mode="horizontal" onClick={handleClick} style={{width:300}} >
+            <Menu.Item key="list" icon={<ProfileOutlined />} >
+              内推列表
+            </Menu.Item>
+            <Menu.Item key="add" icon={<PlusCircleOutlined />} >
+              添加内推
+            </Menu.Item>
+          </Menu>
         </div>
         <div className="m-user">
           {userInfo ? (

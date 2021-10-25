@@ -15,12 +15,12 @@ const UserCenter: React.FC = (props: any) => {
   const [form] = Form.useForm()
   const [editing, setEditing] = useState<boolean>(false)
   const userInfo = useSelector((state: RootState) => state.user.userInfo)
-  const { Option } = Select;
-  const { TextArea } = Input;
+  const { Option } = Select
+  const { TextArea } = Input
   const dispatch = useAppDispatch()
 
   const onFinish = (values: any) => {
-    dispatch(updateInfo(form.getFieldsValue()))
+    dispatch(updateInfo(form.getFieldsValue(true)))
   }
 
   return (
@@ -34,7 +34,9 @@ const UserCenter: React.FC = (props: any) => {
             shape="round"
             size="large"
             style={{ marginTop: 30 }}
-            onClick={()=>{setEditing(true)}}
+            onClick={() => {
+              setEditing(true)
+            }}
           >
             编辑资料
           </Button>
@@ -45,7 +47,10 @@ const UserCenter: React.FC = (props: any) => {
             size="large"
             style={{ marginTop: 30 }}
             disabled={!editing}
-            onClick={onFinish}
+            onClick={() => {
+              form.submit()
+            }}
+            htmlType="submit"
           >
             提交
           </Button>
@@ -59,59 +64,78 @@ const UserCenter: React.FC = (props: any) => {
             更新简历
           </Button>
         </div>
-        <Form form={form} name="userInfo">
+        <Form form={form} name="userInfo" onFinish={onFinish} initialValues={userInfo}>
           <div className="m-right">
             <Form.Item name="mobile">
               <div className="m-item">
-                <span className="u-label" >手机号</span>
+                <span className="u-label">手机号</span>
                 {/* {editing ? <Input /> : userInfo?.mobile } */}
                 {userInfo?.mobile}
               </div>
             </Form.Item>
-            <Form.Item name="mobile">
+            <Form.Item name="password">
               <div className="m-item">
-                <span className="u-label" >密码</span>
-                {editing ? <Input.Password width={300} /> : "******" }
+                <span className="u-label">密码</span>
+                {editing ? (
+                  <Input.Password defaultValue={userInfo?.password} width={300} />
+                ) : (
+                  '******'
+                )}
               </div>
             </Form.Item>
             <Form.Item name="name">
               <div className="m-item">
-                <span className="u-label" >姓名</span>
-                {editing ? <Input defaultValue={userInfo?.name} /> : userInfo?.name }
+                <span className="u-label">姓名</span>
+                {editing ? <Input defaultValue={userInfo?.name} /> : userInfo?.name}
               </div>
             </Form.Item>
             <Form.Item name="sex">
               <div className="m-item">
-                <span className="u-label" >性别</span>
-                {editing ? <Select>
-                  <Option value="男">男</Option>
-                  <Option value="女">女</Option>
-                  <Option value="未知">未知</Option>
-                </Select> : userInfo?.sex }
+                <span className="u-label">性别</span>
+                {editing ? (
+                  <Select
+                    onChange={(value: string) => {
+                      form.setFieldsValue({
+                        sex: value,
+                      })
+                    }}
+                    defaultValue={userInfo?.sex}
+                  >
+                    <Option value="男">男</Option>
+                    <Option value="女">女</Option>
+                    <Option value="未知">未知</Option>
+                  </Select>
+                ) : (
+                  userInfo?.sex
+                )}
               </div>
             </Form.Item>
             <Form.Item name="stuId">
               <div className="m-item">
-                <span className="u-label" >学号</span>
-                {editing ? <Input defaultValue={userInfo?.stuId} /> : userInfo?.stuId }
+                <span className="u-label">学号</span>
+                {editing ? <Input defaultValue={userInfo?.stuId} /> : userInfo?.stuId}
               </div>
             </Form.Item>
             <Form.Item name="birth">
               <div className="m-item">
-                <span className="u-label" >出生年份</span>
-                {editing ? <Input /> : userInfo?.birth }
+                <span className="u-label">出生年份</span>
+                {editing ? <Input defaultValue={userInfo?.birth} /> : userInfo?.birth}
               </div>
             </Form.Item>
             <Form.Item name="work">
               <div className="m-item">
-                <span className="u-label" >求职岗位</span>
-                {editing ? <Input defaultValue={userInfo?.work} /> : userInfo?.work }
+                <span className="u-label">求职岗位</span>
+                {editing ? <Input defaultValue={userInfo?.work} /> : userInfo?.work}
               </div>
             </Form.Item>
             <Form.Item name="company">
               <div className="m-item">
-                <div className="u-company" >公司</div>
-                {editing ? <TextArea rows={4} maxLength={70} defaultValue={userInfo?.company} /> : userInfo?.company }
+                <div className="u-company">公司</div>
+                {editing ? (
+                  <TextArea showCount rows={4} maxLength={70} defaultValue={userInfo?.company} />
+                ) : (
+                  userInfo?.company
+                )}
               </div>
             </Form.Item>
           </div>
