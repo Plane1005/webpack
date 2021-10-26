@@ -5,7 +5,7 @@ import { message } from 'antd'
 
 export interface ResponseData<T> {
   code?: string
-  data: T
+  data?: T
   message?: string
   pageNum?: number
   pageSize?: number
@@ -26,6 +26,12 @@ axios.interceptors.request.use(
   },
   (error: AxiosError) => Promise.reject(error)
 )
+
+axios.interceptors.response.use((response: AxiosResponse<ResponseData<any>>) => {
+  
+}, (error) => {
+  
+})
 
 // 统一发起请求的函数
 export function request<T>(options: AxiosRequestConfig) {
