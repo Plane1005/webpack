@@ -1,7 +1,10 @@
 import React, { CSSProperties, useState } from 'react'
-import { Image, Upload } from 'antd'
+import { Image, message, Upload } from 'antd'
 import './style.less'
 import PictureOutlined from '@ant-design/icons/lib/icons/PictureOutlined'
+import { chkToken } from '@/utils'
+import { useAppDispatch } from '@/store'
+import { fetchUserInfo } from '@/store/reducer/userReducer'
 
 interface AvatarType {
   imgUrl: string
@@ -39,6 +42,15 @@ const mackContent: CSSProperties = {
 const Avatar: React.FC<AvatarType> = (props) => {
   const { imgUrl, uploadUrl } = props
   const [maskVisble, setMaskVisble] = useState(false)
+  const dispatch = useAppDispatch()
+
+  const handleFileUpload = (value: any) => {
+    const { file } = value
+    if (file?.response?.code === 200) {
+      message.success('更新成功')
+      dispatch(fetchUserInfo())
+    }
+  }
 
   return (
     <div
@@ -47,7 +59,7 @@ const Avatar: React.FC<AvatarType> = (props) => {
       onMouseOver={() => setMaskVisble(true)}
       onMouseOut={() => setMaskVisble(false)}
     >
-      <Upload action={uploadUrl} showUploadList={false}>
+      <Upload action={uploadUrl} showUploadList={false} accept='.jpg,.jpeg,.png' headers={{accessToken: chkToken()}} onChange={handleFileUpload}>
         <div>
           <div style={maskVisble ? maskStyle : removeMask}></div>
           <div style={maskVisble ? mackContent : removeMask}>

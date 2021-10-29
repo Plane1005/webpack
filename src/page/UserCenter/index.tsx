@@ -27,7 +27,7 @@ const UserCenter: React.FC = (props: any) => {
     <div className="g-usercenter">
       <div className="m-main">
         <div className="m-left">
-          <Avatar imgUrl="http://116.62.220.126/test/avatar.jpg" uploadUrl="null" />
+          <Avatar imgUrl="http://116.62.220.126/test/avatar.jpg" uploadUrl="http://localhost:2333/api/user/upload" />
           <Button
             type="primary"
             icon={<EditOutlined />}
