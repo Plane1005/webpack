@@ -7,7 +7,7 @@ import { useAppDispatch } from '@/store'
 import { fetchUserInfo } from '@/store/reducer/userReducer'
 
 interface AvatarType {
-  imgUrl: string
+  imgUrl: string | undefined
   uploadUrl: string
 }
 

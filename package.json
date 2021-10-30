@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
+  "proxy": "http://192.168.0.129:9080",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "build": "npm run check && webpack --config ./config/webpack.common.js --env production",
@@ -25,6 +26,7 @@
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
     "react-pdf": "^5.4.1",
+    "react-pdf-js": "^5.1.0",
     "react-redux": "^7.2.5",
     "regenerator-runtime": "^0.13.9",
     "ts-loader": "^9.2.6",
