@@ -27,6 +27,8 @@ const UserCenter: React.FC = (props: any) => {
     })
   }
 
+  console.log('userinfo',userInfo);
+
   return (
     <div className="g-usercenter">
       <div className="m-main">

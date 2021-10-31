@@ -2,7 +2,8 @@ import React from 'react'
 import { HashRouter, Route, Switch, Router } from 'react-router-dom'
 import NavWrapper from '@/component/NavWrapper'
 import Home from '@/page/Home'
-import List from '@/page/List'
+import WorkList from '@/page/WorkList'
+import AddWork from '@/page/AddWork'
 import Login from '@/page/Login'
 import UserCenter from '@/page/UserCenter'
 
@@ -16,8 +17,9 @@ const App: React.FC = (props: any) => {
             <NavWrapper>
               <Switch>
                 <Route exact path="/" component={Home} />
-                <Route exact path="/list" component={List} />
+                <Route exact path="/worklist" component={WorkList} />
                 <Route exact path="/usercenter" component={UserCenter} />
+                <Route exact path="/addwork" component={AddWork} />
               </Switch>
             </NavWrapper>
           </div>

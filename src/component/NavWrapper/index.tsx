@@ -68,7 +68,8 @@ const NavWrapper: React.FC = (props: any) => {
   )
 
   const handleClick = (e: any) => {
-    console.log("click",e);
+    // console.log("click", e);
+    history.push(e.key)
   }
 
   return (
@@ -88,10 +89,10 @@ const NavWrapper: React.FC = (props: any) => {
             <PlusCircleOutlined className="u-icon" />
           </div> */}
           <Menu mode="horizontal" onClick={handleClick} style={{width:300}} >
-            <Menu.Item key="list" icon={<ProfileOutlined />} >
+            <Menu.Item key="worklist" icon={<ProfileOutlined />} >
               内推列表
             </Menu.Item>
-            <Menu.Item key="add" icon={<PlusCircleOutlined />} >
+            <Menu.Item key="addwork" icon={<PlusCircleOutlined />} >
               添加内推
             </Menu.Item>
           </Menu>
