@@ -13,6 +13,8 @@ declare module '*.gif' {
   export default src
 }
 
+declare module 'BMap';
+
 declare module '*.jpg' {
   const src: string
   export default src

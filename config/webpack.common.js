@@ -16,7 +16,12 @@ const commonConfig = {
     // publicPath: '/'
     // assetModuleFilename: "img/[name][hash:6][ext]"
   },
+  externals: {
+    BMap: 'BMap',
+    AMap: 'AMap',
+  },
   resolve: {
+    modules: ['node_modules'],
     extensions: ['.js', '.json', '.jsx', '.ts', '.tsx'],
     alias: {
       '@': resolveApp('./src'),

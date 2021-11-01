@@ -10,6 +10,15 @@ module.exports = {
     ['@babel/preset-react'],
     ['@babel/preset-typescript'],
   ],
+  plugins: [
+    [
+      'import',
+      {
+        libraryName: '@amap/amap-react',
+        libraryDirectory: 'lib',
+      },
+    ],
+  ],
   // plugins: [
   //   ['react-refresh/babel']
   // ]

@@ -1,13 +1,13 @@
-import React from 'react'
-import { HashRouter, Route, Switch } from 'react-router-dom'
-// import NavWrapper from 'component/NavWrapper'
+import React, { useState } from 'react'
+import GodMap from '@/component/GodMap'
 
-const List: React.FC = (props: any) => {
+const AddWork: React.FC = (props: any) => {
+
   return (
     <div>
-      123
+      <GodMap />
     </div>
   )
 }
 
-export default List
+export default AddWork
