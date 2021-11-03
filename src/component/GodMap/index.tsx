@@ -56,75 +56,83 @@ export default (props: any) => {
   }
   return (
     <div className="g-map">
-      <div id="indexMap" className="m-map" />
-      <Select
-        placeholder="请选取公司地址"
-        style={{ width: 500 }}
-        optionLabelProp="label"
-        open={showOpen}
-        onSelect={(value) => {
-          if (marker) {
-            map.removeOverlay(marker)
-          }
-          let item: any = options.find((item: any) => item.uid === value)
-          let point = new BMap.Point(item.point.lng, item.point.lat)
-          map.centerAndZoom(point, 16)
-          setLocation({ lng: item.point.lng, lat: item.point.lat, zoom: 16 })
-          let _marker = new BMap.Marker(point) // 创建标注
-          setMarker(_marker)
-          map.addOverlay(_marker) // 将标注添加到地图中
-          let opt = {
-            width: 200, // 信息窗口宽度
-            height: 50, // 信息窗口高度
-            title: item.title, // 信息窗口标题
-            message: `这里是${item.title}`,
-          }
-          let infoWindow = new BMap.InfoWindow(`地址：${item.address}`, opt) // 创建信息窗口对象
-          _marker.addEventListener('click', function () {
-            map.openInfoWindow(infoWindow, point) //开启信息窗口
-          })
-        }}
-        notFoundContent={
-          <div style={{ display: 'flex', alignItems: 'center', flexFlow: 'column nowrap' }}>
-            <img src={noData} style={{ width: '80%' }} />
-            <div style={{ color: 'rgb(135, 145, 163)', margin: '2px 0px 20px;' }}>暂无数据</div>
-          </div>
-        }
-        getPopupContainer={(triggerNode) => triggerNode.parentNode}
-        onDropdownVisibleChange={(open) => {
-          setshowOpen(!showOpen)
-        }}
-        dropdownRender={(menu: ReactNode) => {
-          return (
-            <div style={{ padding: 10 }} className={'m-select'}>
-              <Input
-                placeholder="地址检索"
-                onChange={(e) => {
-                  localSearch(e.target.value)
-                }}
-              />
-
-              {menu}
+      <div className="m-select">
+        <div className="u-label">公司地址：</div>
+        <Select
+          placeholder="请选取公司地址"
+          style={{ width: 500 }}
+          optionLabelProp="label"
+          open={showOpen}
+          onSelect={(value) => {
+            if (marker) {
+              map.removeOverlay(marker)
+            }
+            let item: any = options.find((item: any) => item.uid === value)
+            let point = new BMap.Point(item.point.lng, item.point.lat)
+            map.centerAndZoom(point, 16)
+            setLocation({ lng: item.point.lng, lat: item.point.lat, zoom: 16 })
+            let _marker = new BMap.Marker(point) // 创建标注
+            setMarker(_marker)
+            map.addOverlay(_marker) // 将标注添加到地图中
+            let opt = {
+              width: 200, // 信息窗口宽度
+              height: 50, // 信息窗口高度
+              title: item.title, // 信息窗口标题
+              message: `这里是${item.title}`,
+            }
+            let infoWindow = new BMap.InfoWindow(`地址：${item.address}`, opt) // 创建信息窗口对象
+            _marker.addEventListener('click', function () {
+              map.openInfoWindow(infoWindow, point) //开启信息窗口
+            })
+          }}
+          notFoundContent={
+            <div style={{ display: 'flex', alignItems: 'center', flexFlow: 'column nowrap' }}>
+              <img src={noData} style={{ width: '80%' }} />
+              <div style={{ color: 'rgb(135, 145, 163)', margin: '2px 0px 20px;' }}>暂无数据</div>
             </div>
-          )
-        }}
-      >
-        {options.map((o: any, idx: number) => {
-          return (
-            <Option key={idx} label={truncate(o.title, { length: 24 })} value={o.uid}>
-              <div>
-                <div
-                  style={{ color: '#3E3E3E', fontSize: 14, display: 'flex', alignItems: 'center' }}
-                >
-                  <EnvironmentOutlined />
-                  <span>{o.title}</span>
-                </div>
-                <div style={{ color: '#A8A8A8', fontSize: 12 }}>{o.address}</div>
+          }
+          getPopupContainer={(triggerNode) => triggerNode.parentNode}
+          onDropdownVisibleChange={(open) => {
+            setshowOpen(!showOpen)
+          }}
+          dropdownRender={(menu: ReactNode) => {
+            return (
+              <div style={{ padding: 10 }}>
+                <Input
+                  placeholder="地址检索"
+                  onChange={(e) => {
+                    localSearch(e.target.value)
+                  }}
+                />
+
+                {menu}
               </div>
-            </Option>
-          )
-        })}
-      </Select>
+            )
+          }}
+        >
+          {options.map((o: any, idx: number) => {
+            return (
+              <Option key={idx} label={truncate(o.title, { length: 24 })} value={o.uid}>
+                <div>
+                  <div
+                    style={{
+                      color: '#3E3E3E',
+                      fontSize: 14,
+                      display: 'flex',
+                      alignItems: 'center',
+                    }}
+                  >
+                    <EnvironmentOutlined />
+                    <span>{o.title}</span>
+                  </div>
+                  <div style={{ color: '#A8A8A8', fontSize: 12 }}>{o.address}</div>
+                </div>
+              </Option>
+            )
+          })}
+        </Select>
+      </div>
+      <div id="indexMap" className="m-map" />
     </div>
   )
 }
