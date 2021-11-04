@@ -3,7 +3,7 @@ import { HashRouter, Route, Switch, Router } from 'react-router-dom'
 import NavWrapper from '@/component/NavWrapper'
 import Home from '@/page/Home'
 import WorkList from '@/page/WorkList'
-import AddWork from '@/page/AddWork'
+import AddWork from '@/page/WorkInfo'
 import Login from '@/page/Login'
 import UserCenter from '@/page/UserCenter'
 

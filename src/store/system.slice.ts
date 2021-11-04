@@ -1,7 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit'
 import { message } from 'antd'
 import { handleMessage } from '@/utils'
-import { fetchRoleList, fetchTempChart } from './reducer/systemReducer'
+import { addWork } from './reducer/systemReducer'
 
 interface State {
   roleList: any[]
@@ -22,20 +22,10 @@ export const systemSlice = createSlice({
   initialState,
   reducers: {},
   extraReducers: (builder) => {
-    builder.addCase(fetchRoleList.fulfilled, (state, action: any) => {
+    builder.addCase(addWork.fulfilled, (state, action: any) => {
       const res = action?.payload?.data
       if (res.code === 200) {
-        state.roleList = res.data
-        state.roleListCount = res.totalCount
-      } else {
-        message.warning(res.message || '服务器异常')
-      }
-    })
-    builder.addCase(fetchTempChart.fulfilled, (state, action: any) => {
-      const res = action?.payload?.data
-      if (res.code === 200) {
-        state.tempChartTemp = res.data.tempChartTemp
-        state.tempChartHour = res.data.tempChartHour
+        message.success('添加成功')
       } else {
         message.warning(res.message || '服务器异常')
       }
