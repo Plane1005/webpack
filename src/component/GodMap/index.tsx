@@ -8,6 +8,10 @@ let map: any = null
 const Option = Select.Option
 import './styles.less'
 
+interface godMapType{
+  setAddress: (value: any) => void
+}
+
 interface mapType {
   lng: number
   lat: number
@@ -22,7 +26,9 @@ function mapInit(value: mapType) {
   map.enableContinuousZoom() //启用地图惯性拖拽
 }
 
-export default (props: any) => {
+export default (props: godMapType) => {
+  const { setAddress } = props
+
   const [location, setLocation] = useState<mapType>({ lng: 120.15507, lat: 30.274084, zoom: 11 })
   const [options, setOptions] = useState([])
   const [showOpen, setshowOpen] = useState(false)
@@ -71,6 +77,7 @@ export default (props: any) => {
             let point = new BMap.Point(item.point.lng, item.point.lat)
             map.centerAndZoom(point, 16)
             setLocation({ lng: item.point.lng, lat: item.point.lat, zoom: 16 })
+            setAddress({ lng: item.point.lng, lat: item.point.lat })
             let _marker = new BMap.Marker(point) // 创建标注
             setMarker(_marker)
             map.addOverlay(_marker) // 将标注添加到地图中

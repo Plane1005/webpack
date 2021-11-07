@@ -1,7 +1,7 @@
 import { createAsyncThunk } from '@reduxjs/toolkit'
 import { request, ResponseData } from '@/utils/request'
 
-// 获取首页的温度列表
+// 添加一份内推
 export const addWork = createAsyncThunk(
   'system/addWork',
   async (params: any = {}) => {
