@@ -77,7 +77,7 @@ export default (props: godMapType) => {
             let point = new BMap.Point(item.point.lng, item.point.lat)
             map.centerAndZoom(point, 16)
             setLocation({ lng: item.point.lng, lat: item.point.lat, zoom: 16 })
-            setAddress({ lng: item.point.lng, lat: item.point.lat })
+            setAddress({ lng: item.point.lng, lat: item.point.lat, title: item.title, address: item.address })
             let _marker = new BMap.Marker(point) // 创建标注
             setMarker(_marker)
             map.addOverlay(_marker) // 将标注添加到地图中
