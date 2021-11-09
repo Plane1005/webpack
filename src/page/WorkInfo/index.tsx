@@ -117,6 +117,24 @@ const WorkInfo: React.FC = (props: any) => {
             }}
           />
         </Form.Item>
+        <div className="m-totalTime" >
+        <Form.Item name="workDay" >
+        <Select
+            style={{ width: 100 }}
+            onChange={(value: string) => {
+              form.setFieldsValue({
+                workDay: value,
+              })
+            }}
+          >
+            <Option value="1天/周">1天/周</Option>
+            <Option value="2天/周">2天/周</Option>
+            <Option value="3天/周">3天/周</Option>
+            <Option value="4天/周">4天/周</Option>
+            <Option value="5天/周">5天/周</Option>
+            <Option value="在校/应届">在校/应届</Option>
+          </Select>
+        </Form.Item>
         <Form.Item name="totalTime" label="实习总时间">
           <InputNumber
             style={{ width: 80 }}
@@ -126,6 +144,7 @@ const WorkInfo: React.FC = (props: any) => {
             formatter={(value) => `${value}月`}
           />
         </Form.Item>
+        </div>
         <Form.Item name="education" label="学历">
           <Select
             style={{ width: 100 }}

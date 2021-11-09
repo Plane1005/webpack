@@ -5,6 +5,7 @@ import { request, ResponseData } from '@/utils/request'
 export const addWork = createAsyncThunk(
   'system/addWork',
   async (params: any = {}) => {
+    console.log(params);
     return request({
       url: `/api/work/addwork`,
       method: 'POST',
