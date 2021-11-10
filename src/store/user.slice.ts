@@ -31,7 +31,7 @@ export const userSlice = createSlice({
     builder.addCase(fetchUserInfo.fulfilled, (state, action: any) => {
       const res = action?.payload?.data
       if (res.code === 200) {
-        state.userInfo = res.data
+        state.userInfo = res?.data
       } else {
         message.warning(res.message || '服务器异常')
       }

@@ -27,15 +27,17 @@ const WorkInfo: React.FC = (props: any) => {
 
   const onFinish = (values: any) => {
     if (userInfo?.mobile) {
-      dispatch(addWork({
-        mobile: userInfo.mobile,
-        beginTime,
-        endTime,
-        startSalary,
-        endSalary,
-        address,
-        ...values
-      })).then((res: any) => {
+      dispatch(
+        addWork({
+          mobile: userInfo.mobile,
+          beginTime,
+          endTime,
+          startSalary,
+          endSalary,
+          address,
+          ...values,
+        })
+      ).then((res: any) => {
         const { success } = res?.payload?.data
         if (success) history.replace('')
       })
@@ -99,6 +101,7 @@ const WorkInfo: React.FC = (props: any) => {
             <Option value="month_money">月薪</Option>
           </Select>
         </Form.Item>
+        <div className="m-totalTime">
         <Form.Item label="工作时间">
           <TimePicker
             name="workTim"
@@ -117,34 +120,29 @@ const WorkInfo: React.FC = (props: any) => {
             }}
           />
         </Form.Item>
-        <div className="m-totalTime" >
-        <Form.Item name="workDay" >
-        <Select
-            style={{ width: 100 }}
-            onChange={(value: string) => {
-              form.setFieldsValue({
-                workDay: value,
-              })
-            }}
-          >
-            <Option value="1天/周">1天/周</Option>
-            <Option value="2天/周">2天/周</Option>
-            <Option value="3天/周">3天/周</Option>
-            <Option value="4天/周">4天/周</Option>
-            <Option value="5天/周">5天/周</Option>
-            <Option value="在校/应届">在校/应届</Option>
-          </Select>
-        </Form.Item>
-        <Form.Item name="totalTime" label="实习总时间">
-          <InputNumber
-            style={{ width: 80 }}
-            min={1}
-            max={12}
-            defaultValue={3}
-            formatter={(value) => `${value}月`}
-          />
-        </Form.Item>
+        <div className="u-workDay">
+            <Form.Item name="totalTime">
+              <InputNumber
+                style={{ width: 80 }}
+                min={1}
+                max={12}
+                defaultValue={3}
+                formatter={(value) => `${value}月`}
+              />
+            </Form.Item>
+          </div>
         </div>
+          <Form.Item name="workDay" label="实习总时间">
+            <Select style={{ width: 100 }}>
+              <Option value="1天/周">1天/周</Option>
+              <Option value="2天/周">2天/周</Option>
+              <Option value="3天/周">3天/周</Option>
+              <Option value="4天/周">4天/周</Option>
+              <Option value="5天/周">5天/周</Option>
+              <Option value="在校/应届">在校/应届</Option>
+            </Select>
+          </Form.Item>
+          
         <Form.Item name="education" label="学历">
           <Select
             style={{ width: 100 }}
@@ -168,7 +166,7 @@ const WorkInfo: React.FC = (props: any) => {
         <Form.Item name="workRequire" label="岗位要求">
           <TextArea showCount allowClear maxLength={200} />
         </Form.Item>
-        <Form.Item >
+        <Form.Item>
           <GodMap setAddress={setAddress} />
         </Form.Item>
         <Button

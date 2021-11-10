@@ -13,5 +13,19 @@ export const addWork = createAsyncThunk(
     }).then((res: ResponseData<any>) => {
       return res
     })
+  });
+
+  // 获取内推列表
+export const fetchWorkList = createAsyncThunk(
+  'system/fetchWorkList',
+  async (params: any = {}) => {
+    console.log(params);
+    return request({
+      url: `/api/work/worklist`,
+      method: 'GET',
+      params: params,
+    }).then((res: ResponseData<any>) => {
+      return res
+    })
 });
 
