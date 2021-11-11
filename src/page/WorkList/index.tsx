@@ -14,28 +14,25 @@ const WorkList: React.FC = (props: any) => {
   const [pagenum, setPagenum] = useState<number>(1)
 
   useEffect(() => {
-    dispatch(fetchWorkList({
-      pagenum
-    }))
-  }, [pagenum])
-
-  const List = () => {
-    return (
-      workList.map((value, index) => {
-        <div>
-          123
-        </div>
+    dispatch(
+      fetchWorkList({
+        pagenum,
       })
     )
-  }
+  }, [pagenum])
+
+  const List = () => workList.map((value, index) => <div>{value.work}</div>)
 
   return (
-    <div className="g-workList" >
-      <div>
-        123
-      </div>
-      <Pagination current={pagenum} total={50} onChange={(e: number)=>{setPagenum(e)
-      }} />
+    <div className="g-workList">
+      <div>{List()}</div>
+      <Pagination
+        current={pagenum}
+        total={50}
+        onChange={(e: number) => {
+          setPagenum(e)
+        }}
+      />
     </div>
   )
 }
