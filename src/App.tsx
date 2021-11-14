@@ -6,6 +6,7 @@ import WorkList from '@/page/WorkList'
 import AddWork from '@/page/WorkInfo'
 import Login from '@/page/Login'
 import UserCenter from '@/page/UserCenter'
+import WorkDetail from '@/page/WorkDetail'
 
 const App: React.FC = (props: any) => {
   return (
@@ -20,6 +21,7 @@ const App: React.FC = (props: any) => {
                 <Route exact path="/worklist" component={WorkList} />
                 <Route exact path="/usercenter" component={UserCenter} />
                 <Route exact path="/addwork" component={AddWork} />
+                <Route exact path="/workdetail" component={WorkDetail} />
               </Switch>
             </NavWrapper>
           </div>

@@ -7,36 +7,23 @@ import { Pagination } from 'antd'
 import Work from '@/component/Work'
 import './style.less'
 
-const WorkList: React.FC = (props: any) => {
+const WorkDetail: React.FC = (props: any) => {
+  const { id } = props.location.state
   const dispatch = useAppDispatch()
   const history = useHistory()
   const workList = useSelector((state: RootState) => state.system.workList)
-  const workListCount = useSelector((state: RootState) => state.system.workListCount)
   const [pagenum, setPagenum] = useState<number>(1)
 
   useEffect(() => {
-    dispatch(
-      fetchWorkList({
-        pagenum,
-      })
-    )
-  }, [pagenum])
+    console.log(id);
+  }, [])
 
-  const List = () => workList.map((value, index) => <Work workInfo={value} />)
 
   return (
     <div className="g-workList">
-      {List()}
-      <Pagination
-        current={pagenum}
-        total={50}
-        onChange={(e: number) => {
-          setPagenum(e)
-        }}
-        style={{marginTop:30}}
-      />
+      workdetail
     </div>
   )
 }
 
-export default WorkList
+export default WorkDetail
