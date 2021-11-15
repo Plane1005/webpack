@@ -3,27 +3,26 @@ import { fetchWorkList } from '@/store/reducer/systemReducer'
 import { useHistory } from 'react-router'
 import { RootState, useAppDispatch } from '@/store'
 import { useSelector } from 'react-redux'
-import { Pagination } from 'antd'
-import Work from '@/component/Work'
+import { fetchWorkDetail } from '@/store/reducer/systemReducer'
 import './style.less'
 
 const WorkDetail: React.FC = (props: any) => {
-  const { id } = props.location.state
+  let workId = props?.location?.state?.workId || null
   const dispatch = useAppDispatch()
   const history = useHistory()
-  const workList = useSelector((state: RootState) => state.system.workList)
-  const [pagenum, setPagenum] = useState<number>(1)
+  const workDetail = useSelector((state: RootState) => state.system.workDetail)
 
   useEffect(() => {
-    console.log(id);
+    dispatch(
+      fetchWorkDetail({
+        workId: workId
+      })
+    )
   }, [])
 
-
-  return (
-    <div className="g-workList">
-      workdetail
-    </div>
-  )
+  return (<div className="g-workList">
+    123
+  </div>)
 }
 
 export default WorkDetail

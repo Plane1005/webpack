@@ -1,9 +1,7 @@
-import React, { useCallback, useState } from 'react'
+import React, { useCallback, useRef, useState } from 'react'
 import { useHistory } from "react-router-dom";
 import './style.less'
 import logo from '@/assets/logo.png'
-import listIcon from '@/assets/icon/nav_list.svg'
-import addIcon from '@/assets/icon/nav_add.svg'
 import { Avatar, Menu, Dropdown, Tooltip } from 'antd'
 import type { MenuInfo } from 'rc-menu/lib/interface'
 import { UserOutlined, SettingOutlined, LogoutOutlined, PlusCircleOutlined, ProfileOutlined } from '@ant-design/icons'
@@ -14,6 +12,7 @@ const NavWrapper: React.FC = (props: any) => {
   const { children } = props
   const history = useHistory()
   const [initialState, setInitialState] = useState({})
+  const [menu, setMenu] = useState(undefined)
   const userInfo = useSelector((state: RootState) => state.user.userInfo)
 
   // console.log("userinfo",userInfo);
@@ -69,13 +68,19 @@ const NavWrapper: React.FC = (props: any) => {
 
   const handleClick = (e: any) => {
     // console.log("click", e);
+    setMenu(e.key)
     history.push(e.key)
+  }
+
+  const backHome = () => {
+    setMenu(undefined)
+    history.push("")
   }
 
   return (
     <div className="g-nav">
       <div className="g-menu">
-        <div className="m-logo">
+        <div className="m-logo" onClick={backHome} >
           <img src={logo} alt="" className="u-logo" />
           <span className="u-title">师大内推</span>
         </div>
@@ -88,7 +93,7 @@ const NavWrapper: React.FC = (props: any) => {
             添加内推
             <PlusCircleOutlined className="u-icon" />
           </div> */}
-          <Menu mode="horizontal" onClick={handleClick} style={{width:300}} >
+          <Menu mode="horizontal" onClick={handleClick} style={{width:300}} selectedKeys={menu} >
             <Menu.Item key="worklist" icon={<ProfileOutlined />} >
               内推列表
             </Menu.Item>

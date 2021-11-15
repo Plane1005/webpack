@@ -22,20 +22,23 @@ const WorkList: React.FC = (props: any) => {
     )
   }, [pagenum])
 
-  const List = () => workList.map((value, index) => <Work workInfo={value} />)
+  const List = () => workList.map((value, index) => <Work key={index} workInfo={value} />)
 
   return (
-    <div className="g-workList">
+    <div className="g-workList" >
+    <div className="m-workList">
       {List()}
-      <Pagination
-        current={pagenum}
-        total={50}
-        onChange={(e: number) => {
-          setPagenum(e)
-        }}
-        style={{marginTop:30}}
-      />
-    </div>
+      </div>
+      <div className="m-pagination" >
+    <Pagination
+    current={pagenum}
+    total={workListCount}
+    onChange={(e: number) => {
+      setPagenum(e)
+    }}
+        />
+        </div>
+      </div>
   )
 }
 

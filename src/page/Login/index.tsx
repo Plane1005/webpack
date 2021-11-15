@@ -28,7 +28,6 @@ const Login: React.FC = (props: any) => {
       })
     ).then((res: any) => {
       res = res?.payload?.data
-      console.log(res);
       if (res?.success) {
         localStorage.setItem('isAdmin', res.isAdmin)
         localStorage.setItem('token', res.token)

@@ -32,7 +32,7 @@ const Work: React.FC<WorkType> = (props) => {
   const history = useHistory()
 
   const handleClick = (value: any) => {
-    history.push({pathname:"/workdetail",state:{id:workId}})
+    history.push({pathname:"/workdetail",state:{workId}})
   }
 
   return (

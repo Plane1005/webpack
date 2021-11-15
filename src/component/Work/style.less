@@ -1,10 +1,17 @@
 .g-workComponent{
     height: 130px;
-    width: 50%;
+    width: calc(50% - 10px);
     padding: 20px 20px 0 30px;
     background-color: #fff;
     cursor: pointer;
     display: flex;
+    margin-right: 10px;
+    margin-bottom: 15px;
+    &:hover{
+        // background: linear-gradient(white,lightblue);
+        box-shadow: 5px 5px 5px #ddd;
+        transition: box-shadow .4s;
+    }
     .m-workInfo{
         width: 50%;
         // background-color: antiquewhite;
@@ -35,6 +42,10 @@
     .m-companyInfo{
         width: 50%;
         .m-logo{
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-bottom: 10px;
             .u-logo{
                 width: 54px;
                 height: 54px;
@@ -44,7 +55,10 @@
         }
         .m-companyName{
             font-size: 16px;
-            color: #0066ff;
+            // color: #0066ff;
+            display: flex;
+            justify-content: center;
+            align-items: center;
         }
         .m-companyAddress{
             font-size: 14px;

@@ -5,7 +5,6 @@ import { request, ResponseData } from '@/utils/request'
 export const addWork = createAsyncThunk(
   'system/addWork',
   async (params: any = {}) => {
-    console.log(params);
     return request({
       url: `/api/work/addwork`,
       method: 'POST',
@@ -19,9 +18,21 @@ export const addWork = createAsyncThunk(
 export const fetchWorkList = createAsyncThunk(
   'system/fetchWorkList',
   async (params: any = {}) => {
-    console.log(params);
     return request({
       url: `/api/work/worklist`,
+      method: 'GET',
+      params: params,
+    }).then((res: ResponseData<any>) => {
+      return res
+    })
+  });
+
+    // 拉取内推详情
+export const fetchWorkDetail = createAsyncThunk(
+  'system/fetchWorkDetail',
+  async (params: any = {}) => {
+    return request({
+      url: `/api/work/workdetail`,
       method: 'GET',
       params: params,
     }).then((res: ResponseData<any>) => {
