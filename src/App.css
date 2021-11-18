@@ -35,3 +35,8 @@ menu{
     display: inline-block;
     padding: 0 10px 0 7px;
 }
+
+.textContent{
+    white-space: pre-wrap;
+    font-size: 14px;
+}

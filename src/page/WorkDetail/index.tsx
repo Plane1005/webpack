@@ -7,6 +7,8 @@ import { fetchWorkDetail } from '@/store/reducer/systemReducer'
 import './style.less'
 import { Avatar, Button } from 'antd'
 import PlusOutlined from '@ant-design/icons/lib/icons/PlusOutlined'
+import WorkText from './WorkText'
+import MapShow from '@/component/MapShow'
 
 const WorkDetail: React.FC = (props: any) => {
   let workId = props?.location?.state?.workId || null
@@ -34,8 +36,17 @@ const WorkDetail: React.FC = (props: any) => {
                 招聘 <em className="vdot">·</em> 刚刚活跃
               </div>
             </div>
-            <Button type="primary" icon={<PlusOutlined />} className="u-btn" >向Ta投递简历</Button>
+            <Button type="primary" icon={<PlusOutlined />} className="u-btn">
+              向Ta投递简历
+            </Button>
           </div>
+          <WorkText title="职位描述" content={workDetail.workDetail} />
+          <WorkText title="职位要求" content={workDetail.workRequire} />
+          <h3>
+            工作地点
+            <em />
+          </h3>
+          <MapShow lat={workDetail.positionx} lng={workDetail.positiony} />
         </div>
       </div>
     </div>
