@@ -9,6 +9,8 @@ import { Avatar, Button } from 'antd'
 import PlusOutlined from '@ant-design/icons/lib/icons/PlusOutlined'
 import WorkText from './WorkText'
 import MapShow from '@/component/MapShow'
+import companyInfo from '@/assets/companyInfo.png'
+import recommend from '@/assets/recommend.jpg'
 
 const WorkDetail: React.FC = (props: any) => {
   let workId = props?.location?.state?.workId || null
@@ -46,7 +48,18 @@ const WorkDetail: React.FC = (props: any) => {
             工作地点
             <em />
           </h3>
-          <MapShow lat={workDetail.positionx} lng={workDetail.positiony} />
+          <MapShow lat={workDetail.positiony} lng={workDetail.positionx} addressTitle={workDetail.addressTitle} addressDetail={workDetail.addressDetail} />
+        </div>
+        <div className="m-right">
+          <div className="m-title">公司基本信息</div>
+          <div className="m-name" >
+            <Avatar src={workDetail.logoUrl} shape="square" size={64} />
+            <div className="u-name">{ workDetail.company }</div>
+          </div>
+          <img src={companyInfo} alt="" className="u-info" />
+          <div className="m-workInfo">
+
+          </div>
         </div>
       </div>
     </div>

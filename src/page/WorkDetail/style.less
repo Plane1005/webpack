@@ -2,7 +2,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  h3{
+  h3 {
     font-weight: 700;
     font-size: 15px;
     color: #424a5e;
@@ -10,24 +10,25 @@
     padding: 0 0 10px 0;
     margin-bottom: 0;
     position: relative;
-    em{
-        position: absolute;
-        bottom: 20%;
-        left: 0;
-        width: 20px;
-        height: 2px;
-        background-color: #0066ff;
+    em {
+      position: absolute;
+      bottom: 20%;
+      left: 0;
+      width: 20px;
+      height: 2px;
+      background-color: #0066ff;
     }
   }
   .m-workDetail {
     display: flex;
     width: 1150px;
     max-width: 1150px;
-    padding: 20px 25px;
+    padding: 20px 0 20px 25px;
     .m-left {
-      width: 70%;
-      padding-right: 25px;
+      width: 75%;
+      padding-right: 20px;
       border-right: 1px #f5f7f9 solid;
+      overflow: auto;
       .m-hrDetail {
         margin-bottom: 10px;
         display: flex;
@@ -50,7 +51,32 @@
           margin-left: auto;
         }
       }
-      .m-detail{
+    }
+    .m-right {
+        width: 25%;
+      padding: 20px 0 0 30px;
+      .m-title {
+        line-height: 25px;
+        padding-bottom: 5px;
+        margin-bottom: 20px;
+        font-size: 15px;
+        font-weight: 500;
+        color: #414a60;
+        border-bottom: 1px #f5f5f5 solid;
+      }
+      .m-name {
+        display: flex;
+        align-items: center;
+        .u-name {
+          font-size: 14px;
+          margin-left: 10px;
+          color: #414a60;
+        }
+      }
+      .u-info {
+        margin: 40px 0 0 0;
+      }
+      .m-workInfo{
 
       }
     }
