@@ -102,47 +102,46 @@ const WorkInfo: React.FC = (props: any) => {
           </Select>
         </Form.Item>
         <div className="m-totalTime">
-        <Form.Item label="工作时间">
-          <TimePicker
-            name="workTim"
-            defaultValue={moment('09:00', format)}
-            format={format}
-            onChange={(e: any) => {
-              setBeginTime(moment(e._d).format(format))
-            }}
-          />
-          <span style={{ margin: '0 10px' }}>~</span>
-          <TimePicker
-            defaultValue={moment('18:00', format)}
-            format={format}
-            onChange={(e: any) => {
-              setEndTime(moment(e._d).format(format))
-            }}
-          />
-        </Form.Item>
-        <div className="u-workDay">
+          <Form.Item label="工作时间">
+            <TimePicker
+              name="workTime"
+              defaultValue={moment('09:00', format)}
+              format={format}
+              onChange={(e: any) => {
+                setBeginTime(moment(e._d).format(format))
+              }}
+            />
+            <span style={{ margin: '0 10px' }}>~</span>
+            <TimePicker
+              defaultValue={moment('18:00', format)}
+              format={format}
+              onChange={(e: any) => {
+                setEndTime(moment(e._d).format(format))
+              }}
+            />
+          </Form.Item>
+          <div className="u-workDay">
             <Form.Item name="totalTime">
               <InputNumber
                 style={{ width: 80 }}
                 min={1}
                 max={12}
-                defaultValue={3}
                 formatter={(value) => `${value}月`}
               />
             </Form.Item>
           </div>
         </div>
-          <Form.Item name="workDay" label="实习总时间">
-            <Select style={{ width: 100 }}>
-              <Option value="1天/周">1天/周</Option>
-              <Option value="2天/周">2天/周</Option>
-              <Option value="3天/周">3天/周</Option>
-              <Option value="4天/周">4天/周</Option>
-              <Option value="5天/周">5天/周</Option>
-              <Option value="在校/应届">在校/应届</Option>
-            </Select>
-          </Form.Item>
-          
+        <Form.Item name="workDay" label="实习总时间">
+          <Select style={{ width: 100 }}>
+            <Option value="1天/周">1天/周</Option>
+            <Option value="2天/周">2天/周</Option>
+            <Option value="3天/周">3天/周</Option>
+            <Option value="4天/周">4天/周</Option>
+            <Option value="5天/周">5天/周</Option>
+            <Option value="在校/应届">在校/应届</Option>
+          </Select>
+        </Form.Item>
+
         <Form.Item name="education" label="学历">
           <Select
             style={{ width: 100 }}

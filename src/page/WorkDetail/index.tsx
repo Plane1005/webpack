@@ -48,18 +48,27 @@ const WorkDetail: React.FC = (props: any) => {
             工作地点
             <em />
           </h3>
-          <MapShow lat={workDetail.positiony} lng={workDetail.positionx} addressTitle={workDetail.addressTitle} addressDetail={workDetail.addressDetail} />
+          <MapShow
+            lat={workDetail.positiony}
+            lng={workDetail.positionx}
+            addressTitle={workDetail.addressTitle}
+            addressDetail={workDetail.addressDetail}
+          />
         </div>
         <div className="m-right">
+        <div className="m-title">岗位基本信息</div>
+          <div className="m-workInfo">
+            <div className="u-work">{workDetail.work}</div>
+            <div className="u-salary">{ workDetail.salary}/天</div>
+            <div className="u-time"><span>{workDetail.workTime}</span><span>{workDetail.workTotalTime}个月</span></div>
+            <div className="u-education"><span>{ workDetail.education }</span><span>招聘{workDetail.workNum}人</span></div>
+          </div>
           <div className="m-title">公司基本信息</div>
-          <div className="m-name" >
+          <div className="m-name">
             <Avatar src={workDetail.logoUrl} shape="square" size={64} />
-            <div className="u-name">{ workDetail.company }</div>
+            <div className="u-name">{workDetail.company}</div>
           </div>
           <img src={companyInfo} alt="" className="u-info" />
-          <div className="m-workInfo">
-
-          </div>
         </div>
       </div>
     </div>
