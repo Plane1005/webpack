@@ -4,6 +4,7 @@ const { CleanWebpackPlugin } = require('clean-webpack-plugin')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 const CopyWebpackPlugin = require('copy-webpack-plugin')
 const ReactRefreshWebpackPlugin = require('@pmmmwh/react-refresh-webpack-plugin')
+const {PUBLIC_URL} = require('./proxy')
 
 module.exports = {
   // watch: true,
@@ -16,9 +17,9 @@ module.exports = {
     compress: true,
     historyApiFallback: true,
     proxy: {
-      '/test': {
-        target: 'http://116.62.220.126/',
-        pathRewrite: { "^/test": "" },
+      '/api': {
+        target: PUBLIC_URL,
+        // pathRewrite: { "^/api": "" },
         changeOrigin: true
       }
     }

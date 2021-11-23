@@ -3,9 +3,9 @@ import { PUBLIC_URL } from '../../config/proxy.js'
 import { chkToken } from '@/utils/index'
 import { message } from 'antd'
 
-export interface ResponseData extends AxiosResponse {
+export interface ResponseData<T> {
   code?: string
-  data: never
+  data?: T
   message?: string
   pageNum?: number
   pageSize?: number
@@ -20,27 +20,31 @@ axios.defaults.headers = {
 
 axios.interceptors.request.use(
   (config: AxiosRequestConfig) => {
-    config.url = PUBLIC_URL + config.url
+    // config.url = PUBLIC_URL + config.url
     config.headers = { accessToken: chkToken() }
     return config
   },
   (error: AxiosError) => Promise.reject(error)
 )
 
-axios.interceptors.response.use(
-  (response: any) => {
-    console.log(response);
+// axios.interceptors.response.use(
+//   (response: any) => {
+//     console.log(response);
+//     console.log("res");
+//     // 请求成功
+//     if (response.code === '200') {
+//       return Promise.resolve(response.data)
+//     }
+//     // 请求成功，状态不为成功时
+//     message.error(response.data.message)
+//     return Promise.reject(response.data)
+//   },
+//   (error) => {
+//     console.log(error);
     
-    // 请求成功
-    if (response.code === '200') {
-      return Promise.resolve(response.data)
-    }
-    // 请求成功，状态不为成功时
-    message.error(response.data.message)
-    return Promise.reject(response.data)
-  },
-  (error) => {}
-)
+//     return Promise.reject(error)
+//   }
+// )
 
 // 统一发起请求的函数
 export function request<T>(options: AxiosRequestConfig) {
