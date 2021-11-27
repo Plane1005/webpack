@@ -8,6 +8,8 @@ import { fetchUserInfo } from '@/store/reducer/userReducer'
 interface AvatarType {
   imgUrl: string | undefined
   uploadUrl: string
+  uploadType: string // 1为用户头像 2为公司头像
+  setSaveImgUrl?: (value: any) => void
 }
 
 const maskStyle: CSSProperties = {
@@ -39,15 +41,17 @@ const mackContent: CSSProperties = {
 }
 
 const Avatar: React.FC<AvatarType> = (props) => {
-  const { imgUrl, uploadUrl } = props
+  const { imgUrl, uploadUrl, uploadType, setSaveImgUrl } = props
   const [maskVisble, setMaskVisble] = useState(false)
   const dispatch = useAppDispatch()
 
   const handleFileUpload = (value: any) => {
     const { file } = value
+    console.log(file);
     if (file?.response?.code === 200) {
       message.success('更新成功')
       dispatch(fetchUserInfo())
+      if (setSaveImgUrl) setSaveImgUrl(file?.response?.data?.url)
     }
   }
 
@@ -58,12 +62,12 @@ const Avatar: React.FC<AvatarType> = (props) => {
       onMouseOver={() => setMaskVisble(true)}
       onMouseOut={() => setMaskVisble(false)}
     >
-      <Upload action={uploadUrl} showUploadList={false} accept='.jpg,.jpeg,.png' headers={{accessToken: chkToken()}} onChange={handleFileUpload}>
+      <Upload action={uploadUrl} showUploadList={false} accept='.jpg,.jpeg,.png' headers={{accessToken: chkToken(),uploadType: uploadType}} onChange={handleFileUpload}>
         <div>
           <div style={maskVisble ? maskStyle : removeMask}></div>
           <div style={maskVisble ? mackContent : removeMask}>
             <PictureOutlined />
-            <div>修改头像</div>
+            <div>{ uploadType === "1" ? "修改头像" : "修改Logo  " }</div>
           </div>
         </div>
       </Upload>

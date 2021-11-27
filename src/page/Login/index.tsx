@@ -36,6 +36,8 @@ const Login: React.FC = (props: any) => {
         })
         message.success('登录成功')
         history.push('/')
+      } else {
+        message.error('密码错误')
       }
     })
   }

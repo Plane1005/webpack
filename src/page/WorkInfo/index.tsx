@@ -13,6 +13,7 @@ import { useHistory } from 'react-router'
 
 const WorkInfo: React.FC = (props: any) => {
   const [form] = Form.useForm()
+  const [saveImgUrl, setSaveImgUrl] = useState<string | null>(null)
   const [address, setAddress] = useState<object>({})
   const [beginTime, setBeginTime] = useState<any>('09:00')
   const [endTime, setEndTime] = useState('18:00')
@@ -63,8 +64,10 @@ const WorkInfo: React.FC = (props: any) => {
           </Form.Item>
           <div>公司Logo：</div>
           <Avatar
-            imgUrl="http://116.62.220.126/test/avatar.jpg"
-            uploadUrl={PUBLIC_URL + '/api/user/upload'}
+            imgUrl={saveImgUrl || "http://116.62.220.126/test/avatar.jpg"}
+            uploadUrl={PUBLIC_URL + 'api/user/upload'}
+            uploadType="2"
+            setSaveImgUrl={setSaveImgUrl}
           />
         </div>
         <Form.Item name="work" label="岗位">

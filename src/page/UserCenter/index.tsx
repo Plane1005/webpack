@@ -7,7 +7,7 @@ import React, { useState } from 'react'
 import { useSelector } from 'react-redux'
 import { updateInfo } from '@/store/reducer/userReducer'
 import PDFViewer from './PDFViewer'
-import Avatar from './Avatar'
+import Avatar from '@/component/Avatar'
 import './style.less'
 import { PUBLIC_URL } from '../../../config/proxy'
 // import NavWrapper from 'component/NavWrapper'
@@ -34,7 +34,7 @@ const UserCenter: React.FC = (props: any) => {
       <div className="m-main">
         <div className="m-left">
           <div className="m-user">
-            <Avatar imgUrl={userInfo?.avatar} uploadUrl={PUBLIC_URL + '/api/user/upload'} />
+            <Avatar imgUrl={userInfo?.avatar} uploadUrl={PUBLIC_URL + 'api/user/upload'} uploadType="1"/>
             <div className="m-btn">
               <Button
                 type="primary"
