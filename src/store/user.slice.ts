@@ -1,7 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit'
 import { message } from 'antd'
 import { AppDispatch } from './index'
-import { updateInfo, fetchUserInfo } from './reducer/userReducer'
+import { updateInfo, fetchUserInfo, fetchPDF } from './reducer/userReducer'
 
 interface UserType {
   name: string
@@ -17,10 +17,12 @@ interface UserType {
 
 interface State {
   userInfo: UserType | undefined
+  pdfStream: any
 }
 
 const initialState: State = {
   userInfo: undefined,
+  pdfStream: null,
 }
 
 export const userSlice = createSlice({
@@ -28,7 +30,6 @@ export const userSlice = createSlice({
   initialState,
   reducers: {
     removeUserInfo(state, action) {
-      console.log('移除用户')
       state.userInfo = action.payload
     },
   },
@@ -45,6 +46,15 @@ export const userSlice = createSlice({
         const res = action?.payload?.data
         if (res.code === 200) {
           message.success('更新成功')
+        } else {
+          message.warning(res.message || '服务器异常')
+        }
+      }),
+      builder.addCase(fetchPDF.fulfilled,(state, action: any) => {
+        const res = action?.payload?.data
+        if (res) {
+          state.pdfStream = res
+          message.success('PDF获取成功')
         } else {
           message.warning(res.message || '服务器异常')
         }

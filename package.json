@@ -20,6 +20,7 @@
     "@reduxjs/toolkit": "^1.6.2",
     "antd": "^4.16.13",
     "axios": "^0.22.0",
+    "base-64": "^1.0.0",
     "core-js": "^3.18.1",
     "highcharts": "^9.2.2",
     "highcharts-react-official": "^3.0.0",

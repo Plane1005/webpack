@@ -43,7 +43,6 @@ export const systemSlice = createSlice({
       const res = action?.payload?.data
       if (res.code === 200) {
         message.success('获取成功')
-        console.log(res?.data?.data);
         state.workDetail = res?.data?.data
       } else {
         message.warning(res.message || '服务器异常')

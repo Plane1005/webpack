@@ -4,7 +4,7 @@ const { CleanWebpackPlugin } = require('clean-webpack-plugin')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 const CopyWebpackPlugin = require('copy-webpack-plugin')
 const ReactRefreshWebpackPlugin = require('@pmmmwh/react-refresh-webpack-plugin')
-const {PUBLIC_URL} = require('./proxy')
+const { PUBLIC_URL, File_URL } = require('./proxy')
 
 module.exports = {
   // watch: true,
@@ -19,6 +19,11 @@ module.exports = {
     proxy: {
       '/api': {
         target: PUBLIC_URL,
+        // pathRewrite: { "^/api": "" },
+        changeOrigin: true
+      },
+      '/test': {
+        target: File_URL,
         // pathRewrite: { "^/api": "" },
         changeOrigin: true
       }

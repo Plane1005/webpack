@@ -3,9 +3,9 @@ import CheckOutlined from '@ant-design/icons/lib/icons/CheckOutlined'
 import EditOutlined from '@ant-design/icons/lib/icons/EditOutlined'
 import FileOutlined from '@ant-design/icons/lib/icons/FileOutlined'
 import { Button, Form, Input, Select } from 'antd'
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useSelector } from 'react-redux'
-import { updateInfo } from '@/store/reducer/userReducer'
+import { updateInfo, fetchPDF } from '@/store/reducer/userReducer'
 import PDFViewer from './PDFViewer'
 import Avatar from '@/component/Avatar'
 import './style.less'
@@ -16,6 +16,7 @@ const UserCenter: React.FC = (props: any) => {
   const [form] = Form.useForm()
   const [editing, setEditing] = useState<boolean>(false)
   const userInfo = useSelector((state: RootState) => state.user.userInfo)
+  const PDFStream = useSelector((state: RootState) => state.user.pdfStream)
   const { Option } = Select
   const { TextArea } = Input
   const dispatch = useAppDispatch()
@@ -26,6 +27,10 @@ const UserCenter: React.FC = (props: any) => {
       if (success) setEditing(false)
     })
   }
+
+  useEffect(() => {
+    dispatch(fetchPDF({}))
+  }, [])
 
   console.log('userinfo',userInfo);
 
@@ -149,7 +154,7 @@ const UserCenter: React.FC = (props: any) => {
             </div>
           </Form>
         </div>
-        <PDFViewer />
+        <PDFViewer PDFStream={PDFStream} />
       </div>
     </div>
   )

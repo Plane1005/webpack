@@ -47,7 +47,6 @@ const Avatar: React.FC<AvatarType> = (props) => {
 
   const handleFileUpload = (value: any) => {
     const { file } = value
-    console.log(file);
     if (file?.response?.code === 200) {
       message.success('更新成功')
       dispatch(fetchUserInfo())
