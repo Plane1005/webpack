@@ -15,6 +15,12 @@ declare module '*.gif' {
 
 declare module 'BMap';
 
+declare interface Window {
+  DDLogin: any,
+  attachEvent: any
+}
+
+
 declare module '*.jpg' {
   const src: string
   export default src

@@ -9,6 +9,12 @@ vyTcfYFeUg56lnzx5KJnijjTMoHEuwvMnBdZLz03DiQdeAZroQKy9Kf+yzDF2BR2
 RwcnYzQhZu0smQBR4QIDAQAB
 -----END PUBLIC KEY-----`
 
+export const AgentId: string = "1384166309"
+export const AppKey: string = "dingaw2togxomecovuxy"
+export const AppSecret: string = "925KT3fMyPb_Nv2rh08eedeHu5eYR4LwW6QDsNrE3jc-VyAPSRxqWK2R0wXhAfrt"
+export const CorpId: string = "dingd22a6c4bf53f3567a39a90f97fcb1e09"
+export const REDIRECT_URI: string = "http://localhost:8080/login"
+
 // 公钥加密密码
 export const getScrect = async (data: string) => {
   const encrypt = new JSEncrypt()
@@ -73,3 +79,16 @@ export const switchBase64 = async (value: Blob) => {
     }
   })
 }
+
+export const getUrlParams = (objName: string): object | null => {
+  if(objName.indexOf("?")<0) return null; 
+  let allParamsArr = objName.split("?")[1].split("&")
+  let returnObj = {};
+  if (allParamsArr.length == 0) return null;
+  for(let i =0; i<allParamsArr.length; i++) {
+      returnObj[`${allParamsArr[i].split("=")[0]}`] = allParamsArr[i].split("=")[1]
+  }
+  return returnObj
+}
+
+

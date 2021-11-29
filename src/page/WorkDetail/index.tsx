@@ -5,7 +5,7 @@ import { RootState, useAppDispatch } from '@/store'
 import { useSelector } from 'react-redux'
 import { fetchWorkDetail } from '@/store/reducer/systemReducer'
 import './style.less'
-import { Avatar, Button } from 'antd'
+import { Avatar, Button, Spin } from 'antd'
 import PlusOutlined from '@ant-design/icons/lib/icons/PlusOutlined'
 import WorkText from './WorkText'
 import MapShow from '@/component/MapShow'
@@ -17,6 +17,7 @@ const WorkDetail: React.FC = (props: any) => {
   const dispatch = useAppDispatch()
   const history = useHistory()
   const workDetail = useSelector((state: RootState) => state.system.workDetail)
+  const [isSpin, setIsSpin] = useState<boolean>(true)
 
   useEffect(() => {
     dispatch(
@@ -25,6 +26,12 @@ const WorkDetail: React.FC = (props: any) => {
       })
     )
   }, [])
+
+  useEffect(() => {
+    if (workDetail.workDetail) {
+      setIsSpin(false)
+    }
+  }, [workDetail])
 
   return (
     <div className="g-workDetail">
@@ -48,20 +55,32 @@ const WorkDetail: React.FC = (props: any) => {
             工作地点
             <em />
           </h3>
-          <MapShow
-            lat={workDetail.positiony}
-            lng={workDetail.positionx}
-            addressTitle={workDetail.addressTitle}
-            addressDetail={workDetail.addressDetail}
-          />
+          <Spin spinning={isSpin}>
+            {isSpin ? (
+              <div className="m-map"></div>
+            ) : (
+              <MapShow
+                lat={workDetail.positiony}
+                lng={workDetail.positionx}
+                addressTitle={workDetail.addressTitle}
+                addressDetail={workDetail.addressDetail}
+              />
+            )}
+          </Spin>
         </div>
         <div className="m-right">
-        <div className="m-title">岗位基本信息</div>
+          <div className="m-title">岗位基本信息</div>
           <div className="m-workInfo">
             <div className="u-work">{workDetail.work}</div>
-            <div className="u-salary">{ workDetail.salary}/天</div>
-            <div className="u-time"><span>{workDetail.workTime}</span><span>{workDetail.workTotalTime}个月</span></div>
-            <div className="u-education"><span>{ workDetail.education }</span><span>招聘{workDetail.workNum}人</span></div>
+            <div className="u-salary">{workDetail.salary}/天</div>
+            <div className="u-time">
+              <span>{workDetail.workTime}</span>
+              <span>{workDetail.workTotalTime}个月</span>
+            </div>
+            <div className="u-education">
+              <span>{workDetail.education}</span>
+              <span>招聘{workDetail.workNum}人</span>
+            </div>
           </div>
           <div className="m-title">公司基本信息</div>
           <div className="m-name">

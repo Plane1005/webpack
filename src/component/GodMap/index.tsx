@@ -8,7 +8,7 @@ let map: any = null
 const Option = Select.Option
 import './styles.less'
 
-interface godMapType{
+interface godMapType {
   setAddress: (value: any) => void
 }
 
@@ -35,9 +35,7 @@ export default (props: godMapType) => {
   const [marker, setMarker] = useState(null)
 
   useEffect(() => {
-    setTimeout(() => {
-      mapInit(location)
-    }, 100)
+    mapInit(location)
   }, [])
 
   let timer: any = null
@@ -77,7 +75,12 @@ export default (props: godMapType) => {
             let point = new BMap.Point(item.point.lng, item.point.lat)
             map.centerAndZoom(point, 16)
             setLocation({ lng: item.point.lng, lat: item.point.lat, zoom: 16 })
-            setAddress({ lng: item.point.lng, lat: item.point.lat, title: item.title, address: item.address })
+            setAddress({
+              lng: item.point.lng,
+              lat: item.point.lat,
+              title: item.title,
+              address: item.address,
+            })
             let _marker = new BMap.Marker(point) // 创建标注
             setMarker(_marker)
             map.addOverlay(_marker) // 将标注添加到地图中

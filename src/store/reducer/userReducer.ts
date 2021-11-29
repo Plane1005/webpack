@@ -23,6 +23,17 @@ export const fetchUserInfo = createAsyncThunk('user/userinfo', async () => {
   })
 })
 
+// 获取钉钉用户信息
+export const fetchDingInfo = createAsyncThunk('user/dinginfo', async (params: any = {}) => {
+  return request({
+    url: `/api/user/dinginfo`,
+    method: 'POST',
+    params: params
+  }).then((res: ResponseData<any>) => {
+    return res
+  })
+})
+
 // 更新个人信息
 export const updateInfo = createAsyncThunk('user/updateinfo', async (params: any = {}) => {
   return request({
@@ -42,7 +53,7 @@ export const fetchPDF = createAsyncThunk('user/fetchPDF', async (params: any = {
     responseType: 'blob',
     params: params,
   }).then(async (res: ResponseData<any>) => {
-    res.data = await switchBase64(res.data)
-    return res
+      res.data = await switchBase64(res.data)
+      return res
   })
 })

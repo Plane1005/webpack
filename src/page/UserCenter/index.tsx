@@ -15,8 +15,8 @@ import { PUBLIC_URL } from '../../../config/proxy'
 const UserCenter: React.FC = (props: any) => {
   const [form] = Form.useForm()
   const [editing, setEditing] = useState<boolean>(false)
+  const [PDFContent, setPDFContent] = useState<boolean | string>(false)
   const userInfo = useSelector((state: RootState) => state.user.userInfo)
-  const PDFStream = useSelector((state: RootState) => state.user.pdfStream)
   const { Option } = Select
   const { TextArea } = Input
   const dispatch = useAppDispatch()
@@ -27,10 +27,6 @@ const UserCenter: React.FC = (props: any) => {
       if (success) setEditing(false)
     })
   }
-
-  useEffect(() => {
-    dispatch(fetchPDF({}))
-  }, [])
 
   console.log('userinfo',userInfo);
 
@@ -154,7 +150,7 @@ const UserCenter: React.FC = (props: any) => {
             </div>
           </Form>
         </div>
-        <PDFViewer PDFStream={PDFStream} />
+        <PDFViewer />
       </div>
     </div>
   )

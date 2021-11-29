@@ -1,7 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit'
 import { message } from 'antd'
 import { AppDispatch } from './index'
-import { updateInfo, fetchUserInfo, fetchPDF } from './reducer/userReducer'
+import { updateInfo, fetchUserInfo, fetchPDF, fetchDingInfo } from './reducer/userReducer'
 
 interface UserType {
   name: string
@@ -42,6 +42,10 @@ export const userSlice = createSlice({
         message.warning(res.message || '服务器异常')
       }
     }),
+      builder.addCase(fetchDingInfo.fulfilled, (state, action: any) => {
+        const res = action?.payload?.data
+        console.log(res)
+      }),
       builder.addCase(updateInfo.fulfilled, (state, action: any) => {
         const res = action?.payload?.data
         if (res.code === 200) {
@@ -50,7 +54,7 @@ export const userSlice = createSlice({
           message.warning(res.message || '服务器异常')
         }
       }),
-      builder.addCase(fetchPDF.fulfilled,(state, action: any) => {
+      builder.addCase(fetchPDF.fulfilled, (state, action: any) => {
         const res = action?.payload?.data
         if (res) {
           state.pdfStream = res

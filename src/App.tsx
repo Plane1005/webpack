@@ -1,5 +1,5 @@
 import React from 'react'
-import { HashRouter, Route, Switch, Router } from 'react-router-dom'
+import { BrowserRouter, Route, Switch, Router } from 'react-router-dom'
 import NavWrapper from '@/component/NavWrapper'
 import Home from '@/page/Home'
 import WorkList from '@/page/WorkList'
@@ -10,7 +10,7 @@ import WorkDetail from '@/page/WorkDetail'
 
 const App: React.FC = (props: any) => {
   return (
-    <HashRouter>
+    <BrowserRouter>
       <Switch>
         <Route exact path="/login" component={Login} />
         <Route path="" render={() => (
@@ -27,7 +27,7 @@ const App: React.FC = (props: any) => {
           </div>
         )} />
       </Switch>
-    </HashRouter>
+    </BrowserRouter>
   )
 }
 
