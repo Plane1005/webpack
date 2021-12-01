@@ -2,7 +2,7 @@ import { RootState, useAppDispatch } from '@/store'
 import CheckOutlined from '@ant-design/icons/lib/icons/CheckOutlined'
 import EditOutlined from '@ant-design/icons/lib/icons/EditOutlined'
 import FileOutlined from '@ant-design/icons/lib/icons/FileOutlined'
-import { Button, Form, Input, Select } from 'antd'
+import { Button, Form, Input, message, Select, Upload } from 'antd'
 import React, { useEffect, useState } from 'react'
 import { useSelector } from 'react-redux'
 import { updateInfo, fetchPDF } from '@/store/reducer/userReducer'
@@ -10,6 +10,7 @@ import PDFViewer from './PDFViewer'
 import Avatar from '@/component/Avatar'
 import './style.less'
 import { PUBLIC_URL } from '../../../config/proxy'
+import { chkToken } from '@/utils'
 // import NavWrapper from 'component/NavWrapper'
 
 const UserCenter: React.FC = (props: any) => {
@@ -26,6 +27,14 @@ const UserCenter: React.FC = (props: any) => {
       const { success } = res?.payload?.data
       if (success) setEditing(false)
     })
+  }
+
+  const handleFileUpload = (value: any) => {
+    const { file } = value
+    if (file?.response?.code === 200) {
+      message.success('更新成功')
+      dispatch(fetchPDF())
+    }
   }
 
   console.log('userinfo',userInfo);
@@ -62,6 +71,7 @@ const UserCenter: React.FC = (props: any) => {
               >
                 提交
               </Button>
+              <Upload action={PUBLIC_URL + 'api/user/upload'} showUploadList={false} accept='.pdf' headers={{accessToken: chkToken(),uploadType: "2"}} onChange={handleFileUpload}>
               <Button
                 type="primary"
                 icon={<FileOutlined />}
@@ -71,6 +81,7 @@ const UserCenter: React.FC = (props: any) => {
               >
                 更新简历
               </Button>
+              </Upload>
             </div>
           </div>
           <Form form={form} name="userInfo" onFinish={onFinish} initialValues={userInfo}>

@@ -17,7 +17,7 @@ const PDFViewer = (props: any) => {
   const dispatch = useAppDispatch()
 
   useEffect(() => {
-    dispatch(fetchPDF({}))
+    dispatch(fetchPDF())
   }, [])
 
   //获取所有页

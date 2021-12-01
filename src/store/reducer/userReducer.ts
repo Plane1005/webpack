@@ -13,6 +13,17 @@ export const userLogin = createAsyncThunk('user/login', async (params: any = {})
   })
 })
 
+// 钉钉扫码登录接口
+export const dingLogin = createAsyncThunk('user/ding', async (params: any = {}) => {
+  return request({
+    url: `/api/user/ding`,
+    method: 'POST',
+    params: params,
+  }).then((res: ResponseData<any>) => {
+    return res
+  })
+})
+
 // 获取用户信息
 export const fetchUserInfo = createAsyncThunk('user/userinfo', async () => {
   return request({
@@ -45,13 +56,12 @@ export const updateInfo = createAsyncThunk('user/updateinfo', async (params: any
   })
 })
 
-// 更新个人信息
-export const fetchPDF = createAsyncThunk('user/fetchPDF', async (params: any = {}) => {
+// 更新个人简历
+export const fetchPDF = createAsyncThunk('user/fetchPDF', async () => {
   return request({
     url: `/api/user/pdf`,
     method: 'GET',
     responseType: 'blob',
-    params: params,
   }).then(async (res: ResponseData<any>) => {
       res.data = await switchBase64(res.data)
       return res

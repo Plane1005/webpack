@@ -1,16 +1,16 @@
 import React, { CSSProperties, useEffect, useState } from 'react'
 import { LoginForm, ProFormText, ProFormCaptcha, ProFormCheckbox } from '@ant-design/pro-form'
 import { UserOutlined, MobileOutlined, LockOutlined } from '@ant-design/icons'
-import { message, Tabs, Space, Modal } from 'antd'
+import { message, Tabs, Space, Modal, Spin } from 'antd'
 import logo from '@/assets/logo.png'
-import { fetchDingInfo, fetchUserInfo, userLogin } from '@/store/reducer/userReducer'
+import { fetchDingInfo, fetchUserInfo, userLogin, dingLogin } from '@/store/reducer/userReducer'
 import './style.less'
 import { useAppDispatch } from '@/store'
 import { getScrect, getUrlParams } from '@/utils/index'
 import { useHistory } from 'react-router-dom'
 import DingLogin from './DingLogin'
 import DingdingOutlined from '@ant-design/icons/lib/icons/DingdingOutlined'
-import { AgentId, AppKey, AppSecret, REDIRECT_URI } from '@/utils/index';
+import { AgentId, AppKey, AppSecret, REDIRECT_URI } from '@/utils/index'
 
 type LoginType = 'phone' | 'account'
 
@@ -27,7 +27,23 @@ const Login: React.FC = (props: any) => {
   const dispatch = useAppDispatch()
   const history = useHistory()
   const [modalShow, setModalShow] = useState<boolean>(false)
-  
+  const [isSpin, setIsSpin] = useState<boolean>(false)
+
+  const fetchInfo = (res: any) => {
+    res = res?.payload?.data
+    if (res?.success) {
+      localStorage.setItem('isAdmin', res.isAdmin)
+      localStorage.setItem('token', res.token)
+      dispatch(fetchUserInfo()).then((res: any) => {
+        localStorage.setItem('userInfo', res.payload.data ? JSON.stringify(res.payload.data) : '')
+      })
+      message.success('登录成功')
+      setIsSpin(false)
+      history.push('/')
+    } else {
+      message.error('密码错误')
+    }
+  }
 
   const handleSubmit = async (values: any) => {
     let password: string | boolean
@@ -40,18 +56,7 @@ const Login: React.FC = (props: any) => {
         loginType,
       })
     ).then((res: any) => {
-      res = res?.payload?.data
-      if (res?.success) {
-        localStorage.setItem('isAdmin', res.isAdmin)
-        localStorage.setItem('token', res.token)
-        dispatch(fetchUserInfo()).then((res: any) => {
-          localStorage.setItem('userInfo', res.payload.data ? JSON.stringify(res.payload.data) : '')
-        })
-        message.success('登录成功')
-        history.push('/')
-      } else {
-        message.error('密码错误')
-      }
+      fetchInfo(res)
     })
   }
 
@@ -60,19 +65,33 @@ const Login: React.FC = (props: any) => {
     let params = props?.location?.search
     //手机钉钉扫码后 确认登录 成功后 网页地址栏会出现一个参数：state='dinglogin'
     params = getUrlParams(params)
-    console.log(params);
+    console.log(params)
     if (params?.state === 'dinglogin') {
       //同时出现参数code （因为我们需要拿到这个参数 传给后台来获取用户信息）判断后再进行下一步操作
       if (params?.code) {
+        setIsSpin(true)
         let parameter = { jsCode: params.code, externalType: 2, AppKey, AppSecret }
         //在这里调用接口 获取用户信息，拿到返回结果，判断是否需要调用自己的登录接口
-        dispatch(fetchDingInfo(parameter))
+        dispatch(fetchDingInfo(parameter)).then((res: any) => {
+          console.log(res)
+          const { name, mobile, avatar } = res?.payload?.data?.data
+          dispatch(
+            dingLogin({
+              name,
+              mobile,
+              avatar,
+            })
+          ).then((res) => {
+            fetchInfo(res)
+          })
+        })
       }
     }
   }, [])
 
   return (
     <div className="app-root g-login">
+      <Spin spinning={isSpin} >
       <LoginForm
         logo={logo}
         title="师大内推"
@@ -83,7 +102,12 @@ const Login: React.FC = (props: any) => {
         actions={
           <Space>
             其他登录方式
-            <DingdingOutlined onClick={()=>{setModalShow(true)}} style={iconStyles} />
+            <DingdingOutlined
+              onClick={() => {
+                setModalShow(true)
+              }}
+              style={iconStyles}
+            />
           </Space>
         }
       >
@@ -188,7 +212,14 @@ const Login: React.FC = (props: any) => {
           </a>
         </div>
       </LoginForm>
-      <Modal visible={modalShow} footer={null} onCancel={()=>{setModalShow(false)}} >
+      </Spin>
+      <Modal
+        visible={modalShow}
+        footer={null}
+        onCancel={() => {
+          setModalShow(false)
+        }}
+      >
         <DingLogin params={props?.location?.search} />
       </Modal>
     </div>
