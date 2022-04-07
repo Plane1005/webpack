@@ -52,10 +52,10 @@ const UserCenter: React.FC = (props: any) => {
                 shape="round"
                 size="large"
                 onClick={() => {
-                  setEditing(true)
+                  setEditing(!editing)
                 }}
               >
-                编辑资料
+                {editing ? '取消' : '编辑资料'}
               </Button>
               <Button
                 type="primary"

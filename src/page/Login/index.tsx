@@ -6,7 +6,7 @@ import logo from '@/assets/logo.png'
 import { fetchDingInfo, fetchUserInfo, userLogin, dingLogin } from '@/store/reducer/userReducer'
 import './style.less'
 import { useAppDispatch } from '@/store'
-import { getScrect, getUrlParams } from '@/utils/index'
+import { getScrect, getUrlParams, saveToken } from '@/utils/index'
 import { useHistory } from 'react-router-dom'
 import DingLogin from './DingLogin'
 import DingdingOutlined from '@ant-design/icons/lib/icons/DingdingOutlined'
@@ -32,11 +32,8 @@ const Login: React.FC = (props: any) => {
   const fetchInfo = (res: any) => {
     res = res?.payload?.data
     if (res?.success) {
-      localStorage.setItem('isAdmin', res.isAdmin)
-      localStorage.setItem('token', res.token)
-      dispatch(fetchUserInfo()).then((res: any) => {
-        localStorage.setItem('userInfo', res.payload.data ? JSON.stringify(res.payload.data) : '')
-      })
+      saveToken(res.token)
+      dispatch(fetchUserInfo())
       message.success('登录成功')
       setIsSpin(false)
       history.push('/')

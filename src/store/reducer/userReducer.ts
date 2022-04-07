@@ -67,3 +67,14 @@ export const fetchPDF = createAsyncThunk('user/fetchPDF', async () => {
       return res
   })
 })
+
+// 投递简历
+export const sendResume = createAsyncThunk('user/sendResume', async (params: any = {}) => {
+  return request({
+    url: `/api/record/add`,
+    method: 'POST',
+    params: params,
+  }).then(async (res: ResponseData<any>) => {
+      return res
+  })
+})

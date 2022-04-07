@@ -6,7 +6,7 @@ import { Avatar, Menu, Dropdown, Tooltip, message } from 'antd'
 import type { MenuInfo } from 'rc-menu/lib/interface'
 import {
   UserOutlined,
-  SettingOutlined,
+  MessageOutlined,
   LogoutOutlined,
   PlusCircleOutlined,
   ProfileOutlined,
@@ -14,6 +14,7 @@ import {
 import { RootState, useAppDispatch } from '@/store'
 import { logOut } from '@/store/user.slice'
 import { useSelector } from 'react-redux'
+import { userLogOut } from '@/utils'
 
 const NavWrapper: React.FC = (props: any) => {
   const { children } = props
@@ -27,13 +28,11 @@ const NavWrapper: React.FC = (props: any) => {
     switch (key) {
       case 'logout':
         dispatch(logOut()).then(() => {
-          message.success('退出成功')
-          localStorage.removeItem('isAdmin')
-          localStorage.removeItem('token')
-          localStorage.removeItem('userInfo')
-          history.replace('/')
-          document.title = '师大内推'
+          userLogOut()
         })
+        break
+      case 'mymessage':
+        history.replace('/mymessage')
         break
       case 'center':
         history.push('./usercenter')
@@ -47,9 +46,9 @@ const NavWrapper: React.FC = (props: any) => {
         <UserOutlined />
         个人中心
       </Menu.Item>
-      <Menu.Item key="settings">
-        <SettingOutlined />
-        个人设置
+      <Menu.Item key="mymessage">
+        <MessageOutlined />
+        我的消息
       </Menu.Item>
       <Menu.Divider />
       <Menu.Item key="logout">
