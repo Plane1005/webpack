@@ -6,9 +6,10 @@
   "proxy": "http://192.168.0.129:9080",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "npm run check && webpack --config ./config/webpack.common.js --env production",
+    "build": "webpack --config ./config/webpack.common.js --env production",
     "dev": "npm run check && webpack --config ./config/webpack.common.js --env development",
     "start": "npm run check && webpack serve --config ./config/webpack.common.js --env development",
+    "dll": "webpack --config ./config/webpack.config.dll.js",
     "check": "tsc --noEmit"
   },
   "keywords": [],
@@ -44,6 +45,7 @@
   "devDependencies": {
     "@babel/cli": "^7.15.7",
     "@babel/core": "^7.15.5",
+    "@babel/plugin-syntax-dynamic-import": "^7.8.3",
     "@babel/plugin-transform-arrow-functions": "^7.14.5",
     "@babel/plugin-transform-block-scoping": "^7.15.3",
     "@babel/preset-env": "^7.15.6",
@@ -55,7 +57,7 @@
     "@types/react-router-dom": "^5.3.1",
     "autoprefixer": "^10.3.6",
     "babel-loader": "^8.2.2",
-    "babel-plugin-import": "^1.13.3",
+    "babel-plugin-import": "^1.13.5",
     "clean-webpack-plugin": "^4.0.0",
     "copy-webpack-plugin": "^9.0.1",
     "css-loader": "^6.3.0",
@@ -63,6 +65,8 @@
     "html-webpack-plugin": "^5.3.2",
     "less": "^4.1.1",
     "less-loader": "^10.0.1",
+    "mini-css-extract-plugin": "^2.6.1",
+    "optimize-css-assets-webpack-plugin": "^6.0.1",
     "postcss": "^8.3.8",
     "postcss-loader": "^6.1.1",
     "postcss-preset-env": "^6.7.0",
@@ -70,7 +74,9 @@
     "react-router-dom": "^5.3.0",
     "style-loader": "^3.3.0",
     "typescript": "^4.4.3",
+    "uglifyjs-webpack-plugin": "^2.2.0",
     "url-loader": "^4.1.1",
+    "webpack-bundle-analyzer": "^4.5.0",
     "webpack-merge": "^5.8.0"
   }
 }

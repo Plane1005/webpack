@@ -1,7 +1,7 @@
 import React, { useCallback, useRef, useState } from 'react'
 import { useHistory } from 'react-router-dom'
 import './style.less'
-import logo from '@/assets/logo.png'
+// import logo from '@/assets/logo.png'
 import { Avatar, Menu, Dropdown, Tooltip, message } from 'antd'
 import type { MenuInfo } from 'rc-menu/lib/interface'
 import {
@@ -74,7 +74,6 @@ const NavWrapper: React.FC = (props: any) => {
     <div className="g-nav">
       <div className="g-menu">
         <div className="m-logo" onClick={backHome}>
-          <img src={logo} alt="" className="u-logo" />
           <span className="u-title">师大内推</span>
         </div>
         <div className="m-menu">
