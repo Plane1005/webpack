@@ -49,20 +49,13 @@ const commonConfig = {
         ],
       },
       {
-        test: /\.less/,
+        test: /\.scss/,
         use: [
           'style-loader',
           MiniCssExtractPlugin.loader,
           'css-loader',
           'postcss-loader',
-          {
-            loader: 'less-loader',
-            options: {
-              lessOptions: {
-                javascriptEnabled: true,
-              },
-            },
-          },
+          'sass-loader'
         ],
       },
       { test: /\.(pdf|svg)$/, use: 'file-loader?name=[path][name].[ext]' },
@@ -89,16 +82,6 @@ const commonConfig = {
           },
         },
       },
-      // use: [{ // 通过插件打包
-      //   // loader: 'file-loader',
-      //   loader: 'url-loader', // 图片转换为base64，放入main.js
-      //   options: {
-      //     // esModule: false  reqiure引用文件，打包成esmodule
-      //     name: '[name].[hash:6].[ext]',
-      //     outputPath: 'img',
-      //     limit: 50 * 1024, // 如果超出这个值，就不进行转换
-      //   }
-      // }]
       {
         test: /\.(ttf|woff2?)$/,
         type: 'asset/resource',
@@ -127,9 +110,9 @@ const commonConfig = {
       PUBLIC_URL: '"./"',
     }),
     new ContextReplacementPlugin(/moment[/\\]locale$/, /zh-cn|en/),
-    new DllReferencePlugin({
-      manifest: path.resolve(__dirname, 'dist/dll', 'mainfist.json'),
-    }),
+    // new DllReferencePlugin({
+    //   manifest: path.resolve(__dirname, 'dist/dll', 'mainfist.json'),
+    // }),
   ],
   optimization: {
     splitChunks: {

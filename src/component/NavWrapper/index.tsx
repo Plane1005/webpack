@@ -1,6 +1,5 @@
 import React, { useCallback, useRef, useState } from 'react'
-import { useHistory } from 'react-router-dom'
-import './style.less'
+import { useNavigate } from 'react-router-dom'
 // import logo from '@/assets/logo.png'
 import { Avatar, Menu, Dropdown, Tooltip, message } from 'antd'
 import type { MenuInfo } from 'rc-menu/lib/interface'
@@ -14,11 +13,10 @@ import {
 import { RootState, useAppDispatch } from '@/store'
 import { logOut } from '@/store/user.slice'
 import { useSelector } from 'react-redux'
-import { userLogOut } from '@/utils'
 
-const NavWrapper: React.FC = (props: any) => {
+const NavWrapper = (props: any) => {
   const { children } = props
-  const history = useHistory()
+  const navigate = useNavigate()
   const dispatch = useAppDispatch()
   const [menu, setMenu] = useState(undefined)
   const userInfo = useSelector((state: RootState) => state.user.userInfo)
@@ -27,15 +25,12 @@ const NavWrapper: React.FC = (props: any) => {
     const { key } = event
     switch (key) {
       case 'logout':
-        dispatch(logOut()).then(() => {
-          userLogOut()
-        })
         break
       case 'mymessage':
-        history.replace('/mymessage')
+        navigate('/mymessage', { replace: true })
         break
       case 'center':
-        history.push('./usercenter')
+        navigate('./usercenter')
         break
     }
   }, [])
@@ -62,12 +57,12 @@ const NavWrapper: React.FC = (props: any) => {
 
   const handleClick = (e: any) => {
     setMenu(e.key)
-    history.push(e.key)
+    navigate(e.key)
   }
 
   const backHome = () => {
     setMenu(undefined)
-    history.push('')
+    navigate('')
   }
 
   return (
@@ -93,7 +88,7 @@ const NavWrapper: React.FC = (props: any) => {
             <div
               className="u-name"
               onClick={() => {
-                history.push('/login')
+                navigate('/login')
               }}
             >
               登录/注册

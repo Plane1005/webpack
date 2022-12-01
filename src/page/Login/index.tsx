@@ -2,15 +2,13 @@ import React, { CSSProperties, useEffect, useState } from 'react'
 import { LoginForm, ProFormText, ProFormCaptcha, ProFormCheckbox } from '@ant-design/pro-form'
 import { UserOutlined, MobileOutlined, LockOutlined } from '@ant-design/icons'
 import { message, Tabs, Space, Modal, Spin } from 'antd'
-import logo from '@/assets/logo.png'
 import { fetchDingInfo, fetchUserInfo, userLogin, dingLogin } from '@/store/reducer/userReducer'
-import './style.less'
 import { useAppDispatch } from '@/store'
-import { getScrect, getUrlParams, saveToken } from '@/utils/index'
-import { useHistory } from 'react-router-dom'
+import { getUrlParams } from '@/utils/index'
+import { useNavigate } from 'react-router'
 import DingLogin from './DingLogin'
 import DingdingOutlined from '@ant-design/icons/lib/icons/DingdingOutlined'
-import { AgentId, AppKey, AppSecret, REDIRECT_URI } from '@/utils/index'
+import { AppKey, AppSecret } from '@/utils/index'
 
 type LoginType = 'phone' | 'account'
 
@@ -22,21 +20,20 @@ const iconStyles: CSSProperties = {
   cursor: 'pointer',
 }
 
-const Login: React.FC = (props: any) => {
+const Login = (props: any) => {
   const [loginType, setLoginType] = useState<LoginType>('account')
   const dispatch = useAppDispatch()
-  const history = useHistory()
+  const navigate = useNavigate()
   const [modalShow, setModalShow] = useState<boolean>(false)
   const [isSpin, setIsSpin] = useState<boolean>(false)
 
   const fetchInfo = (res: any) => {
     res = res?.payload?.data
     if (res?.success) {
-      saveToken(res.token)
       dispatch(fetchUserInfo())
       message.success('登录成功')
       setIsSpin(false)
-      history.push('/')
+      navigate('/');
     } else {
       message.error('密码错误')
     }
@@ -44,7 +41,7 @@ const Login: React.FC = (props: any) => {
 
   const handleSubmit = async (values: any) => {
     let password: string | boolean
-    if (loginType === 'account') password = await getScrect(values.password)
+    if (loginType === 'account') password = values.password
     else password = values.captcha
     dispatch(
       userLogin({
@@ -90,7 +87,6 @@ const Login: React.FC = (props: any) => {
     <div className="app-root g-login">
       <Spin spinning={isSpin} >
       <LoginForm
-        logo={logo}
         title="师大内推"
         subTitle="杭师大学生内推平台"
         onFinish={async (values) => {

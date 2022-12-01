@@ -1,7 +1,7 @@
 import React, { CSSProperties, useState } from 'react'
 import { message, Upload } from 'antd'
 import PictureOutlined from '@ant-design/icons/lib/icons/PictureOutlined'
-import { chkToken, throttle } from '@/utils'
+import { throttle } from '@/utils'
 import { useAppDispatch } from '@/store'
 import { fetchUserInfo } from '@/store/reducer/userReducer'
 
@@ -59,7 +59,7 @@ const Avatar: React.FC<AvatarType> = (props) => {
       action={uploadUrl}
       showUploadList={false}
       accept=".jpg,.jpeg,.png"
-      headers={{ accessToken: chkToken(), uploadType: uploadType }}
+      headers={{ uploadType: uploadType }}
       onChange={handleFileUpload}
     >
       <div

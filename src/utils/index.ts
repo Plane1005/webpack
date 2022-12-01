@@ -1,34 +1,4 @@
 import { message } from 'antd'
-import JSEncrypt from 'jsencrypt'
-import cookie from 'react-cookies'
-
-// 获取存储的token
-export const chkToken = (): string => {
-  // 不用token的页面
-  const unsecureList = ['/','/login','/worklist']
-  let token = cookie.load('jetToken')
-  if (!unsecureList.includes(location.pathname)) {
-    if (!token) {
-      location.href = window.origin + '/login'
-      return 'error'
-    }
-  }
-  return token
-}
-
-// 用户登录，保存cookie
-export const saveToken = (token: string) => {
-  let cookieTime = new Date(new Date().getTime() + 24 * 3600 * 1000);
-  cookie.save('jetToken', token, { expires: cookieTime })
-}
-
-// 用户登出，删除cookie
-export const userLogOut = () => {
-  cookie.remove('jetToken')
-  location.href = '/'
-  document.title = '师大内推'
-}
-
 
 const PUB_KEY = `-----BEGIN PUBLIC KEY-----
 MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQCWqAwCqkPAuF0tI/zKk+htXbTl
@@ -42,14 +12,6 @@ export const AppKey: string = "dingaw2togxomecovuxy"
 export const AppSecret: string = "925KT3fMyPb_Nv2rh08eedeHu5eYR4LwW6QDsNrE3jc-VyAPSRxqWK2R0wXhAfrt"
 export const CorpId: string = "dingd22a6c4bf53f3567a39a90f97fcb1e09"
 export const REDIRECT_URI: string = "http://localhost:8080/login"
-
-// 公钥加密密码
-export const getScrect = async (data: string) => {
-  const encrypt = new JSEncrypt()
-  encrypt.setPublicKey(PUB_KEY)
-  const password = encrypt.encrypt(data)
-  return password
-}
 
 // 处理消息提示
 export const handleMessage = (res: any, tip: string, warn = '') => {
