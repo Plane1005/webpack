@@ -1,11 +1,11 @@
 import { configureStore, combineReducers } from '@reduxjs/toolkit'
 import { useDispatch } from 'react-redux'
-import { systemSlice } from './system.slice'
+import { globalSlice } from './global.slice'
 import { userSlice } from './user.slice'
 
 // 项目中使用到的reducer
 export const rootReducer = combineReducers({
-  system: systemSlice.reducer,
+  global: globalSlice.reducer,
   user: userSlice.reducer,
 })
 

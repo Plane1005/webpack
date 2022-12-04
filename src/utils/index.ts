@@ -1,12 +1,5 @@
 import { message } from 'antd'
 
-const PUB_KEY = `-----BEGIN PUBLIC KEY-----
-MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQCWqAwCqkPAuF0tI/zKk+htXbTl
-m7BJaAfcnv+sULUlWdcfpjnJpCZsyFMyYZrrFult5i7ihKjQF8px3uEbj4Jv8iUD
-vyTcfYFeUg56lnzx5KJnijjTMoHEuwvMnBdZLz03DiQdeAZroQKy9Kf+yzDF2BR2
-RwcnYzQhZu0smQBR4QIDAQAB
------END PUBLIC KEY-----`
-
 export const AgentId: string = "1384166309"
 export const AppKey: string = "dingaw2togxomecovuxy"
 export const AppSecret: string = "925KT3fMyPb_Nv2rh08eedeHu5eYR4LwW6QDsNrE3jc-VyAPSRxqWK2R0wXhAfrt"
