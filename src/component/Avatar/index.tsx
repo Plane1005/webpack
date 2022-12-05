@@ -1,7 +1,7 @@
 import React, { CSSProperties, useState } from 'react'
 import { message, Upload } from 'antd'
 import PictureOutlined from '@ant-design/icons/lib/icons/PictureOutlined'
-import { chkToken } from '@/utils'
+import { throttle } from '@/utils'
 import { useAppDispatch } from '@/store'
 import { fetchUserInfo } from '@/store/reducer/userReducer'
 
@@ -55,28 +55,39 @@ const Avatar: React.FC<AvatarType> = (props) => {
   }
 
   return (
-    <div
-      className="g-avatar"
-      style={{ position: 'relative' }}
-      onMouseOver={() => setMaskVisble(true)}
-      onMouseOut={() => setMaskVisble(false)}
+    <Upload
+      action={uploadUrl}
+      showUploadList={false}
+      accept=".jpg,.jpeg,.png"
+      headers={{ uploadType: uploadType }}
+      onChange={handleFileUpload}
     >
-      <Upload action={uploadUrl} showUploadList={false} accept='.jpg,.jpeg,.png' headers={{accessToken: chkToken(),uploadType: uploadType}} onChange={handleFileUpload}>
+      <div
+        className="g-avatar"
+        style={{ position: 'relative', display: 'inline-block', zIndex:99 }}
+        onMouseEnter={throttle(() => {
+          setMaskVisble(true)
+        },1000)}
+        onMouseLeave={throttle(() => {
+          setMaskVisble(false)
+        },1000)}
+      >
         <div>
           <div style={maskVisble ? maskStyle : removeMask}></div>
           <div style={maskVisble ? mackContent : removeMask}>
             <PictureOutlined />
-            <div>{ uploadType === "1" ? "修改头像" : "修改Logo  " }</div>
+            <div>{uploadType === '1' ? '修改头像' : '修改Logo  '}</div>
           </div>
         </div>
-      </Upload>
-      <img
-        width={140}
-        height={140}
-        src={imgUrl}
-        style={{ borderRadius: '8px', border: '4px solid #fff' }}
-      />
-    </div>
+
+        <img
+          width={140}
+          height={140}
+          src={imgUrl}
+          style={{ borderRadius: '8px', border: '4px solid #fff' }}
+        />
+      </div>
+    </Upload>
   )
 }
 

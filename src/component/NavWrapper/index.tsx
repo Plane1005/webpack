@@ -1,12 +1,11 @@
 import React, { useCallback, useRef, useState } from 'react'
-import { useHistory } from 'react-router-dom'
-import './style.less'
-import logo from '@/assets/logo.png'
+import { useNavigate } from 'react-router-dom'
+// import logo from '@/assets/logo.png'
 import { Avatar, Menu, Dropdown, Tooltip, message } from 'antd'
 import type { MenuInfo } from 'rc-menu/lib/interface'
 import {
   UserOutlined,
-  SettingOutlined,
+  MessageOutlined,
   LogoutOutlined,
   PlusCircleOutlined,
   ProfileOutlined,
@@ -15,9 +14,9 @@ import { RootState, useAppDispatch } from '@/store'
 import { logOut } from '@/store/user.slice'
 import { useSelector } from 'react-redux'
 
-const NavWrapper: React.FC = (props: any) => {
+const NavWrapper = (props: any) => {
   const { children } = props
-  const history = useHistory()
+  const navigate = useNavigate()
   const dispatch = useAppDispatch()
   const [menu, setMenu] = useState(undefined)
   const userInfo = useSelector((state: RootState) => state.user.userInfo)
@@ -26,17 +25,12 @@ const NavWrapper: React.FC = (props: any) => {
     const { key } = event
     switch (key) {
       case 'logout':
-        dispatch(logOut()).then(() => {
-          message.success('退出成功')
-          localStorage.removeItem('isAdmin')
-          localStorage.removeItem('token')
-          localStorage.removeItem('userInfo')
-          history.replace('/')
-          document.title = '师大内推'
-        })
+        break
+      case 'mymessage':
+        navigate('/mymessage', { replace: true })
         break
       case 'center':
-        history.push('./usercenter')
+        navigate('./usercenter')
         break
     }
   }, [])
@@ -47,9 +41,9 @@ const NavWrapper: React.FC = (props: any) => {
         <UserOutlined />
         个人中心
       </Menu.Item>
-      <Menu.Item key="settings">
-        <SettingOutlined />
-        个人设置
+      <Menu.Item key="mymessage">
+        <MessageOutlined />
+        我的消息
       </Menu.Item>
       <Menu.Divider />
       <Menu.Item key="logout">
@@ -63,19 +57,18 @@ const NavWrapper: React.FC = (props: any) => {
 
   const handleClick = (e: any) => {
     setMenu(e.key)
-    history.push(e.key)
+    navigate(e.key)
   }
 
   const backHome = () => {
     setMenu(undefined)
-    history.push('')
+    navigate('')
   }
 
   return (
     <div className="g-nav">
       <div className="g-menu">
         <div className="m-logo" onClick={backHome}>
-          <img src={logo} alt="" className="u-logo" />
           <span className="u-title">师大内推</span>
         </div>
         <div className="m-menu">
@@ -95,7 +88,7 @@ const NavWrapper: React.FC = (props: any) => {
             <div
               className="u-name"
               onClick={() => {
-                history.push('/login')
+                navigate('/login')
               }}
             >
               登录/注册

@@ -1,34 +1,18 @@
-import React, { useState, useEffect } from 'react'
-import { request } from '@/utils/request' //你自己封装的调用接口的方法
-import { message } from 'antd'
-import { useHistory } from 'react-router-dom'
-import { getUrlParams } from '@/utils/index';
-import { useAppDispatch } from '@/store';
-import { fetchDingInfo } from '@/store/reducer/userReducer';
-import * as dd from 'dingtalk-jsapi';
-import { AgentId, AppKey, AppSecret, REDIRECT_URI, CorpId } from '@/utils/index';
+import React, { useEffect } from 'react'
+import { AppKey, REDIRECT_URI } from '@/utils/index';
 
 interface DingType {
   params: string
 }
 
-const DingLogin: React.FC<DingType> = (props: any) => {
+const DingLogin: React.FC<DingType> = () => {
   // const [REDIRECT_URI] = useState<string>("http://zxl0313.top/#/login/")
-  const history = useHistory()
-  const dispatch = useAppDispatch()
 
   useEffect(() => {
     let URL = encodeURIComponent(
       `https://oapi.dingtalk.com/connect/oauth2/sns_authorize?appid=${AppKey}&response_type=code&scope=snsapi_login&state=STATE&redirect_uri=${REDIRECT_URI}`
     )
     // 实例化对象
-    let obj = window.DDLogin({
-      id: 'login_container',
-      goto: URL,
-      style: 'border:none;background-color:#FFFFFF;',
-      width: '100%',
-      height: '300',
-    })
     // 监听消息处理方法
     const handleMessage = (event) => {
       // 获取loginTempCode

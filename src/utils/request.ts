@@ -1,7 +1,4 @@
-import axios, { AxiosRequestConfig, AxiosError, AxiosResponse } from 'axios'
-import { PUBLIC_URL } from '../../config/proxy.js'
-import { chkToken } from '@/utils/index'
-import { message } from 'antd'
+import axios, { AxiosRequestConfig, AxiosError } from 'axios'
 
 export interface ResponseData<T> {
   code?: string
@@ -14,14 +11,14 @@ export interface ResponseData<T> {
 }
 
 // 指定 axios 请求类型
-axios.defaults.headers = {
-  'Content-Type': 'application/json;charset=utf-8',
-}
+// axios.defaults.headers = {
+//   'Content-Type': 'application/json;charset=utf-8',
+// }
 
 axios.interceptors.request.use(
   (config: AxiosRequestConfig) => {
     // config.url = PUBLIC_URL + config.url
-    config.headers = { accessToken: chkToken() }
+    // config.headers = { accessToken: chkToken() }
     return config
   },
   (error: AxiosError) => Promise.reject(error)

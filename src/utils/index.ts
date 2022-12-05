@@ -1,27 +1,10 @@
 import { message } from 'antd'
-import Base64 from 'base-64'
-import JSEncrypt from 'jsencrypt'
-
-const PUB_KEY = `-----BEGIN PUBLIC KEY-----
-MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQCWqAwCqkPAuF0tI/zKk+htXbTl
-m7BJaAfcnv+sULUlWdcfpjnJpCZsyFMyYZrrFult5i7ihKjQF8px3uEbj4Jv8iUD
-vyTcfYFeUg56lnzx5KJnijjTMoHEuwvMnBdZLz03DiQdeAZroQKy9Kf+yzDF2BR2
-RwcnYzQhZu0smQBR4QIDAQAB
------END PUBLIC KEY-----`
 
 export const AgentId: string = "1384166309"
 export const AppKey: string = "dingaw2togxomecovuxy"
 export const AppSecret: string = "925KT3fMyPb_Nv2rh08eedeHu5eYR4LwW6QDsNrE3jc-VyAPSRxqWK2R0wXhAfrt"
 export const CorpId: string = "dingd22a6c4bf53f3567a39a90f97fcb1e09"
 export const REDIRECT_URI: string = "http://localhost:8080/login"
-
-// 公钥加密密码
-export const getScrect = async (data: string) => {
-  const encrypt = new JSEncrypt()
-  encrypt.setPublicKey(PUB_KEY)
-  const password = encrypt.encrypt(data)
-  return password
-}
 
 // 处理消息提示
 export const handleMessage = (res: any, tip: string, warn = '') => {
@@ -45,27 +28,12 @@ export const objNotEmpty = (obj: object) => {
   return true // 如果不为空，则会执行到这一步，返回true
 }
 
-// 获取存储的token
-export const chkToken = (): string => {
-  // 不用token的页面
-  const unsecureList = ['/login']
-  let token = localStorage.getItem('token')
-  if (token === null) {
-    return 'empty'
-  }
-  if (!unsecureList.includes(location.pathname)) {
-    if (!token) {
-      location.href = window.origin + '/login'
-      return 'error'
-    }
-  }
-  return token
-}
-
 // 转base64
 export const switchBase64 = async (value: Blob) => {
   return new Promise((res, rej) => {
     try {
+      // console.log('base',value);
+      if (value.size < 100) return null
       let ans: string = ''
       let reader = new FileReader()
       reader.readAsDataURL(value) // 转换为base64，可以直接放入a标签href
@@ -92,3 +60,37 @@ export const getUrlParams = (objName: string): object | null => {
 }
 
 
+// 防抖
+// 函数触发后立即执行，过delay秒后才能再次执行
+// 如果delay时再次触发，则重新计时
+export function debounce(fn, delay) {
+	let timer: any = null
+	return function () {
+		if (timer) {
+			clearTimeout(timer)
+		}
+		let callNow = !timer
+		timer = setTimeout(() => {
+			timer = null
+		}, delay)
+		if (callNow) {
+			fn()
+		}
+	}
+}
+
+//节流
+//函数触发后立即执行，过delay秒后可再执行
+//如果delay时再次触发，无动作
+//连续发生的事件在delay秒内只执行一次函数
+export function throttle(fn, delay) {
+	let timer: any = null
+  return function () {
+    if (!timer) {
+      fn()
+			timer = setTimeout(() => {
+				timer = null
+			}, delay)
+    }
+	}
+}

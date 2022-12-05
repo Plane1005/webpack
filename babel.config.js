@@ -4,8 +4,8 @@ module.exports = {
       '@babel/preset-env',
       {
         useBuiltIns: 'usage', // 是否进行polyfill填充
-        corejs: 3, // 不设置会报错 
-      }
+        corejs: 3, // 不设置会报错
+      },
     ],
     ['@babel/preset-react'],
     ['@babel/preset-typescript'],
@@ -17,9 +17,16 @@ module.exports = {
         libraryName: '@amap/amap-react',
         libraryDirectory: 'lib',
       },
+      'amap',
+    ],
+    [
+      'import',
+      {
+        libraryName: 'antd',
+        libraryDirectory: 'es',
+        style: true,
+      },
+      'antd',
     ],
   ],
-  // plugins: [
-  //   ['react-refresh/babel']
-  // ]
 }

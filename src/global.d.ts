@@ -57,3 +57,5 @@ declare module '*.svg' {
   export default src
 }
 
+declare module '*.scss'
+

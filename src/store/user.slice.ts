@@ -1,7 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit'
 import { message } from 'antd'
 import { AppDispatch } from './index'
-import { updateInfo, fetchUserInfo, fetchPDF, fetchDingInfo } from './reducer/userReducer'
+import { updateInfo, fetchUserInfo, fetchPDF, fetchDingInfo, sendResume } from './reducer/userReducer'
 
 interface UserType {
   name: string
@@ -62,8 +62,17 @@ export const userSlice = createSlice({
         } else {
           message.warning(res.message || '服务器异常')
         }
+      }),
+      builder.addCase(sendResume.fulfilled, (state, action: any) => {
+        const res = action?.payload?.data
+        if (res.code === 200) {
+          message.success('投递成功')
+        } else {
+          message.warning(res.message || '服务器异常')
+        }
       })
   },
+  
 })
 
 const { removeUserInfo } = userSlice.actions
