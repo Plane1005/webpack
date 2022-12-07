@@ -1,4 +1,5 @@
-import { createSlice } from '@reduxjs/toolkit'
+import { ICO } from '@/types'
+import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 import { message } from 'antd'
 import { AppDispatch } from './index'
 import { updateInfo, fetchUserInfo, fetchPDF, fetchDingInfo, sendResume } from './reducer/userReducer'
@@ -29,7 +30,7 @@ export const userSlice = createSlice({
   name: 'user',
   initialState,
   reducers: {
-    removeUserInfo(state, action) {
+    removeUserInfo(state: any, action: PayloadAction<ICO>) {
       state.userInfo = action.payload
     },
   },
@@ -77,4 +78,4 @@ export const userSlice = createSlice({
 
 const { removeUserInfo } = userSlice.actions
 
-export const logOut = () => async (dispatch: AppDispatch) => dispatch(removeUserInfo(undefined))
+export const logOut = () => async (dispatch: AppDispatch) => dispatch(removeUserInfo({}))

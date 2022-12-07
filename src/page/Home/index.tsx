@@ -4,11 +4,22 @@ import styled from './style.module.scss'
 
 const Home: React.FC = () => {
   const dispatch = useAppDispatch()
-  const [pagenum, setPagenum] = useState<number>(1) 
+  const [userName,setUserName] = useState('')
+  const [password,setPassword] = useState('')
   
+  const onOk = () => {
+    alert(`${userName} + ${password}`)
+  }
+
   return (
     <div className={styled.home}>
-      123
+      <input onChange={(e) => {
+        setUserName(e.target.value)
+      }}></input>
+      <input type='password' onChange={(e) => {
+        setPassword(e.target.value)
+      }}></input>
+      <button onClick={onOk}>确定</button>
     </div>
   )
 }
