@@ -1,19 +1,12 @@
-import React, { Suspense } from 'react'
-import { BrowserRouter, Route, Routes, Router } from 'react-router-dom'
-import NavWrapper from '@/component/NavWrapper'
-import Login from '@/page/Login'
-import { routerConfig } from './config/router'
-import { Spin } from 'antd'
+import React from 'react'
+import { BrowserRouter } from 'react-router-dom'
+import Layout from './main/Layout'
+import './style.scss'
 
 const App: React.FC = () => {
   return (
     <BrowserRouter>
-      <Routes>
-        <Route path="/login" element={<Login />} />
-        {routerConfig.map((it) => (
-          <Route path={it.path} key={it.path} element={<it.component />} />
-        ))}
-      </Routes>
+      <Layout />
     </BrowserRouter>
   )
 }

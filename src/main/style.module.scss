@@ -1,0 +1,14 @@
+.layout {
+  .header {
+    display: flex;
+    justify-content: space-between;
+    background: #25292e;
+    color: #fff;
+    align-items: center;
+  }
+  .body {
+    height: calc(100vh - 64px);
+    max-height: calc(100vh - 64px);
+    overflow: auto;
+  }
+}

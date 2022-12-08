@@ -1,4 +1,5 @@
-import { lazy } from 'react'
+import React, { lazy } from 'react'
+import Layout from '../main/Layout'
 
 export const routerConfig = [
   {
