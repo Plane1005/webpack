@@ -1,8 +1,8 @@
-import React, { useEffect, useState } from 'react'
+import React, { ReactNode, useEffect, useState } from 'react'
 import { useAppDispatch } from '@/store'
 import styled from './style.module.scss'
 
-const Home: React.FC = () => {
+const Home = () => {
   const dispatch = useAppDispatch()
 
   return (

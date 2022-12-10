@@ -1,6 +1,8 @@
 import React, { useEffect } from 'react'
 import { AppKey, REDIRECT_URI } from '@/utils/index';
 
+declare const window: any;
+
 interface DingType {
   params: string
 }

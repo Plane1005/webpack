@@ -84,11 +84,11 @@ const Login = (props: any) => {
   }, [])
 
   return (
-    <div className="app-root g-login">
+    <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', paddingTop: '15vh' }}>
       <Spin spinning={isSpin} >
       <LoginForm
-        title="师大内推"
-        subTitle="杭师大学生内推平台"
+        title="染疫人员管理系统"
+        subTitle="可视化、信息化的线上管理平台"
         onFinish={async (values) => {
           await handleSubmit(values)
         }}
@@ -207,7 +207,7 @@ const Login = (props: any) => {
       </LoginForm>
       </Spin>
       <Modal
-        visible={modalShow}
+        open={modalShow}
         footer={null}
         onCancel={() => {
           setModalShow(false)

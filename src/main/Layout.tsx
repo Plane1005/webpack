@@ -1,5 +1,10 @@
 import React from 'react'
-import { LaptopOutlined, NotificationOutlined, UserOutlined, LogoutOutlined } from '@ant-design/icons'
+import {
+  LaptopOutlined,
+  NotificationOutlined,
+  UserOutlined,
+  LogoutOutlined,
+} from '@ant-design/icons'
 import { Dropdown, MenuProps, Space } from 'antd'
 import { Breadcrumb, Layout, Menu, theme } from 'antd'
 import { routerConfig } from '../config/router'
@@ -10,11 +15,11 @@ import Login from '@/page/Login'
 
 const { Header, Content, Sider } = Layout
 
-const userMenu: MenuProps['items']= [
+const userMenu: MenuProps['items'] = [
   {
     label: 'Log out',
     key: '1',
-    icon: <LogoutOutlined />
+    icon: <LogoutOutlined />,
   },
 ]
 
@@ -44,10 +49,10 @@ const ILayout: React.FC = () => {
       <Header className={styled.header}>
         <div className={styled.logo} />
         <Dropdown menu={{ items: userMenu }} trigger={['click']}>
-        <Space>
-          <UserOutlined />
-          Jet
-        </Space>
+          <Space>
+            <UserOutlined />
+            Jet
+          </Space>
         </Dropdown>
       </Header>
       <Layout className={styled.body}>
@@ -74,11 +79,9 @@ const ILayout: React.FC = () => {
             }}
           >
             <Routes>
-              <Route path="/login" element={<Login />} />
               {routerConfig.map((it) => (
                 <Route path={it.path} key={it.path} element={<it.component />} />
               ))}
-              <Route element={<NotFound />} />
             </Routes>
           </Content>
         </Layout>

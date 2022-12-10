@@ -1,5 +1,4 @@
 import { createAsyncThunk } from '@reduxjs/toolkit'
-import { switchBase64 } from '@/utils/index'
 import { request, ResponseData } from '@/utils/request'
 
 // 登录接口
@@ -63,7 +62,7 @@ export const fetchPDF = createAsyncThunk('user/fetchPDF', async () => {
     method: 'GET',
     responseType: 'blob',
   }).then(async (res: ResponseData<any>) => {
-      res.data = await switchBase64(res.data)
+      // res.data = await switchBase64(res.data)
       return res
   })
 })
