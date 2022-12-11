@@ -51,7 +51,7 @@ export const objNotEmpty = (obj: object) => {
 export const getUrlParams = (objName: string): object | null => {
   if (objName?.indexOf('?') < 0) return null
   let allParamsArr = objName?.split('?')[1]?.split('&')
-  let returnObj = {}
+  let returnObj: any = {} 
   if (allParamsArr?.length == 0) return null
   for (let i = 0; i < allParamsArr?.length; i++) {
     returnObj[`${allParamsArr?.[i]?.split('=')[0]}`] = allParamsArr?.[i]?.split('=')?.[1]
@@ -62,7 +62,7 @@ export const getUrlParams = (objName: string): object | null => {
 // 防抖
 // 函数触发后立即执行，过delay秒后才能再次执行
 // 如果delay时再次触发，则重新计时
-export function debounce(fn, delay) {
+export function debounce(fn: Function, delay: number) {
   let timer: any = null
   return function () {
     if (timer) {
@@ -82,7 +82,7 @@ export function debounce(fn, delay) {
 //函数触发后立即执行，过delay秒后可再执行
 //如果delay时再次触发，无动作
 //连续发生的事件在delay秒内只执行一次函数
-export function throttle(fn, delay) {
+export function throttle(fn: Function, delay: number) {
   let timer: any = null
   return function () {
     if (!timer) {

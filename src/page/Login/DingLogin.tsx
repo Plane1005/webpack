@@ -16,7 +16,7 @@ const DingLogin: React.FC<DingType> = () => {
     )
     // 实例化对象
     // 监听消息处理方法
-    const handleMessage = (event) => {
+    const handleMessage = (event: { data: any; origin: any; }) => {
       // 获取loginTempCode
       const loginTempCode = event.data
       // 获取消息来源
