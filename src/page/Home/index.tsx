@@ -1,13 +1,35 @@
-import React, { ReactNode, useEffect, useState } from 'react'
-import { useAppDispatch } from '@/store'
+import React, { ReactNode, useEffect, useRef, useState } from 'react'
+import * as echarts from 'echarts'
 import styled from './style.module.scss'
 
+const option = {
+  xAxis: {
+    type: 'category',
+    data: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']
+  },
+  yAxis: {
+    type: 'value'
+  },
+  series: [
+    {
+      data: [150, 230, 224, 218, 135, 147, 260],
+      type: 'line'
+    }
+  ]
+};
+
+
 const Home = () => {
-  const dispatch = useAppDispatch()
+  const chartWapper = useRef<HTMLDivElement>(null)
+
+  useEffect(() => {
+    const chartRef = echarts.init(chartWapper.current as HTMLDivElement)
+    chartRef.setOption(option)
+  }, [])
 
   return (
     <div className={styled.home}>
-      Home
+      <div ref={chartWapper} style={{ width: 500, height: 400 }} />
     </div>
   )
 }

@@ -48,7 +48,7 @@ const ILayout: React.FC = () => {
     <Layout className={styled.layout}>
       <Header className={styled.header}>
         <div className={styled.logo} />
-        <Dropdown menu={{ items: userMenu }} trigger={['click']}>
+        <Dropdown menu={{ items: userMenu }} trigger={['click']} placement="bottom">
           <Space>
             <UserOutlined />
             Jet
