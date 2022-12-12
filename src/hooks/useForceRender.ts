@@ -1,6 +1,6 @@
 import React, { useCallback, useState } from 'react'
 
-export default function useForceRender() {
+export default function useForceRender(): [() => void, number] {
   const [count, setCount] = useState(0)
 
   const forceRender = useCallback(() => {

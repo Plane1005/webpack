@@ -1,4 +1,21 @@
 .home {
+    height: 100%;
+  .cardWrap {
     display: flex;
-    flex-flow: column;
+    justify-content: space-between;
+    height: 100%;
+  }
+  .card {
+    width: 49%;
+    height: 85%;
+    background-color: #fff;
+    padding: 16px 24px;
+    border: 1px solid #f1f1f1;
+    border-radius: 12px;
+    -webkit-border-radius: 12px;
+    -moz-border-radius: 12px;
+    -ms-border-radius: 12px;
+    -o-border-radius: 12px;
+    box-shadow: 0 2px 8px #ccc;
+  }
 }
