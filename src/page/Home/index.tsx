@@ -3,7 +3,106 @@ import * as echarts from 'echarts'
 import geoJson from '@/assets/zj.json'
 import styled from './style.module.scss'
 
-const option = {
+const lineOption = {
+  title: {
+    text: '杭州市染疫人员数量一周走势 （2022.10.10 - 2022.10.16）',
+  },
+  tooltip: {
+    trigger: 'axis',
+    axisPointer: {
+      type: 'cross',
+      crossStyle: {
+        color: '#999'
+      }
+    }
+  },
+  toolbox: {
+    showTitle: false,
+    feature: {
+      dataView: { show: true, readOnly: false },
+      magicType: { show: true, type: ['line', 'bar'] },
+      saveAsImage: { show: true }
+    }
+  },
+  grid: {
+    top: 100, 
+    bottom: 40
+  },
+  legend: {
+    top: 40,
+    data: ['Evaporation', 'Precipitation', 'Temperature']
+  },
+  xAxis: [
+    {
+      type: 'category',
+      data: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
+      axisPointer: {
+        type: 'shadow'
+      }
+    }
+  ],
+  yAxis: [
+    {
+      type: 'value',
+      name: 'Precipitation',
+      min: 0,
+      max: 250,
+      interval: 50,
+      axisLabel: {
+        formatter: '{value} ml'
+      }
+    },
+    {
+      type: 'value',
+      name: 'Temperature',
+      min: 0,
+      max: 25,
+      interval: 5,
+      axisLabel: {
+        formatter: '{value} °C'
+      }
+    }
+  ],
+  series: [
+    {
+      name: 'Evaporation',
+      type: 'bar',
+      tooltip: {
+        valueFormatter: function (value: number) {
+          return value + ' ml';
+        }
+      },
+      data: [
+        2.0, 4.9, 7.0, 23.2, 25.6, 76.7, 135.6, 162.2, 32.6, 20.0, 6.4, 3.3
+      ]
+    },
+    {
+      name: 'Precipitation',
+      type: 'bar',
+      tooltip: {
+        valueFormatter: function (value: number) {
+          return value + ' ml';
+        }
+      },
+      data: [
+        2.6, 5.9, 9.0, 26.4, 28.7, 70.7, 175.6, 182.2, 48.7, 18.8, 6.0, 2.3
+      ]
+    },
+    {
+      name: 'Temperature',
+      type: 'line',
+      yAxisIndex: 1,
+      tooltip: {
+        valueFormatter: function (value: number) {
+          return value + ' °C';
+        }
+      },
+      data: [2.0, 2.2, 3.3, 4.5, 6.3, 10.2, 20.3, 23.4, 23.0, 16.5, 12.0, 6.2]
+    }
+  ]
+};
+
+const mapOption = {
   title: {
     text: '染疫人员数量统计 （2022.10）',
     subtext: '数据来源于统计局',
@@ -29,7 +128,7 @@ const option = {
     realtime: false,
     calculable: true,
     inRange: {
-      color: ['lightskyblue', 'yellow', 'orangered'],
+      color: ['lightgreen', 'yellow', 'orangered'],
     },
   },
   series: [
@@ -58,38 +157,46 @@ const option = {
 }
 
 const Home = () => {
-  const chartWapper = useRef<HTMLDivElement>(null)
-  const chartRef = useRef<any>(null)
+  const mapChartWapper = useRef<HTMLDivElement>(null)
+  const mapChartRef = useRef<any>(null)
+  const lineChartWapper = useRef<HTMLDivElement>(null)
+  const lineChartRef = useRef<any>(null)
 
   useEffect(() => {
-    chartRef.current = echarts.init(chartWapper.current as HTMLDivElement)
-    chartRef.current.hideLoading()
+    mapChartRef.current = echarts.init(mapChartWapper.current as HTMLDivElement)
+    mapChartRef.current.hideLoading()
     echarts.registerMap('浙江', geoJson)
-    chartRef.current.setOption(option)
+    mapChartRef.current.setOption(mapOption)
+    lineChartRef.current = echarts.init(lineChartWapper.current as HTMLDivElement)
+    lineChartRef.current.setOption(lineOption)
   }, [])
 
   useEffect(() => {
     window.addEventListener('resize', () => {
-      chartRef.current?.resize();
+      mapChartRef.current?.resize();
+      lineChartRef.current?.resize();
     })
     return () => {
       window.removeEventListener('resize', () => {
-        chartRef.current?.resize();
+        mapChartRef.current?.resize();
+        lineChartRef.current?.resize();
       })
     }
   }, []);
 
   useEffect(() => {
     setTimeout(() => {
-      chartRef.current?.resize();
+      mapChartRef.current?.resize();
+      lineChartRef.current?.resize();
     }, 200)
   }, []);
 
   return (
     <div className={styled.home}>
+      <div className={styled.title}>浙江省染疫人员数量统计大盘</div>
       <div className={styled.cardWrap}>
-        <div ref={chartWapper} className={styled.card} />
-        <div className={styled.card}></div>
+        <div ref={mapChartWapper} className={styled.card} />
+        <div ref={lineChartWapper} className={styled.card}></div>
       </div>
     </div>
   )

@@ -5,6 +5,7 @@
     background: #25292e;
     color: #fff;
     align-items: center;
+    padding-left: 20px;
     .logo {
       height: 50px;
       width: 200px;
@@ -20,8 +21,11 @@
       }
     }
   }
-  .body {
+  .content {
+    padding: 24px 36px;
+    margin: 0;
     height: calc(100vh - 64px);
+    min-height: calc(100vh - 64px);
     max-height: calc(100vh - 64px);
     overflow: auto;
   }

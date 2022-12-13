@@ -17,7 +17,7 @@ const commonConfig = {
   output: {
     filename: 'js/[name].js',
     path: resolveApp('./build'),
-    // publicPath: '/'
+    publicPath: '/' // 不开启会导致刷新后 main.js 路径错误
     // assetModuleFilename: "img/[name][hash:6][ext]"
   },
   externals: {

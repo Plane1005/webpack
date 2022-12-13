@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { Suspense } from 'react'
 import {
   LaptopOutlined,
   NotificationOutlined,
@@ -8,10 +8,9 @@ import {
 import { Dropdown, MenuProps, Space } from 'antd'
 import { Breadcrumb, Layout, Menu, theme } from 'antd'
 import { routerConfig } from '../config/router'
-import { Route, Routes } from 'react-router-dom'
-import NotFound from './NotFound'
+import { Outlet, Route, Routes, useNavigate } from 'react-router-dom'
+import menuData from '../config/menu'
 import styled from './style.module.scss'
-import Login from '@/page/Login'
 
 const { Header, Content, Sider } = Layout
 
@@ -23,27 +22,16 @@ const userMenu: MenuProps['items'] = [
   },
 ]
 
-const items2: MenuProps['items'] = [UserOutlined, LaptopOutlined, NotificationOutlined].map(
-  (icon, index) => {
-    const key = String(index + 1)
+const ILayout = () => {
+  console.log('Layout Render')
 
-    return {
-      key: `sub${key}`,
-      icon: React.createElement(icon),
-      label: `subnav ${key}`,
+  const navigate = useNavigate()
 
-      children: new Array(4).fill(null).map((_, j) => {
-        const subKey = index * 4 + j + 1
-        return {
-          key: subKey,
-          label: `option${subKey}`,
-        }
-      }),
-    }
+  const menuClick = (item: { keyPath: string[] }) => {
+    console.log(item)
+    navigate(item.keyPath.reverse().join('/'))
   }
-)
 
-const ILayout: React.FC = () => {
   return (
     <Layout className={styled.layout}>
       <Header className={styled.header}>
@@ -55,29 +43,21 @@ const ILayout: React.FC = () => {
           </Space>
         </Dropdown>
       </Header>
-      <Layout className={styled.body}>
+      <Layout>
         <Sider width={200}>
           <Menu
             mode="inline"
-            defaultSelectedKeys={['1']}
-            defaultOpenKeys={['sub1']}
-            style={{ height: '100%', borderRight: 0 }}
-            items={items2}
+            defaultSelectedKeys={['']}
+            style={{ height: '100%' }}
+            items={menuData}
+            onClick={menuClick}
           />
         </Sider>
         <Layout>
-          <Content
-            style={{
-              padding: '24px 36px',
-              margin: 0,
-              minHeight: 280,
-            }}
-          >
-            <Routes>
-              {routerConfig.map((it) => (
-                <Route path={it.path} key={it.path} element={<it.component />} />
-              ))}
-            </Routes>
+          <Content className={styled.content}>
+            <Suspense fallback={<h1>loading......</h1>}>
+              <Outlet />
+            </Suspense>
           </Content>
         </Layout>
       </Layout>
