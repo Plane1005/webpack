@@ -48,7 +48,7 @@ const ILayout = () => {
           <Menu
             mode="inline"
             defaultSelectedKeys={['']}
-            style={{ height: '100%' }}
+            style={{ height: '100%', boxShadow: '7px 0 5px -5px #ddd' }}
             items={menuData}
             onClick={menuClick}
           />
