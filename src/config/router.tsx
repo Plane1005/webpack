@@ -10,8 +10,8 @@ export const routerConfig = [
     element: Home
   },
   {
-    path: '/person/list',
-    name: '染疫人员管理',
+    path: '/person',
+    name: '常住人员管理',
     element: lazy(() => import('@/page/person-list'))
   }
 ]

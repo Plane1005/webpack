@@ -87,7 +87,7 @@ const Login = (props: any) => {
     <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', paddingTop: '15vh' }}>
       <Spin spinning={isSpin} >
       <LoginForm
-        title="染疫人员管理系统"
+        title="社区常住人员管理系统"
         subTitle="可视化、信息化的线上管理平台"
         onFinish={async (values) => {
           await handleSubmit(values)
