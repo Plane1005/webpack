@@ -1,11 +1,19 @@
 .tablehead {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  height: 70px;
-  padding: 0 16px;
-  border-bottom: 1px solid #ddd;
+  .table_container {
+    padding: 24px;
+    background-color: #fff;
+    border-radius: 8px;
+    margin-bottom: 24px;
+  }
   .title {
     font-size: 20px;
+  }
+  .toolbar {
+    margin-bottom: 24px;
+    display: flex;
+    justify-content: end;
+    button {
+      margin-left: 24px;
+    }
   }
 }

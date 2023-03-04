@@ -43,3 +43,14 @@ interface IOption {
   label: number | string
   value: number | string
 }
+
+interface IFilterForm {
+  name: string;
+  label: string;
+  component: JSX.Element
+}
+
+interface IDrawerInfo {
+  visible: boolean;
+  data?: any
+}

@@ -5,7 +5,7 @@ import styled from './style.module.scss'
 
 const lineOption = {
   title: {
-    text: '杭州市染疫人员数量一周走势 （2022.10.10 - 2022.10.16）',
+    text: '社区区块常住人员走势',
   },
   tooltip: {
     trigger: 'axis',
@@ -35,7 +35,7 @@ const lineOption = {
   xAxis: [
     {
       type: 'category',
-      data: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
+      data: ['1月', '2月', '3月', '4月', '5月', '6月', '7月'],
       axisPointer: {
         type: 'shadow'
       }
@@ -44,68 +44,68 @@ const lineOption = {
   yAxis: [
     {
       type: 'value',
-      name: 'Precipitation',
+      name: '人口数',
       min: 0,
-      max: 250,
+      max: 300,
       interval: 50,
       axisLabel: {
-        formatter: '{value} ml'
+        formatter: '{value} 人'
       }
     },
     {
       type: 'value',
-      name: 'Temperature',
-      min: 0,
-      max: 25,
+      name: '增长率',
+      min: -10,
+      max: 10,
       interval: 5,
       axisLabel: {
-        formatter: '{value} °C'
+        formatter: '{value} %'
       }
     }
   ],
   series: [
     {
-      name: 'Evaporation',
+      name: '迁出人数',
       type: 'bar',
       tooltip: {
         valueFormatter: function (value: number) {
-          return value + ' ml';
+          return value + ' 人';
         }
       },
       data: [
-        2.0, 4.9, 7.0, 23.2, 25.6, 76.7, 135.6, 162.2, 32.6, 20.0, 6.4, 3.3
+        20, 49, 70, 232, 256, 77, 136, 162, 36, 20, 64, 33
       ]
     },
     {
-      name: 'Precipitation',
+      name: '迁入人数',
       type: 'bar',
       tooltip: {
         valueFormatter: function (value: number) {
-          return value + ' ml';
+          return value + ' 人';
         }
       },
       data: [
-        2.6, 5.9, 9.0, 26.4, 28.7, 70.7, 175.6, 182.2, 48.7, 18.8, 6.0, 2.3
+        26, 59, 90, 24, 27, 77, 176, 182, 287, 188, 60, 23
       ]
     },
     {
-      name: 'Temperature',
+      name: '增长率',
       type: 'line',
       yAxisIndex: 1,
       tooltip: {
         valueFormatter: function (value: number) {
-          return value + ' °C';
+          return value + ' %';
         }
       },
-      data: [2.0, 2.2, 3.3, 4.5, 6.3, 10.2, 20.3, 23.4, 23.0, 16.5, 12.0, 6.2]
+      data: [2.0, 2.2, 3.3, 4.5, 6.3, 8.2, 9.3, -3.4, -4.0, -6.5, -7.0, -6.2]
     }
   ]
 };
 
 const mapOption = {
   title: {
-    text: '染疫人员数量统计 （2022.10）',
-    subtext: '数据来源于统计局',
+    text: '社区区块常住人员统计 （2022.10）',
+    subtext: '数据来源于社区统计',
   },
   tooltip: {
     trigger: 'item',
@@ -123,7 +123,7 @@ const mapOption = {
   },
   visualMap: {
     min: 100,
-    max: 5000,
+    max: 2000,
     text: ['High', 'Low'],
     realtime: false,
     calculable: true,
@@ -140,17 +140,10 @@ const mapOption = {
         show: true,
       },
       data: [
-        { name: '杭州市', value: 4800 },
-        { name: '湖州市', value: 1547 },
-        { name: '嘉兴市', value: 316 },
-        { name: '舟山市', value: 2022 },
-        { name: '绍兴市', value: 2404 },
-        { name: '宁波市', value: 1068 },
-        { name: '金华市', value: 3765 },
-        { name: '衢州市', value: 4518 },
-        { name: '丽水市', value: 55 },
-        { name: '温州市', value: 2190 },
-        { name: '台州市', value: 491 },
+        { name: 'A区块', value: 1800 },
+        { name: 'B区块', value: 1547 },
+        { name: 'C区块', value: 900 },
+        { name: 'D区块', value: 200 },
       ],
     },
   ],
@@ -193,7 +186,7 @@ const Home = () => {
 
   return (
     <div className={styled.home}>
-      <div className={styled.title}>浙江省染疫人员数量统计大盘</div>
+      <div className={styled.title}>社区常住人员数量统计大盘</div>
       <div className={styled.cardWrap}>
         <div ref={mapChartWapper} className={styled.card} />
         <div ref={lineChartWapper} className={styled.card}></div>

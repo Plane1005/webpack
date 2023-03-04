@@ -10,17 +10,17 @@ export enum VisibleEnum {
 }
 
 export enum GenderEnum {
-  女,
-  男,
+  Male = '男',
+  Female = '女',
 }
 
-export enum EpidemicEnum {
+export enum LiveEnum {
   Close = '密接',
   Asymptomatic = '无症状',
   Confirmed = '确诊',
 }
 
-export enum EpidemicColorEnum {
+export enum LiveColorEnum {
   Close = 'blue',
   Asymptomatic = 'warning',
   Confirmed = 'red',

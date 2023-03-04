@@ -4,3 +4,13 @@ body, #root {
   max-height: 100vh;
   overflow: auto;
 }
+
+.ant-picker {
+  width: 100%;
+}
+
+.flex-row-end {
+  display: flex;
+  justify-content: end;
+  align-items: center;
+}

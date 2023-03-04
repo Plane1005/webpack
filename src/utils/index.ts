@@ -1,3 +1,4 @@
+import { IOption } from '@/types'
 import { message } from 'antd'
 
 export const AgentId: string = '1384166309'
@@ -51,7 +52,7 @@ export const objNotEmpty = (obj: object) => {
 export const getUrlParams = (objName: string): object | null => {
   if (objName?.indexOf('?') < 0) return null
   let allParamsArr = objName?.split('?')[1]?.split('&')
-  let returnObj: any = {} 
+  let returnObj: any = {}
   if (allParamsArr?.length == 0) return null
   for (let i = 0; i < allParamsArr?.length; i++) {
     returnObj[`${allParamsArr?.[i]?.split('=')[0]}`] = allParamsArr?.[i]?.split('=')?.[1]
@@ -92,4 +93,13 @@ export function throttle(fn: Function, delay: number) {
       }, delay)
     }
   }
+}
+
+// enum 转 option
+export function enum2Option(enu: any): IOption[] {
+  const output = []
+  for (const key in enu) {
+    output.push({ value: key, label: enu[key] })
+  }
+  return output
 }
