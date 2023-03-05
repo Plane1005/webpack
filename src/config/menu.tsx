@@ -19,12 +19,12 @@ const menuData = [
     icon: <NodeIndexOutlined />,
   },
   {
-    key: 'access',
-    label: '进出权限管理',
+    key: 'inout',
+    label: '限行权限管理',
     icon: <AuditOutlined />,
   },
   {
-    key: 'notice',
+    key: 'notification',
     label: '通知公告管理',
     icon: <CalendarOutlined />,
   },

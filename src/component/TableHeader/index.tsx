@@ -5,6 +5,7 @@ import React, { ReactNode } from 'react'
 import styled from './style.module.scss'
 
 interface PropsType {
+  title: string;
   form: FormInstance<any>
   needToolbar: boolean
   needAddBtn: boolean
@@ -24,6 +25,7 @@ export type TableFilterPropsType = Partial<PropsType>
 const TableFilter = (props: TableFilterPropsType) => {
   const {
     form,
+    title = '',
     needToolbar = true,
     needAddBtn = true,
     needExtraBtn = true,
@@ -52,7 +54,8 @@ const TableFilter = (props: TableFilterPropsType) => {
 
   return (
     <div className={styled.tablehead}>
-      <Form form={form} className={styled.table_container} onFinish={onSubmit} onReset={onReset}>
+      {title && <div className={styled.title}>{title}</div>}
+      {formItems.length ? <Form form={form} className={styled.table_container} onFinish={onSubmit} onReset={onReset}>
         <Row gutter={48}>
           {formItems.map((it) => (
             <Col span={6} key={it.label}>
@@ -72,7 +75,7 @@ const TableFilter = (props: TableFilterPropsType) => {
             </Form.Item>
           </Col>
         </Row>
-      </Form>
+      </Form> : <></>}
       {needToolbar && <div className={styled.toolbar}>
         {toolbarExtra}
         {needExtraBtn && <Button icon={<ExportOutlined />} onClick={onExport}>导出Excel</Button>}

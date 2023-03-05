@@ -25,3 +25,8 @@ export enum LiveColorEnum {
   Asymptomatic = 'warning',
   Confirmed = 'red',
 }
+
+export enum InOutEnum {
+  Allow = '允许',
+  Ban = '限行'
+}

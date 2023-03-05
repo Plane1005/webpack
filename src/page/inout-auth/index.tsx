@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import { Button, Col, DatePicker, Form, Input, Row, Select, Space, Table, Tag } from 'antd'
 import type { ColumnsType } from 'antd/es/table'
-import { LiveColorEnum, LiveEnum, GenderEnum } from '@/utils/enums'
+import { InOutEnum, LiveEnum, GenderEnum } from '@/utils/enums'
 import { enum2Option } from '@/utils'
 import styled from './style.module.scss'
 import TableFilter from '@/component/TableHeader'
@@ -18,6 +18,8 @@ interface DataType {
   liveType: keyof typeof LiveEnum
 }
 
+const { RangePicker } = DatePicker;
+
 const formItems = [
   {
     name: 'name',
@@ -25,9 +27,9 @@ const formItems = [
     component: <Input placeholder='请输入姓名'/>,
   },
   {
-    name: 'gender',
-    label: '性别',
-    component: <Select options={enum2Option(GenderEnum)} placeholder='请选择性别'/>,
+    name: 'status',
+    label: '限行状态',
+    component: <Select options={enum2Option(InOutEnum)} placeholder='请选择限行状态'/>,
   },
   {
     name: 'address',
@@ -40,15 +42,10 @@ const formItems = [
     component: <Input placeholder='请输入手机号'/>,
   },
   {
-    name: 'time',
-    label: '入住时间',
-    component: <DatePicker placeholder='请选择入住时间'/>,
+    name: 'banTime',
+    label: '限行时间段',
+    component: <RangePicker showTime />,
   },
-  {
-    name: 'liveType',
-    label: '居住类别',
-    component: <Select options={enum2Option(LiveEnum)} placeholder='请选择居住类别'/>,
-  }
 ]
 
 const columns: ColumnsType<DataType> = [
@@ -56,17 +53,6 @@ const columns: ColumnsType<DataType> = [
     title: '姓名',
     dataIndex: 'name',
     key: 'name',
-  },
-  {
-    title: '性别',
-    dataIndex: 'gender',
-    key: 'gender',
-    render: (value: keyof typeof GenderEnum) => GenderEnum[value],
-  },
-  {
-    title: '出生日期',
-    dataIndex: 'birth',
-    key: 'birth',
   },
   {
     title: '住址',
@@ -79,17 +65,14 @@ const columns: ColumnsType<DataType> = [
     key: 'phone',
   },
   {
-    title: '入住时间',
-    dataIndex: 'time',
-    key: 'time',
+    title: '限行状态',
+    dataIndex: 'status',
+    key: 'status',
   },
   {
-    title: '居住类别',
-    key: 'liveType',
-    dataIndex: 'liveType',
-    render: (value: keyof typeof LiveEnum) => (
-      <Tag color={LiveColorEnum[value]}>{LiveEnum[value]}</Tag>
-    ),
+    title: '限行时间段',
+    dataIndex: 'banTime',
+    key: 'banTime',
   },
   {
     title: '操作',
@@ -98,8 +81,7 @@ const columns: ColumnsType<DataType> = [
       <Space size="middle">
         <a>编辑</a>
         <a>复制</a>
-        <a>查看轨迹</a>
-        <a>迁出</a>
+        <a>删除</a>
       </Space>
     ),
   },
@@ -132,10 +114,10 @@ const data: DataType[] = [
   },
 ]
 
-const PersonList = () => {
+const InOutAuth = () => {
   const [drawerForm] = useForm()
   const [page, setPage] = useState(1);
-  const [drawerInfo, setDrawerInfo] = useState<IDrawerInfo>({ visible: true });
+  const [drawerInfo, setDrawerInfo] = useState<IDrawerInfo>({ visible: false });
   
   const onFilter = (values: any) => {
     
@@ -148,9 +130,9 @@ const PersonList = () => {
   return (
     <div>
       <AddDrawer form={drawerForm} data={drawerInfo} setData={setDrawerInfo} formItems={formItems} />
-      <TableFilter title='常住人员管理' onAddBtnClick={onAddBtnClick} onFilter={onFilter} formItems={formItems} columns={columns} dataSource={data} setPage={setPage}/>
+      <TableFilter title='限行权限管理' onAddBtnClick={onAddBtnClick} onFilter={onFilter} formItems={formItems} columns={columns} dataSource={data} setPage={setPage}/>
     </div>
   )
 }
 
-export default PersonList
+export default InOutAuth
