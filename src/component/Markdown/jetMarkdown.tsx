@@ -1,5 +1,19 @@
 import React, { useState, useEffect, useRef } from 'react'
 import { message, Upload, Popover, Modal, UploadFile } from 'antd'
+import {
+  BoldOutlined,
+  CheckSquareOutlined,
+  AreaChartOutlined,
+  TagOutlined,
+  TagsOutlined,
+  UnorderedListOutlined,
+  LineOutlined,
+  FormatPainterOutlined,
+  PaperClipOutlined,
+  CloudUploadOutlined,
+  DatabaseOutlined,
+  SaveOutlined
+} from '@ant-design/icons'
 import marked from 'marked'
 import hljs from 'highlight.js'
 import './highlight.scss'
@@ -38,7 +52,7 @@ const Marked = () => {
     let content = window.sessionStorage.getItem('content')
     // console.log(content);
     if (content && document) {
-      (document.getElementById('mark') as HTMLTextAreaElement).value = content
+      ;(document.getElementById('mark') as HTMLTextAreaElement).value = content
       setText(content)
     }
   }, [])
@@ -92,7 +106,7 @@ const Marked = () => {
     setShowlist(false)
     Modal.confirm({
       title: '提示',
-      content: '您真的要提交吗，一旦提交不可再次修改',
+      content: '确定要提交吗',
       onOk() {
         message.success('提交成功')
       },
@@ -176,37 +190,38 @@ const Marked = () => {
           <ul>
             <li onClick={() => addMark('****', 0)}>
               <button>
+                <BoldOutlined />
                 加粗
               </button>
             </li>
             <li onClick={() => addMark('# ', 1)}>
               <button>
+                <TagOutlined />
                 标题
               </button>
             </li>
             <li onClick={() => addMark('## ', 2)}>
               <button>
+                <TagsOutlined />
                 二级
               </button>
             </li>
             <li onClick={() => addMark('- ', 3)}>
               <button>
+                <UnorderedListOutlined />
                 列表
               </button>
             </li>
             <li onClick={() => addMark('\n\n---\n', 4)}>
               <button>
+                <LineOutlined />
                 分割线
               </button>
             </li>
             <li onClick={() => addMark('> ', 5)}>
               <button>
+                <FormatPainterOutlined />
                 引用
-              </button>
-            </li>
-            <li onClick={() => addMark('\n``` \n\n```\n', 6)}>
-              <button>
-                代码块
               </button>
             </li>
             <li>|</li>
@@ -216,11 +231,13 @@ const Marked = () => {
               }}
             >
               <button>
+                <PaperClipOutlined />
                 链接
               </button>
             </li>
             <li onClick={() => {}}>
               <button>
+                <AreaChartOutlined />
                 图片
               </button>
             </li>
@@ -260,29 +277,28 @@ const Marked = () => {
             >
               <li>
                 <button>
+                  <CloudUploadOutlined />
                   上传
                 </button>
               </li>
             </Upload>
-            <Popover
-              trigger="click"
-              placement="bottom"
-              content={content}
-              title="已上传文件列表"
-            >
+            <Popover trigger="click" placement="bottom" content={content} title="已上传文件列表">
               <li>
                 <button>
+                  <DatabaseOutlined />
                   文件列表 ▾
                 </button>
               </li>
             </Popover>
             <li onClick={() => saveMark()}>
               <button>
+                <SaveOutlined />
                 保存
               </button>
             </li>
             <li onClick={submitMark}>
               <button>
+                <CheckSquareOutlined />
                 提交
               </button>
             </li>

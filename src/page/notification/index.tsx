@@ -8,6 +8,7 @@ import TableFilter from '@/component/TableHeader'
 import { useForm } from 'antd/es/form/Form'
 import { IDrawerInfo } from '@/types'
 import AddDrawer from '@/component/AddDrawer'
+import { useNavigate } from 'react-router-dom'
 
 interface DataType {
   key: string
@@ -70,15 +71,14 @@ const data: DataType[] = [
 ]
 
 const Notification = () => {
+  const navigate = useNavigate()
   const [page, setPage] = useState(1);
-  
-  const onFilter = (values: any) => {
-    
-  }
 
   return (
     <div>
-      <TableFilter needExtraBtn={false} title='通知公告管理' columns={columns} dataSource={data} setPage={setPage}/>
+      <TableFilter needExtraBtn={false} title='通知公告管理' columns={columns} dataSource={data} setPage={setPage} onAddBtnClick={() => {
+        navigate('/mark', { replace: true })
+      }}/>
     </div>
   )
 }
