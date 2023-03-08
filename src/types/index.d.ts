@@ -47,7 +47,8 @@ interface IOption {
 interface IFilterForm {
   name: string;
   label: string;
-  component: JSX.Element
+  component: JSX.Element;
+  span?: number;
 }
 
 interface IDrawerInfo {

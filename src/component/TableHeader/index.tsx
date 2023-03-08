@@ -58,7 +58,7 @@ const TableFilter = (props: TableFilterPropsType) => {
       {formItems.length ? <Form form={form} className={styled.table_container} onFinish={onSubmit} onReset={onReset}>
         <Row gutter={48}>
           {formItems.map((it) => (
-            <Col span={6} key={it.label}>
+            <Col span={it.span || 6} key={it.label}>
               <Form.Item label={it.label} name={it.name}>
                 {it.component}
               </Form.Item>

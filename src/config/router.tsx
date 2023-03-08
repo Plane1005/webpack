@@ -28,5 +28,10 @@ export const routerConfig = [
     path: '/mark',
     name: '通知编辑',
     element: lazy(() => import('@/page/notification/mark'))
+  },
+  {
+    path: '/account',
+    name: '通知编辑',
+    element: lazy(() => import('@/page/account-auth'))
   }
 ]
