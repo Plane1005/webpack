@@ -33,5 +33,10 @@ export const routerConfig = [
     path: '/account',
     name: '通知编辑',
     element: lazy(() => import('@/page/account-auth'))
+  },
+  {
+    path: '/locus',
+    name: '轨迹查询',
+    element: lazy(() => import('@/page/locus'))
   }
 ]
