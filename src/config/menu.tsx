@@ -20,7 +20,7 @@ const menuData = [
   },
   {
     key: 'inout',
-    label: '限行权限管理',
+    label: '访客进出管理',
     icon: <AuditOutlined />,
   },
   {

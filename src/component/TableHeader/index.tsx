@@ -12,6 +12,7 @@ interface PropsType {
   needToolbar: boolean
   needAddBtn: boolean
   needExtraBtn: boolean
+  loading: boolean
   columns: any
   dataSource: any
   formItems: IFilterForm[]
@@ -35,6 +36,7 @@ function s2ab(s: string): ArrayBuffer {
 const TableFilter = (props: TableFilterPropsType) => {
   const {
     form,
+    loading = false,
     title = '',
     needToolbar = true,
     needAddBtn = true,
@@ -92,7 +94,6 @@ const TableFilter = (props: TableFilterPropsType) => {
   }
 
   const onSubmit = (values?: any) => {
-    console.log('filter values', values)
     onFilter?.(values || form?.getFieldsValue())
   }
 
@@ -110,19 +111,22 @@ const TableFilter = (props: TableFilterPropsType) => {
       {formItems.length ? (
         <Form form={form} className={styled.table_container} onFinish={onSubmit} onReset={onReset}>
           <Row gutter={48}>
-            {formItems.map((it) => (
-              <Col span={it.span || 6} key={it.label}>
-                <Form.Item label={it.label} name={it.name}>
-                  {it.component}
-                </Form.Item>
-              </Col>
-            ))}
+            {formItems.map(
+              (it) =>
+                !it?.hiddenFilter && (
+                  <Col span={it.span || 6} key={it.label}>
+                    <Form.Item label={it.label} name={it.name}>
+                      {it.component}
+                    </Form.Item>
+                  </Col>
+                )
+            )}
             <Col span={6}>
               <Form.Item>
                 <Button htmlType="reset" style={{ width: 80, marginRight: 12 }}>
                   重置
                 </Button>
-                <Button type="primary" htmlType="submit" style={{ width: 80 }}>
+                <Button type="primary" htmlType="submit" style={{ width: 80 }} loading={loading}>
                   提交
                 </Button>
               </Form.Item>
@@ -151,7 +155,8 @@ const TableFilter = (props: TableFilterPropsType) => {
         columns={columns}
         dataSource={dataSource}
         className={styled.table_container}
-        pagination={{ showSizeChanger: false, onChange: onPageChange }}
+        pagination={{ showSizeChanger: false }}
+        loading={loading}
       />
     </div>
   )

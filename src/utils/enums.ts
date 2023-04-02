@@ -15,15 +15,16 @@ export enum GenderEnum {
 }
 
 export enum LiveEnum {
-  Close = '密接',
-  Asymptomatic = '无症状',
-  Confirmed = '确诊',
+  Owner = '业主',
+  Long = '长租',
+  Short = '短租',
 }
 
 export enum LiveColorEnum {
-  Close = 'blue',
-  Asymptomatic = 'warning',
-  Confirmed = 'red',
+  Owner = 'blue',
+  Long = 'purple',
+  Short = 'green',
+  Leave = 'grey'
 }
 
 export enum InOutEnum {
@@ -34,7 +35,7 @@ export enum InOutEnum {
 export enum ModuleEnum {
   Person = '常住人员管理',
   Locus = '人员轨迹查询',
-  Inout = '限行权限管理',
+  Inout = '访客进出管理',
   Notification = '通知公告管理',
   Account = '账号管理',
 }

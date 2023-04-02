@@ -1,4 +1,4 @@
-import React, { Suspense } from 'react'
+import React, { Suspense, useState } from 'react'
 import {
   LaptopOutlined,
   NotificationOutlined,
@@ -23,8 +23,7 @@ const userMenu: MenuProps['items'] = [
 ]
 
 const ILayout = () => {
-  console.log('Layout Render')
-
+  const [collapsed, setCollapsed] = useState(false);
   const navigate = useNavigate()
 
   const menuClick = (item: { keyPath: string[] }) => {
@@ -44,7 +43,7 @@ const ILayout = () => {
         </Dropdown>
       </Header>
       <Layout>
-        <Sider width={200}>
+        <Sider width={200} collapsible collapsed={collapsed} onCollapse={(value) => setCollapsed(value)}>
           <Menu
             mode="inline"
             defaultSelectedKeys={['']}

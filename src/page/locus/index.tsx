@@ -1,5 +1,6 @@
 import { List, Select } from 'antd'
 import React, { useEffect, useRef } from 'react'
+// @ts-ignore
 import { Map, Marker, BMapGL } from 'react-bmapgl'
 
 const data = [

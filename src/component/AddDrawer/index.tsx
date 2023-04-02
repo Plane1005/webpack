@@ -9,6 +9,8 @@ interface PropsType {
   title: ReactNode
   formItems: IFilterForm[]
   onAdd: (values: any) => void
+  onEdit: (values: any) => void
+  onCopy: (values: any) => void
   data: IDrawerInfo
   setData: React.Dispatch<React.SetStateAction<IDrawerInfo>>
 }
@@ -16,11 +18,25 @@ interface PropsType {
 export type AddDrawerPropsType = Partial<PropsType>
 
 const AddDrawer = (props: AddDrawerPropsType) => {
-  const { title = '新增', data, form, formItems = [], onAdd, setData } = props
+  const { title = '新增', data, form, formItems = [], onAdd, setData, onEdit, onCopy } = props
 
-  const handleSubmit = (values: any) => {
-    console.log('drawer add values', form?.getFieldsValue())
-    onAdd?.(form?.getFieldsValue())
+  const handleSubmit = () => {
+    form
+      ?.validateFields()
+      .then(() => {
+        const values = form?.getFieldsValue();
+        console.log('drawer add values', form?.getFieldsValue())
+        if (data?.isEdit) {
+          onEdit?.(values)
+          return;
+        }
+        if (data?.isCopy) {
+          onCopy?.(values)
+          return;
+        }
+        onAdd?.(values)
+      })
+      .catch(() => {})
   }
 
   const resetFilter = () => {
@@ -37,8 +53,9 @@ const AddDrawer = (props: AddDrawerPropsType) => {
       className={styled.add_drawer}
       title={title}
       onClose={onClose}
+      destroyOnClose
       footer={
-        <div className='flex-row-end'>
+        <div className="flex-row-end">
           <Button htmlType="reset" style={{ width: 80, marginRight: 12 }} onClick={resetFilter}>
             重置
           </Button>
@@ -50,7 +67,7 @@ const AddDrawer = (props: AddDrawerPropsType) => {
     >
       <Form form={form} initialValues={data?.data}>
         {formItems.map((it) => (
-          <Form.Item label={it.label} name={it.name}>
+          <Form.Item label={it.label} name={it.name} required rules={[{ required: true }]}>
             {it.component}
           </Form.Item>
         ))}

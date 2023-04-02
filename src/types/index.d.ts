@@ -49,9 +49,12 @@ interface IFilterForm {
   label: string;
   component: JSX.Element;
   span?: number;
+  hiddenFilter?: boolean;
 }
 
 interface IDrawerInfo {
   visible: boolean;
+  isEdit?: boolean;
+  isCopy?: boolean;
   data?: any
 }

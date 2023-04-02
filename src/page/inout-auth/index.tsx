@@ -130,7 +130,7 @@ const InOutAuth = () => {
   return (
     <div>
       <AddDrawer form={drawerForm} data={drawerInfo} setData={setDrawerInfo} formItems={formItems} />
-      <TableFilter title='限行权限管理' onAddBtnClick={onAddBtnClick} onFilter={onFilter} formItems={formItems} columns={columns} dataSource={data} setPage={setPage}/>
+      <TableFilter title='访客进出管理' onAddBtnClick={onAddBtnClick} onFilter={onFilter} formItems={formItems} columns={columns} dataSource={data} setPage={setPage}/>
     </div>
   )
 }

@@ -3,6 +3,8 @@ import { createRoot } from 'react-dom/client';
 import { Provider } from 'react-redux'
 import { store } from './store/index'
 import { ConfigProvider } from 'antd'
+import dayjs from 'dayjs';
+import 'dayjs/locale/zh-cn';
 import zhCN from 'antd/es/locale/zh_CN' // 引入中文包
 import App from './App'
 
