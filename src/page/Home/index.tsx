@@ -1,7 +1,10 @@
-import React, { ReactNode, useEffect, useRef, useState } from 'react'
+import React, { ReactNode, useEffect, useMemo, useRef, useState } from 'react'
 import * as echarts from 'echarts'
 import geoJson from '@/assets/zj.json'
 import styled from './style.module.scss'
+import { Button } from 'antd';
+
+const coefficient = [0.4, 0.35, 0.2, 0.05];
 
 const lineOption = {
   title: {
@@ -12,34 +15,34 @@ const lineOption = {
     axisPointer: {
       type: 'cross',
       crossStyle: {
-        color: '#999'
-      }
-    }
+        color: '#999',
+      },
+    },
   },
   toolbox: {
     showTitle: false,
     feature: {
       dataView: { show: true, readOnly: false },
       magicType: { show: true, type: ['line', 'bar'] },
-      saveAsImage: { show: true }
-    }
+      saveAsImage: { show: true },
+    },
   },
   grid: {
-    top: 100, 
-    bottom: 40
+    top: 100,
+    bottom: 40,
   },
   legend: {
     top: 40,
-    data: ['Evaporation', 'Precipitation', 'Temperature']
+    data: ['Evaporation', 'Precipitation', 'Temperature'],
   },
   xAxis: [
     {
       type: 'category',
       data: ['1月', '2月', '3月', '4月', '5月', '6月', '7月'],
       axisPointer: {
-        type: 'shadow'
-      }
-    }
+        type: 'shadow',
+      },
+    },
   ],
   yAxis: [
     {
@@ -49,8 +52,8 @@ const lineOption = {
       max: 300,
       interval: 50,
       axisLabel: {
-        formatter: '{value} 人'
-      }
+        formatter: '{value} 人',
+      },
     },
     {
       type: 'value',
@@ -59,48 +62,11 @@ const lineOption = {
       max: 10,
       interval: 5,
       axisLabel: {
-        formatter: '{value} %'
-      }
-    }
+        formatter: '{value} %',
+      },
+    },
   ],
-  series: [
-    {
-      name: '迁出人数',
-      type: 'bar',
-      tooltip: {
-        valueFormatter: function (value: number) {
-          return value + ' 人';
-        }
-      },
-      data: [
-        20, 49, 70, 232, 256, 77, 136, 162, 36, 20, 64, 33
-      ]
-    },
-    {
-      name: '迁入人数',
-      type: 'bar',
-      tooltip: {
-        valueFormatter: function (value: number) {
-          return value + ' 人';
-        }
-      },
-      data: [
-        26, 59, 90, 24, 27, 77, 176, 182, 287, 188, 60, 23
-      ]
-    },
-    {
-      name: '增长率',
-      type: 'line',
-      yAxisIndex: 1,
-      tooltip: {
-        valueFormatter: function (value: number) {
-          return value + ' %';
-        }
-      },
-      data: [2.0, 2.2, 3.3, 4.5, 6.3, 8.2, 9.3, -3.4, -4.0, -6.5, -7.0, -6.2]
-    }
-  ]
-};
+}
 
 const mapOption = {
   title: {
@@ -154,39 +120,84 @@ const Home = () => {
   const mapChartRef = useRef<any>(null)
   const lineChartWapper = useRef<HTMLDivElement>(null)
   const lineChartRef = useRef<any>(null)
+  const [index, setIndex] = useState(1);
+
+  const text = ['总和', 'A区块', 'B区块', 'C区块', 'D区块']
+
+  const dataOption = useMemo(
+    () => ({
+      series: [
+        {
+          name: '迁出人数',
+          type: 'bar',
+          tooltip: {
+            valueFormatter: function (value: number) {
+              return value + ' 人'
+            },
+          },
+          data: [20, 49, 70, 232, 256, 77, 136, 162, 36, 20, 64, 33].map((it) => Math.round(it * index)),
+        },
+        {
+          name: '迁入人数',
+          type: 'bar',
+          tooltip: {
+            valueFormatter: function (value: number) {
+              return value + ' 人'
+            },
+          },
+          data: [26, 59, 90, 24, 27, 77, 176, 182, 287, 188, 60, 23].map((it) => Math.round(it * index)),
+        },
+        {
+          name: '增长率',
+          type: 'line',
+          yAxisIndex: 1,
+          tooltip: {
+            valueFormatter: function (value: number) {
+              return value + ' %'
+            },
+          },
+          data: [2.0, -2.2, 3.3, -4.5, 6.3, 7.2, 7.8, -3.4, -4.0, -6.5, -7.0, -6.2].map((it) => it > 0 ? (it - index * 5).toFixed(1) : (it + index * 10).toFixed(1)),
+        },
+      ],
+    }),
+    [index]
+  )
 
   useEffect(() => {
     mapChartRef.current = echarts.init(mapChartWapper.current as HTMLDivElement)
     mapChartRef.current.hideLoading()
     echarts.registerMap('浙江', geoJson)
+    mapChartRef.current.on('click',(params: any) => {
+      setIndex(coefficient[params.dataIndex])
+    })
     mapChartRef.current.setOption(mapOption)
     lineChartRef.current = echarts.init(lineChartWapper.current as HTMLDivElement)
-    lineChartRef.current.setOption(lineOption)
-  }, [])
+    lineChartRef.current.setOption({...lineOption, ...dataOption})
+  }, [dataOption])
 
   useEffect(() => {
     window.addEventListener('resize', () => {
-      mapChartRef.current?.resize();
-      lineChartRef.current?.resize();
+      mapChartRef.current?.resize()
+      lineChartRef.current?.resize()
     })
     return () => {
       window.removeEventListener('resize', () => {
-        mapChartRef.current?.resize();
-        lineChartRef.current?.resize();
+        mapChartRef.current?.resize()
+        lineChartRef.current?.resize()
       })
     }
-  }, []);
+  }, [])
 
   useEffect(() => {
     setTimeout(() => {
-      mapChartRef.current?.resize();
-      lineChartRef.current?.resize();
+      mapChartRef.current?.resize()
+      lineChartRef.current?.resize()
     }, 200)
-  }, []);
+  }, [])
 
   return (
     <div className={styled.home}>
-      <div className={styled.title}>社区常住人员数量统计大盘</div>
+      <div className={styled.title}>社区常住人员数量统计大盘<Button type='primary' onClick={() => setIndex(1)} style={{ marginLeft: 12, top: -4 }}>重置</Button></div>
       <div className={styled.cardWrap}>
         <div ref={mapChartWapper} className={styled.card} />
         <div ref={lineChartWapper} className={styled.card}></div>

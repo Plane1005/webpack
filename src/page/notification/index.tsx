@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { Button, Col, DatePicker, Form, Input, Row, Select, Space, Table, Tag } from 'antd'
+import { Button, Col, DatePicker, Form, Input, Row, Select, Space, Table, Tag, Tooltip } from 'antd'
 import type { ColumnsType } from 'antd/es/table'
 import { InOutEnum, LiveEnum, GenderEnum } from '@/utils/enums'
 import { enum2Option } from '@/utils'
@@ -9,6 +9,8 @@ import { useForm } from 'antd/es/form/Form'
 import { IDrawerInfo } from '@/types'
 import AddDrawer from '@/component/AddDrawer'
 import { useNavigate } from 'react-router-dom'
+import { useRequest } from 'ahooks'
+import { getNoticeList } from '@/service'
 
 interface DataType {
   key: string
@@ -19,64 +21,44 @@ interface DataType {
   liveType: keyof typeof LiveEnum
 }
 
-const columns: ColumnsType<DataType> = [
-  {
-    title: '标题',
-    dataIndex: 'title',
-    key: 'title',
-  },
-  {
-    title: '正文',
-    dataIndex: 'content',
-    key: 'content',
-  },
-  {
-    title: '操作',
-    key: 'action',
-    render: () => (
-      <Space size="middle">
-        <a>查看</a>
-        <a>复制</a>
-        <a>禁用</a>
-      </Space>
-    ),
-  },
-]
-
-const data: DataType[] = [
-  {
-    key: '1',
-    name: 'John Brown',
-    age: 32,
-    gender: 1,
-    address: 'New York No. 1 Lake Park',
-    liveType: 'Asymptomatic',
-  },
-  {
-    key: '2',
-    name: 'Jim Green',
-    age: 42,
-    gender: 0,
-    address: 'London No. 1 Lake Park',
-    liveType: 'Close',
-  },
-  {
-    key: '3',
-    name: 'Joe Black',
-    gender: 1,
-    age: 32,
-    address: 'Sidney No. 1 Lake Park',
-    liveType: 'Confirmed',
-  },
-]
-
 const Notification = () => {
   const navigate = useNavigate()
-  const [page, setPage] = useState(1);
+  const [data, setData] = useState([]);
+
+  const { loading, run } = useRequest<any, any>(getNoticeList, {
+    onSuccess(res) {
+      setData(res)
+    }
+  });
+
+  const columns: ColumnsType<DataType> = [
+    {
+      title: '标题',
+      dataIndex: 'title',
+      key: 'title',
+    },
+    {
+      title: '正文',
+      dataIndex: 'content',
+      key: 'content',
+      render: (value) => value.slice(0,50) + '...'
+    },
+    {
+      title: '操作',
+      key: 'action',
+      render: (values) => (
+        <Space size="middle">
+          <a onClick={() => {
+            navigate(`/mark?id=${values?.id || ''}`, { replace: true })
+          }}>编辑</a>
+        </Space>
+      ),
+    },
+  ]
 
   return (
     <div>
-      <TableFilter needExtraBtn={false} title='通知公告管理' columns={columns} dataSource={data} setPage={setPage} onAddBtnClick={() => {
+      <TableFilter needExtraBtn={false} title='通知公告管理' columns={columns} dataSource={data} onAddBtnClick={() => {
         navigate('/mark', { replace: true })
       }}/>
     </div>

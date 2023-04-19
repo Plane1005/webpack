@@ -53,43 +53,33 @@ const TableFilter = (props: TableFilterPropsType) => {
 
   const exportFile = () => {
     // 将antd的列定义转换为xlsx需要的格式
-    const exportColumns = columns.map((col: { title: string }) => col.title as string)
-
+    const exportColumns = columns.map((col: { title: string }) => col.title === '操作' ? '' : col.title as string)
     // 将antd的数据转换为xlsx需要的格式，同时处理枚举值和标签值
     const exportData = dataSource.map((item: { [x: string]: any }) => {
       // 定义一个空数组来存储每一行的数据
       let row = []
       // 遍历每一列，根据dataIndex获取对应的值，并添加到数组中
       for (let col of columns) {
-        // 如果dataIndex是一个数组，说明是合并单元格，需要拼接多个字段的值
-        if (Array.isArray(col.dataIndex)) {
-          let cellValue = ''
-          for (let index of col.dataIndex) {
-            cellValue += item[index] + ' '
-          }
-          row.push(cellValue.trim())
-        } else {
-          // 否则直接获取对应字段的值，并添加到数组中
-          row.push(item[col.dataIndex])
+        if (col.key === 'action') break;
+        let value = item[col.dataIndex];
+        if (col.render) {
+          value = col.render(value)
+          if (typeof value === 'object') value = value?.props.children;
         }
+        row.push(value)
       }
       return row
     })
-
     // 定义一个标题数组
     const title = ['这是一个导出的excel文件']
-
     // 创建一个工作簿对象和一个工作表对象
     const workbook = utils.book_new()
-    const worksheet = utils.aoa_to_sheet([title, exportColumns, ...exportData])
-
+    const worksheet = utils.aoa_to_sheet([exportColumns, ...exportData])
     // 将工作表添加到工作簿中，并命名为sheet1
     utils.book_append_sheet(workbook, worksheet, 'sheet1')
-
     // 定义导出文件名为table.xlsx，并设置文件类型为二进制字符串（bstr）
     const filename = 'table.xlsx'
     const writeOptions: WritingOptions = { type: 'binary', bookType: 'xlsx' }
-
     saveAs(new Blob([s2ab(write(workbook, writeOptions))], { type: '' }), filename)
   }
 
@@ -116,7 +106,7 @@ const TableFilter = (props: TableFilterPropsType) => {
                 !it?.hiddenFilter && (
                   <Col span={it.span || 6} key={it.label}>
                     <Form.Item label={it.label} name={it.name}>
-                      {it.component}
+                      {it.filterCom || it.component}
                     </Form.Item>
                   </Col>
                 )

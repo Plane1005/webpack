@@ -4,30 +4,9 @@ import { request, ResponseData } from '@/utils/request'
 // 登录接口
 export const userLogin = createAsyncThunk('user/login', async (params: any = {}) => {
   return request({
-    url: `/api/user/login`,
+    url: `user/login`,
     method: 'POST',
-    params: params,
-  }).then((res: ResponseData<any>) => {
-    return res
-  })
-})
-
-// 钉钉扫码登录接口
-export const dingLogin = createAsyncThunk('user/ding', async (params: any = {}) => {
-  return request({
-    url: `/api/user/ding`,
-    method: 'POST',
-    params: params,
-  }).then((res: ResponseData<any>) => {
-    return res
-  })
-})
-
-// 获取用户信息
-export const fetchUserInfo = createAsyncThunk('user/userinfo', async () => {
-  return request({
-    url: `/api/user/userinfo`,
-    method: 'GET',
+    data: params,
   }).then((res: ResponseData<any>) => {
     return res
   })
@@ -36,44 +15,10 @@ export const fetchUserInfo = createAsyncThunk('user/userinfo', async () => {
 // 获取钉钉用户信息
 export const fetchDingInfo = createAsyncThunk('user/dinginfo', async (params: any = {}) => {
   return request({
-    url: `/api/user/dinginfo`,
+    url: `user/dinginfo`,
     method: 'POST',
-    params: params
+    data: params,
   }).then((res: ResponseData<any>) => {
     return res
-  })
-})
-
-// 更新个人信息
-export const updateInfo = createAsyncThunk('user/updateinfo', async (params: any = {}) => {
-  return request({
-    url: `/api/user/updateinfo`,
-    method: 'POST',
-    params: params,
-  }).then((res: ResponseData<any>) => {
-    return res
-  })
-})
-
-// 更新个人简历
-export const fetchPDF = createAsyncThunk('user/fetchPDF', async () => {
-  return request({
-    url: `/api/user/pdf`,
-    method: 'GET',
-    responseType: 'blob',
-  }).then(async (res: ResponseData<any>) => {
-      // res.data = await switchBase64(res.data)
-      return res
-  })
-})
-
-// 投递简历
-export const sendResume = createAsyncThunk('user/sendResume', async (params: any = {}) => {
-  return request({
-    url: `/api/record/add`,
-    method: 'POST',
-    params: params,
-  }).then(async (res: ResponseData<any>) => {
-      return res
   })
 })

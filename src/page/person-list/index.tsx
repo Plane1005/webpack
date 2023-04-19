@@ -112,7 +112,7 @@ const PersonList = () => {
       key: 'liveType',
       dataIndex: 'liveType',
       render: (value: keyof typeof LiveEnum) => (
-        <Tag color={LiveColorEnum[value]}>{LiveEnum[value]}</Tag>
+        <Tag color={LiveColorEnum[value]}>{LiveEnum[value] || '迁出'}</Tag>
       ),
     },
     {
@@ -127,7 +127,14 @@ const PersonList = () => {
             setDrawerInfo({ visible: true, isCopy: true, data: { ...values, time: dayjs(values.time), birth: dayjs(values.birth), name: values.name + '_Copy' } })
           }}>复制</a>
           <a>查看轨迹</a>
-          <a>迁出</a>
+          <a onClick={() => {
+            updatePerson({ ...values, liveType: 'Leave' }).then((res) => {
+              if (res) {
+                message.success('迁出成功');
+                run()
+              }
+            })
+          }}>迁出</a>
         </Space>
       ),
     },
@@ -144,18 +151,21 @@ const PersonList = () => {
   const onAdd = async (values: any) => {
     if (await addPerson(values)) {
       message.success('添加成功！'); 
+      run();
     }
   }
 
   const onEdit = async (values: any) => {
     if (await updatePerson(values)) {
       message.success('编辑成功！'); 
+      run();
     }
   }
 
   const onCopy = async (values: any) => {
     if (await addPerson(values)) {
       message.success('复制成功！'); 
+      run();
     }
   }
  

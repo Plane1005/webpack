@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import { AppKey, REDIRECT_URI } from '@/utils/index';
 
 declare const window: any;
@@ -8,13 +8,20 @@ interface DingType {
 }
 
 const DingLogin: React.FC<DingType> = () => {
-  // const [REDIRECT_URI] = useState<string>("http://zxl0313.top/#/login/")
+  const [REDIRECT_URI] = useState<string>("http://localhost:8080/login")
 
   useEffect(() => {
     let URL = encodeURIComponent(
       `https://oapi.dingtalk.com/connect/oauth2/sns_authorize?appid=${AppKey}&response_type=code&scope=snsapi_login&state=STATE&redirect_uri=${REDIRECT_URI}`
     )
     // 实例化对象
+    let obj = window.DDLogin({
+      id: 'login_container',
+      goto: URL,
+      style: 'border:none;background-color:#FFFFFF;',
+      width: '100%',
+      height: '300',
+    })
     // 监听消息处理方法
     const handleMessage = (event: { data: any; origin: any; }) => {
       // 获取loginTempCode

@@ -1,7 +1,7 @@
 import { IDrawerInfo, IFilterForm } from '@/types'
 import { Button, Col, Form, FormInstance, Row, Space, Drawer } from 'antd'
 import { PlusCircleOutlined, ExportOutlined } from '@ant-design/icons'
-import React, { ReactNode, useEffect } from 'react'
+import React, { ReactNode, useEffect, useState } from 'react'
 import styled from './style.module.scss'
 
 interface PropsType {
@@ -19,6 +19,7 @@ export type AddDrawerPropsType = Partial<PropsType>
 
 const AddDrawer = (props: AddDrawerPropsType) => {
   const { title = '新增', data, form, formItems = [], onAdd, setData, onEdit, onCopy } = props
+  const [isInit, setisInit] = useState(false);
 
   const handleSubmit = () => {
     form
@@ -39,12 +40,19 @@ const AddDrawer = (props: AddDrawerPropsType) => {
       .catch(() => {})
   }
 
+  useEffect(() => {
+    if (data?.data && !isInit) {
+      setisInit(true)
+      form?.setFieldsValue(data.data)
+    }
+  }, [data?.data]);
+
   const resetFilter = () => {
     form?.resetFields()
   }
 
   const onClose = () => {
-    setData?.({ ...data, visible: false })
+    setData?.({ visible: false })
   }
 
   return (
@@ -67,7 +75,7 @@ const AddDrawer = (props: AddDrawerPropsType) => {
     >
       <Form form={form} initialValues={data?.data}>
         {formItems.map((it) => (
-          <Form.Item label={it.label} name={it.name} required rules={[{ required: true }]}>
+          <Form.Item label={it.label} name={it.name} rules={[{ required: it.notRequire ? false : true }]}>
             {it.component}
           </Form.Item>
         ))}

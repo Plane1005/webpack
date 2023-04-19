@@ -18,12 +18,13 @@ import marked from 'marked'
 import hljs from 'highlight.js'
 import './highlight.scss'
 import './index.scss'
+import { addNotice } from '@/service'
 const fileApi = 'http://116.62.220.126:2333/api/file/upload'
 
-const Marked = () => {
+const Marked = ({ data } : { data: string }) => {
   const [text, setText] = useState('')
   const [showText, setShowText] = useState('')
-  const edit = useRef(null) // 编辑区元素
+  const edit = useRef<HTMLTextAreaElement>(null) // 编辑区元素
   const show = useRef(null) // 展示区元素
   const [begin, setBegin] = useState(0)
   const [end, setEnd] = useState(0)
@@ -35,9 +36,12 @@ const Marked = () => {
   let indent = [2, 2, 3, 2, 6, 2, 6]
 
   useEffect(() => {
-    // 配置highlight
+    data && setText(data) 
+    data && edit.current && (edit.current.value = data)
+  }, [data]);
+
+  useEffect(() => {
     hljs.configure({
-      // tabReplace: '',
       classPrefix: 'hljs-',
       languages: ['CSS', 'HTML', 'JavaScript', 'Python', 'TypeScript', 'Markdown'],
     })
@@ -46,13 +50,11 @@ const Marked = () => {
       renderer: new marked.Renderer(),
       highlight: (code: string) => hljs.highlightAuto(code).value,
       gfm: true, //默认为true。 允许 Git Hub标准的markdown.
-      // tables: true, //默认为true。 允许支持表格语法。该选项要求 gfm 为true。
       breaks: true, //默认为false。 允许回车换行。该选项要求 gfm 为true。
     })
     let content = window.sessionStorage.getItem('content')
-    // console.log(content);
     if (content && document) {
-      ;(document.getElementById('mark') as HTMLTextAreaElement).value = content
+      (document.getElementById('mark') as HTMLTextAreaElement).value = content
       setText(content)
     }
   }, [])
@@ -98,6 +100,15 @@ const Marked = () => {
     }
   }
 
+  const addImg = () => {
+    let mark = document.getElementById('mark') as HTMLTextAreaElement
+    if (mark) {
+      mark.value = text.slice(0, begin) + '![图片描述](图片url地址)\n' + text.slice(end)
+      mark.setSelectionRange(begin + 2, begin + 6)
+      mark.focus()
+    }
+  }
+
   const saveMark = () => {
     message.success('保存成功')
   }
@@ -108,7 +119,11 @@ const Marked = () => {
       title: '提示',
       content: '确定要提交吗',
       onOk() {
-        message.success('提交成功')
+        addNotice({ text }).then((res) => {
+          if (res) {
+            message.success('提交成功')
+          }
+        })
       },
       cancelText: '取消',
       okText: '确定',
@@ -235,7 +250,9 @@ const Marked = () => {
                 链接
               </button>
             </li>
-            <li onClick={() => {}}>
+            <li onClick={() => {
+              addImg()
+            }}>
               <button>
                 <AreaChartOutlined />
                 图片

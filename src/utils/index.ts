@@ -111,3 +111,21 @@ export const formatDate = (dateStr: string) => {
   const day = dateObj.getDate();
   return `${year}-${month < 10 ? '0' : ''}${month}-${day < 10 ? '0' : ''}${day}`;
 }
+
+function formatTime(timestamp: string | number) {
+  if (!timestamp) return null;
+  const date = new Date(timestamp);
+  const hour = String(date.getHours()).padStart(2, '0');
+  const minute = String(date.getMinutes()).padStart(2, '0');
+  const second = String(date.getSeconds()).padStart(2, '0');
+  return `${hour}:${minute}:${second}`;
+}
+
+// 将 UTC 时间转换为本地时间
+export const utcToLocal = (utcTime: string[]) => {
+  if (!Array.isArray(utcTime)) return undefined;
+  const localTime1 = new Date(utcTime[0]);
+  const localTime2 = new Date(utcTime[1]);
+  const offset = 8 * 60 * 60 * 1000;
+  return formatTime(localTime1.getTime()) + '-' + formatTime(localTime2.getTime());
+};

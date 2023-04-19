@@ -45,11 +45,13 @@ interface IOption {
 }
 
 interface IFilterForm {
+  filterCom?: JSX.Element
   name: string;
   label: string;
   component: JSX.Element;
   span?: number;
   hiddenFilter?: boolean;
+  notRequire?: boolean;
 }
 
 interface IDrawerInfo {
